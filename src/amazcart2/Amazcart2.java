@@ -18,6 +18,7 @@ public class Amazcart2 {
         // TODO code application logic here
         FileReader name= new FileReader();
         name.readFile();
+        
     }
 
 }
