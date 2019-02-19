@@ -20,7 +20,7 @@ import java.util.Date;
  *
  */
 public class FileReader {
-
+    public String date="02/13/2018";
     FileReader()
     {
 
@@ -60,10 +60,12 @@ public class FileReader {
                     filesInFolder(file);
 
                 } else if(file.getName().toLowerCase().contains(".jpg")||file.getName().toLowerCase().contains(".png")) {
+                if(filter(convertTime(file.lastModified()),convertTime(date))==true) {
 
                     System.out.println(file.getName());
 
-                    System.out.println(convertTime(file.lastModified()));
+                   System.out.println(convertTime(file.lastModified()));
+                }
            /* FileTime fileTime;
 try {
     fileTime = Files.getLastModifiedTime(Paths.get(file.getAbsolutePath()));
@@ -83,7 +85,32 @@ try {
 
         }
     }
+
+    private boolean filter(String lastModified, String inputDate) {
+    if(Integer.parseInt(lastModified.substring(0,4))>Integer.parseInt(inputDate.substring(0,4)))
+        {
+            //System.out.println("no more searching");
+            return true;
+        }
+    if(Integer.parseInt(lastModified.substring(0,4))==Integer.parseInt(inputDate.substring(0,4)))
+    {
+        if(Integer.parseInt(lastModified.substring(5,7))>=Integer.parseInt(inputDate.substring(5,7))) {
+           // System.out.println(lastModified);
+            //System.out.println(lastModified.substring(8, 10));
+        }
+        if(Integer.parseInt(lastModified.substring(8,10))>=Integer.parseInt(inputDate.substring(8,10))) {
+        return true;
+        }
+    }
+        return false;
+    }
+
     public String convertTime(long time){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        return format.format(date);
+    }
+    public String convertTime(String time){
         Date date = new Date(time);
         Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
         return format.format(date);
