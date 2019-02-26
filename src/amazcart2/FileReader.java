@@ -20,8 +20,8 @@ import java.util.Date;
  *
  */
 public class FileReader {
-    public String date="02/13/2018";
-    public String startDate="01/01/2018";
+    public String date="12/13/2018";
+    public String startDate="12/01/2017";
     public String endDate="02/17/2018";
     FileReader()
     {
@@ -63,13 +63,14 @@ public class FileReader {
 
                 } else if(file.getName().toLowerCase().contains(".jpg")||file.getName().toLowerCase().contains(".png")) {
 
-                if(filter(convertTime(file.lastModified()),convertTime(date))==true) {
+                /*if(filter(convertTime(file.lastModified()),convertTime(date))==true) {
 
                     System.out.println(file.getName());
 
                    System.out.println(convertTime(file.lastModified()));
                 }
-        if(filter2(convertTime(file.lastModified()),convertTime(startDate),convertTime(endDate))==true)
+                */
+       if(filter2(convertTime(file.lastModified()),convertTime(startDate),convertTime(endDate))==true)
                     {
                         System.out.println(file.getName());
 
@@ -133,12 +134,12 @@ try {
                 }
             }
         }
-        else if(Integer.parseInt(endDate.substring(0,4))==Integer.parseInt(startDate.substring(0,4))+1)
+        else if(endYear==startYear+1)
         {
             Integer modMonth=Integer.parseInt(modifiedDate.substring(5,7));
             Integer startMonth=Integer.parseInt(startDate.substring(5,7));
             Integer endMonth=Integer.parseInt(endDate.substring(5,7));
-            if(modMonth>=(startMonth)&&modMonth <= endMonth) {
+            if(modMonth <= endMonth) {
                 Integer modDay = Integer.parseInt(modifiedDate.substring(8, 10));
                 Integer startDay = Integer.parseInt(startDate.substring(8, 10));
                 Integer endDay = Integer.parseInt(endDate.substring(8, 10));
