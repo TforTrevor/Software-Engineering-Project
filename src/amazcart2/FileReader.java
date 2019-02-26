@@ -105,6 +105,13 @@ try {
             }
         }
     }
+    else if(Integer.parseInt(lastModified.substring(0,4))==Integer.parseInt(inputDate.substring(0,4))+1)
+    {
+            if(Integer.parseInt(lastModified.substring(5,7))<=12-Integer.parseInt(inputDate.substring(5,7))+2)
+            {
+            return true;
+            }
+    }
         return false;
     }
     private boolean filter2(String modifiedDate,String startDate, String endDate) {
@@ -123,6 +130,20 @@ try {
                 Integer endDay=Integer.parseInt(endDate.substring(8,10));
                 if (modDay >= startDay && modDay <= endDay) {
                 return true;
+                }
+            }
+        }
+        else if(Integer.parseInt(endDate.substring(0,4))==Integer.parseInt(startDate.substring(0,4))+1)
+        {
+            Integer modMonth=Integer.parseInt(modifiedDate.substring(5,7));
+            Integer startMonth=Integer.parseInt(startDate.substring(5,7));
+            Integer endMonth=Integer.parseInt(endDate.substring(5,7));
+            if(modMonth>=(startMonth)&&modMonth <= endMonth) {
+                Integer modDay = Integer.parseInt(modifiedDate.substring(8, 10));
+                Integer startDay = Integer.parseInt(startDate.substring(8, 10));
+                Integer endDay = Integer.parseInt(endDate.substring(8, 10));
+                if (modDay >= startDay && modDay <= endDay) {
+                    return true;
                 }
             }
         }
