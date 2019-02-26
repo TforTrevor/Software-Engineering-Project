@@ -62,19 +62,20 @@ public class FileReader {
                     filesInFolder(file);
 
                 } else if(file.getName().toLowerCase().contains(".jpg")||file.getName().toLowerCase().contains(".png")) {
-                    if(filter2(convertTime(file.lastModified()),convertTime(startDate),convertTime(endDate))==true)
-                    {
-                        System.out.println(file.getName());
 
-                        System.out.println(convertTime(file.lastModified()));
-                    }
                 if(filter(convertTime(file.lastModified()),convertTime(date))==true) {
 
                     System.out.println(file.getName());
 
                    System.out.println(convertTime(file.lastModified()));
                 }
-                
+        if(filter2(convertTime(file.lastModified()),convertTime(startDate),convertTime(endDate))==true)
+                    {
+                        System.out.println(file.getName());
+
+                        System.out.println(convertTime(file.lastModified()));
+                    }
+
            /* FileTime fileTime;
 try {
     fileTime = Files.getLastModifiedTime(Paths.get(file.getAbsolutePath()));
@@ -84,11 +85,7 @@ try {
 }
             */
                 }
-                else
-                {
-                    //System.out.println(file.getAbsolutePath());
-                    //System.out.println(file.getName());;
-                }
+
             }
             catch (Exception ignore) { }
 
@@ -96,19 +93,16 @@ try {
     }
 
     private boolean filter(String lastModified, String inputDate) {
-    if(Integer.parseInt(lastModified.substring(0,4))>Integer.parseInt(inputDate.substring(0,4)))
-        {
-            //System.out.println("no more searching");
-            return true;
-        }
     if(Integer.parseInt(lastModified.substring(0,4))==Integer.parseInt(inputDate.substring(0,4)))
     {
-        if(Integer.parseInt(lastModified.substring(5,7))>=Integer.parseInt(inputDate.substring(5,7))) {
-           // System.out.println(lastModified);
+        if(Integer.parseInt(lastModified.substring(5,7))>=Integer.parseInt(inputDate.substring(5,7))&&Integer.parseInt(lastModified.substring(5,7))<=Integer.parseInt(inputDate.substring(5,7))+2) {
+
+            // System.out.println(lastModified);
             //System.out.println(lastModified.substring(8, 10));
-        }
-        if(Integer.parseInt(lastModified.substring(8,10))>=Integer.parseInt(inputDate.substring(8,10))) {
-        return true;
+
+            if (Integer.parseInt(lastModified.substring(8, 10)) >= Integer.parseInt(inputDate.substring(8, 10))) {
+                return true;
+            }
         }
     }
         return false;
