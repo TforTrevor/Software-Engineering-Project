@@ -21,6 +21,8 @@ import java.util.Date;
  */
 public class FileReader {
     public String date="02/13/2018";
+    public String startDate="01/01/2018";
+    public String endDate="02/17/2018";
     FileReader()
     {
 
@@ -60,12 +62,19 @@ public class FileReader {
                     filesInFolder(file);
 
                 } else if(file.getName().toLowerCase().contains(".jpg")||file.getName().toLowerCase().contains(".png")) {
+                    if(filter2(convertTime(file.lastModified()),convertTime(startDate),convertTime(endDate))==true)
+                    {
+                        System.out.println(file.getName());
+
+                        System.out.println(convertTime(file.lastModified()));
+                    }
                 if(filter(convertTime(file.lastModified()),convertTime(date))==true) {
 
                     System.out.println(file.getName());
 
                    System.out.println(convertTime(file.lastModified()));
                 }
+                
            /* FileTime fileTime;
 try {
     fileTime = Files.getLastModifiedTime(Paths.get(file.getAbsolutePath()));
@@ -103,6 +112,27 @@ try {
         }
     }
         return false;
+    }
+    private boolean filter2(String modifiedDate,String startDate, String endDate) {
+
+        Integer modYear=Integer.parseInt(modifiedDate.substring(0,4));
+        Integer startYear=Integer.parseInt(startDate.substring(0,4));
+        Integer endYear=Integer.parseInt(endDate.substring(0,4));
+
+        if(modYear.equals(startYear) || modYear.equals(endYear)) {
+            Integer modMonth=Integer.parseInt(modifiedDate.substring(5,7));
+            Integer startMonth=Integer.parseInt(startDate.substring(5,7));
+            Integer endMonth=Integer.parseInt(endDate.substring(5,7));
+            if(modMonth>=(startMonth)&&modMonth <= endMonth) {
+                Integer modDay=Integer.parseInt(modifiedDate.substring(8,10));
+                Integer startDay=Integer.parseInt(startDate.substring(8,10));
+                Integer endDay=Integer.parseInt(endDate.substring(8,10));
+                if (modDay >= startDay && modDay <= endDay) {
+                return true;
+                }
+            }
+        }
+    return false;
     }
 
     public String convertTime(long time){
