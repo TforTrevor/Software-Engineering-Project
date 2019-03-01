@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="hellofx_main" target="11" />
       <module name="hellofx_test" target="11" />
+      <module name="Software-Engineering-Project.main" target="11" />
+      <module name="Software-Engineering-Project.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

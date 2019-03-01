@@ -15,16 +15,12 @@ public class FXMLController implements Initializable {
     private Label label;
 
     @FXML
-    private Button button;
-
-    @FXML
     private StackPane mainPane;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
-        label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
     }
 
     public double GetMainPaneWidth() {

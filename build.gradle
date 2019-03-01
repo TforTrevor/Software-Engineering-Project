@@ -9,10 +9,14 @@ repositories {
 
 dependencies {
     compile 'com.jfoenix:jfoenix:9.0.8'
+    compile 'org.kordamp.ikonli:ikonli-core:11.0.2'
+    compile 'org.kordamp.ikonli:ikonli-javafx:11.0.2'
+    compile 'org.kordamp.ikonli:ikonli-fontawesome5-pack:11.0.2'
 }
 
 javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
+
 
 mainClassName = 'org.openjfx.MainApp'
