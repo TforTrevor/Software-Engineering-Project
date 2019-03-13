@@ -20,7 +20,7 @@ public class MainApp extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(600);
 
-        stage.setTitle("JavaFX and Gradle");
+        stage.setTitle("Image Searcher");
         stage.setScene(scene);
         stage.show();
     }
