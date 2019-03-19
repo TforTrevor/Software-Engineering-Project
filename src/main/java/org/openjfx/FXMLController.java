@@ -1,6 +1,10 @@
 package org.openjfx;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -8,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.effect.GaussianBlur;
@@ -19,6 +24,14 @@ public class FXMLController implements Initializable {
 
     @FXML
     private Label label;
+    @FXML
+    private Label ToInvalid;
+    @FXML
+    private Label FromInvalid;
+    @FXML
+    private DatePicker ToDate;
+    @FXML
+    private DatePicker FromDate;
     @FXML
     private VBox TabPane;
     @FXML
@@ -47,6 +60,7 @@ public class FXMLController implements Initializable {
     private JFXButton ClearYes;
     @FXML
     private JFXButton ClearNo;
+    LocalDate to, from;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String javaVersion = System.getProperty("java.version");
@@ -55,66 +69,66 @@ public class FXMLController implements Initializable {
         GaussianBlur blurRemove = new GaussianBlur();
         blur.setRadius(10);
         blurRemove.setRadius(0);
-        UploadTab.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SearchPane.setVisible(false);
-                UploadPane.setVisible(true);
-                SettingsPane.setVisible(false);
-            }
+        UploadTab.setOnAction(event -> {
+            SearchPane.setVisible(false);
+            UploadPane.setVisible(true);
+            SettingsPane.setVisible(false);
         });
-        SearchTab.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SearchPane.setVisible(true);
-                UploadPane.setVisible(false);
-                SettingsPane.setVisible(false);
-            }
+        SearchTab.setOnAction(event -> {
+            SearchPane.setVisible(true);
+            UploadPane.setVisible(false);
+            SettingsPane.setVisible(false);
         });
-        SettingsTab.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SearchPane.setVisible(false);
-                UploadPane.setVisible(false);
-                SettingsPane.setVisible(true);
-            }
+        SettingsTab.setOnAction(event -> {
+            SearchPane.setVisible(false);
+            UploadPane.setVisible(false);
+            SettingsPane.setVisible(true);
         });
-        CacheButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SettingsPane.setDisable(true);
-                CachePane.setVisible(true);
-                TabPane.setDisable(true);
-                SettingsPane.setEffect(blur);
-            }
+        CacheButton.setOnAction(event -> {
+            SettingsPane.setDisable(true);
+            CachePane.setVisible(true);
+            TabPane.setDisable(true);
+            SettingsPane.setEffect(blur);
         });
-        ClearYes.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SettingsPane.setDisable(false);
-                CachePane.setVisible(false);
-                TabPane.setDisable(false);
-                SettingsPane.setEffect(blurRemove);
-                TabPane.setEffect(blurRemove);
-            }
+        ClearYes.setOnAction(event -> {
+            SettingsPane.setDisable(false);
+            CachePane.setVisible(false);
+            TabPane.setDisable(false);
+            SettingsPane.setEffect(blurRemove);
+            TabPane.setEffect(blurRemove);
         });
-        ClearNo.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SettingsPane.setDisable(false);
-                CachePane.setVisible(false);
-                TabPane.setDisable(false);
-                SettingsPane.setEffect(blurRemove);
-                TabPane.setEffect(blurRemove);
-            }
+        ClearNo.setOnAction(event -> {
+            SettingsPane.setDisable(false);
+            CachePane.setVisible(false);
+            TabPane.setDisable(false);
+            SettingsPane.setEffect(blurRemove);
+            TabPane.setEffect(blurRemove);
         });
     }
-
     public double GetMainPaneWidth() {
         return mainPane.getPrefWidth();
     }
-
     public double GetMainPaneHeight() {
         return mainPane.getPrefHeight();
+    }
+    public void CheckDate() {
+        try {
+            to = ToDate.getValue();
+            if (to==null) {
+                throw new DateTimeParseException("Invalid Date", ToDate.toString(), 0);
+            }
+            ToInvalid.setVisible(false);
+        } catch (DateTimeParseException e) {
+            ToInvalid.setVisible(true);
+        }
+        try {
+            from = FromDate.getValue();
+            if (from==null) {
+                throw new DateTimeParseException("Invalid Date", FromDate.toString(), 0);
+            }
+            FromInvalid.setVisible(false);
+        } catch (DateTimeParseException e) {
+            FromInvalid.setVisible(true);
+        }
     }
 }

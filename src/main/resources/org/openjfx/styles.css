@@ -25,3 +25,6 @@
 .backgroundColorDark {
     -fx-background-color: #E1E2E1;
 }
+.transparent {
+    -fx-background-color: transparent;
+}
