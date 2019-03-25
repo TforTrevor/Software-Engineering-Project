@@ -1,7 +1,11 @@
 package org.openjfx;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXScrollPane;
@@ -10,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -32,25 +35,25 @@ public class FXMLController implements Initializable {
     @FXML
     private BorderPane mainPane;
     @FXML
-    private AnchorPane UploadPane;
+    private AnchorPane uploadTabPane;
     @FXML
-    private AnchorPane SearchPane;
+    private JFXButton uploadTabButton;
     @FXML
-    private AnchorPane SettingsPane;
+    private AnchorPane searchTabPane;
     @FXML
-    private AnchorPane CachePane;
+    private JFXButton searchTabButton;
     @FXML
     private JFXScrollPane viewScroll;
     @FXML
+    private AnchorPane settingsTabPane;
+    @FXML
+    private JFXButton settingsTabButton;
+    @FXML
+    private AnchorPane CachePane;
+    @FXML
     private JFXButton ViewTab;
     @FXML
-    private JFXButton uploadTab;
-    @FXML
-    private JFXButton searchTab;
-    @FXML
     private JFXButton ShareTab;
-    @FXML
-    private JFXButton settingsTab;
     @FXML
     private JFXButton clearCacheButton;
     @FXML
@@ -60,31 +63,30 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton searchImageButton;
 
+    private ArrayList<AnchorPane> tabList;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //GaussianBlur blur = new GaussianBlur();
-        //GaussianBlur blurRemove = new GaussianBlur();
-        //blur.setRadius(10);
-        //blurRemove.setRadius(0);
-        uploadTab.setOnAction(this::UploadTabAction);
-        searchTab.setOnAction(this::SearchTabAction);
+
+        tabList = new ArrayList<>(Arrays.asList(uploadTabPane, searchTabPane, settingsTabPane));
+
+        uploadTabButton.setOnAction(this::UploadTabAction);
+
+        searchTabButton.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
-        settingsTab.setOnAction(this::SettingsTabAction);
+
+        settingsTabButton.setOnAction(this::SettingsTabAction);
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
     }
 
     private void UploadTabAction(ActionEvent event) {
-        SearchPane.setVisible(false);
-        UploadPane.setVisible(true);
-        SettingsPane.setVisible(false);
+        ShowTab(uploadTabPane);
     }
 
     private void SearchTabAction(ActionEvent event) {
-        SearchPane.setVisible(true);
-        UploadPane.setVisible(false);
-        SettingsPane.setVisible(false);
+        ShowTab(searchTabPane);
     }
 
     private void SearchImageButtonAction(ActionEvent event) {
@@ -92,33 +94,35 @@ public class FXMLController implements Initializable {
     }
 
     private void SettingsTabAction(ActionEvent event) {
-        SearchPane.setVisible(false);
-        UploadPane.setVisible(false);
-        SettingsPane.setVisible(true);
+        ShowTab(settingsTabPane);
     }
 
     private void ClearCacheButtonAction(ActionEvent event) {
-        SettingsPane.setDisable(true);
+        settingsTabPane.setDisable(true);
         CachePane.setVisible(true);
         TabPane.setDisable(true);
-        //SettingsPane.setEffect(blur);
     }
 
     private void ClearCacheAcceptAction(ActionEvent event) {
-        SettingsPane.setDisable(false);
+        settingsTabPane.setDisable(false);
         CachePane.setVisible(false);
         TabPane.setDisable(false);
-        //SettingsPane.setEffect(blurRemove);
-        //TabPane.setEffect(blurRemove);
     }
 
     private void ClearCacheDenyAction(ActionEvent event) {
-        SettingsPane.setDisable(false);
+        settingsTabPane.setDisable(false);
         CachePane.setVisible(false);
         TabPane.setDisable(false);
-        //SettingsPane.setEffect(blurRemove);
-        //TabPane.setEffect(blurRemove);
     }
 
-
+    private void ShowTab(AnchorPane keepTab) {
+        for (int i = 0; i < tabList.size(); i++) {
+            if (tabList.get(i) == keepTab) {
+                tabList.get(i).setVisible(true);
+            }
+            else {
+                tabList.get(i).setVisible(false);
+            }
+        }
+    }
 }
