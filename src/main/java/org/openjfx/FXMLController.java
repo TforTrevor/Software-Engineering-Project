@@ -1,11 +1,10 @@
 package org.openjfx;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXScrollPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,6 +40,8 @@ public class FXMLController implements Initializable {
     @FXML
     private AnchorPane CachePane;
     @FXML
+    private JFXScrollPane viewScroll;
+    @FXML
     private JFXButton ViewTab;
     @FXML
     private JFXButton uploadTab;
@@ -65,7 +66,6 @@ public class FXMLController implements Initializable {
         //GaussianBlur blurRemove = new GaussianBlur();
         //blur.setRadius(10);
         //blurRemove.setRadius(0);
-
         uploadTab.setOnAction(this::UploadTabAction);
         searchTab.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
