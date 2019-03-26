@@ -21,12 +21,22 @@ import java.util.Date;
  *
  */
 public class FileReader {
-    public String date="12/13/2018";
-    public String startDate="12/01/2017";
-    public String endDate="02/17/2018";
-    FileReader()
+    private String date="12/13/2018";
+    private String startDate="12/01/2017";
+    private String endDate="02/17/2018";
+    private String fileSearchLocation="C:\\";
+    FileReader(String startingDay, String endingDay,String fileSearchingLocation)
     {
-
+        if(startingDay!=null) {
+            startDate = startingDay;
+        }
+        if(endingDay!=null) {
+            endDate = endingDay;
+        }
+        if(fileSearchingLocation!=null)
+        {
+            fileSearchingLocation=fileSearchingLocation;
+        }
     }
     public void readFile()
     {
@@ -37,7 +47,7 @@ public class FileReader {
         {
             fileLocation=fileLocation+"../";
         }
-        File folder =new File("C:\\");
+        File folder =new File(fileSearchLocation);
         // folder=new File(folder.getParent());
         //folder=new File(folder.getParent());
         // folder=new File(folder.getParent());
