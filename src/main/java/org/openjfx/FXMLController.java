@@ -1,7 +1,9 @@
 package org.openjfx;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Arrays;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -60,8 +62,12 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton searchImageButton;
 
+    private ArrayList<AnchorPane> tabPanes;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tabPanes = new ArrayList<>(Arrays.asList(viewTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
+
         uploadTabButton.setOnAction(this::UploadTabAction);
         searchTabButton.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
@@ -72,15 +78,11 @@ public class FXMLController implements Initializable {
     }
 
     private void UploadTabAction(ActionEvent event) {
-        searchTabPane.setVisible(false);
-        uploadTabPane.setVisible(true);
-        settingsTabPane.setVisible(false);
+        ShowTab(uploadTabPane);
     }
 
     private void SearchTabAction(ActionEvent event) {
-        searchTabPane.setVisible(true);
-        uploadTabPane.setVisible(false);
-        settingsTabPane.setVisible(false);
+        ShowTab(searchTabPane);
     }
 
     private void SearchImageButtonAction(ActionEvent event) {
@@ -88,9 +90,7 @@ public class FXMLController implements Initializable {
     }
 
     private void SettingsTabAction(ActionEvent event) {
-        searchTabPane.setVisible(false);
-        uploadTabPane.setVisible(false);
-        settingsTabPane.setVisible(true);
+        ShowTab(settingsTabPane);
     }
 
     private void ClearCacheButtonAction(ActionEvent event) {
@@ -109,5 +109,18 @@ public class FXMLController implements Initializable {
         settingsTabPane.setDisable(false);
         clearCachePane.setVisible(false);
         TabPane.setDisable(false);
+    }
+
+    private void ShowTab(AnchorPane keepPane) {
+        for (int i = 0; i < tabPanes.size(); i++) {
+            if (tabPanes.get(i) != null) {
+                if (tabPanes.get(i) == keepPane) {
+                    tabPanes.get(i).setVisible(true);
+                }
+                else {
+                    tabPanes.get(i).setVisible(false);
+                }
+            }
+        }
     }
 }
