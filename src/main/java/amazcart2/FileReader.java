@@ -35,7 +35,7 @@ public class FileReader {
         }
         if(fileSearchingLocation!=null)
         {
-            fileSearchingLocation=fileSearchingLocation;
+            fileSearchLocation=fileSearchingLocation;
         }
     }
     public void readFile()
