@@ -61,11 +61,6 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //GaussianBlur blur = new GaussianBlur();
-        //GaussianBlur blurRemove = new GaussianBlur();
-        //blur.setRadius(10);
-        //blurRemove.setRadius(0);
-
         uploadTab.setOnAction(this::UploadTabAction);
         searchTab.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
@@ -101,24 +96,17 @@ public class FXMLController implements Initializable {
         SettingsPane.setDisable(true);
         CachePane.setVisible(true);
         TabPane.setDisable(true);
-        //SettingsPane.setEffect(blur);
     }
 
     private void ClearCacheAcceptAction(ActionEvent event) {
         SettingsPane.setDisable(false);
         CachePane.setVisible(false);
         TabPane.setDisable(false);
-        //SettingsPane.setEffect(blurRemove);
-        //TabPane.setEffect(blurRemove);
     }
 
     private void ClearCacheDenyAction(ActionEvent event) {
         SettingsPane.setDisable(false);
         CachePane.setVisible(false);
         TabPane.setDisable(false);
-        //SettingsPane.setEffect(blurRemove);
-        //TabPane.setEffect(blurRemove);
     }
-
-
 }
