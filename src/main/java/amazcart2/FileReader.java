@@ -47,18 +47,7 @@ public class FileReader {
         filesInFolder(folder);
 
     }
-    public void searchDirForFile(String dir) {
-        File[] files = new File(dir).listFiles();
-        for(File f:files) {
-            if(f.isDirectory()) {
-                searchDirForFile(f.getPath());
 
-            }
-            if(f.getName().toUpperCase().contains(".PNG"))
-                System.out.println( f.getPath());
-        }
-
-    }
     public void filesInFolder(final File folder) {
         //System.out.println(folder.getName());
         for (final File file : folder.listFiles()) {
