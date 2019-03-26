@@ -6,9 +6,11 @@ import javafx.scene.control.Label;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+import amazcart2.FileReader;
+
 public class CalendarDate {
 
-    static public void CheckDate(DatePicker toDate, DatePicker fromDate, Label toDateError, Label fromDateError) {
+    public void CheckDate(DatePicker toDate, DatePicker fromDate, Label toDateError, Label fromDateError) {
                 LocalDate to, from;
                 try {
                     to = toDate.getValue();
@@ -28,5 +30,10 @@ public class CalendarDate {
         } catch (DateTimeParseException e) {
             fromDateError.setVisible(true);
         }
+    }
+
+    private void ReadFiles() {
+        FileReader testing=new FileReader("01/09/2019","01/11/2019","C:\\Users\\Jpc\\Documents\\NetBeansProjects");
+        testing.readFile();
     }
 }

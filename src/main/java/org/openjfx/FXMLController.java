@@ -1,10 +1,16 @@
 package org.openjfx;
 
 import java.net.URL;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Arrays;
 
+import amazcart2.FileReader;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -86,7 +92,15 @@ public class FXMLController implements Initializable {
     }
 
     private void SearchImageButtonAction(ActionEvent event) {
-        CalendarDate.CheckDate(ToDate, FromDate, ToInvalid, FromInvalid);
+        new CalendarDate().CheckDate(ToDate, FromDate, ToInvalid, FromInvalid);
+        Format format = new SimpleDateFormat("MM/dd/yyyy");
+        java.util.Date tempTo = java.sql.Date.valueOf(ToDate.getValue());
+        java.util.Date tempFrom = java.sql.Date.valueOf(FromDate.getValue());
+        String formattedTo = format.format(tempTo);
+        String formattedFrom = format.format(tempFrom);
+        FileReader testing=new FileReader(formattedTo,formattedFrom,"C:\\Users\\Jpc\\Documents\\NetBeansProjects");
+        testing.readFile();
+        ArrayList filesArr = testing.getArr();
     }
 
     private void SettingsTabAction(ActionEvent event) {
