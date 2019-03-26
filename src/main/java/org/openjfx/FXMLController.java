@@ -1,8 +1,6 @@
 package org.openjfx;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -11,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -33,23 +30,27 @@ public class FXMLController implements Initializable {
     @FXML
     private BorderPane mainPane;
     @FXML
-    private AnchorPane UploadPane;
+    private JFXButton viewTabButton;
     @FXML
-    private AnchorPane SearchPane;
+    private JFXButton uploadTabButton;
     @FXML
-    private AnchorPane SettingsPane;
+    private JFXButton searchTabButton;
     @FXML
-    private AnchorPane CachePane;
+    private JFXButton shareTabButton;
     @FXML
-    private JFXButton ViewTab;
+    private JFXButton settingsTabButton;
     @FXML
-    private JFXButton uploadTab;
+    private AnchorPane viewTabPane;
     @FXML
-    private JFXButton searchTab;
+    private AnchorPane uploadTabPane;
     @FXML
-    private JFXButton ShareTab;
+    private AnchorPane searchTabPane;
     @FXML
-    private JFXButton settingsTab;
+    private AnchorPane shareTabPane;
+    @FXML
+    private AnchorPane settingsTabPane;
+    @FXML
+    private AnchorPane clearCachePane;
     @FXML
     private JFXButton clearCacheButton;
     @FXML
@@ -61,25 +62,25 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        uploadTab.setOnAction(this::UploadTabAction);
-        searchTab.setOnAction(this::SearchTabAction);
+        uploadTabButton.setOnAction(this::UploadTabAction);
+        searchTabButton.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
-        settingsTab.setOnAction(this::SettingsTabAction);
+        settingsTabButton.setOnAction(this::SettingsTabAction);
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
     }
 
     private void UploadTabAction(ActionEvent event) {
-        SearchPane.setVisible(false);
-        UploadPane.setVisible(true);
-        SettingsPane.setVisible(false);
+        searchTabPane.setVisible(false);
+        uploadTabPane.setVisible(true);
+        settingsTabPane.setVisible(false);
     }
 
     private void SearchTabAction(ActionEvent event) {
-        SearchPane.setVisible(true);
-        UploadPane.setVisible(false);
-        SettingsPane.setVisible(false);
+        searchTabPane.setVisible(true);
+        uploadTabPane.setVisible(false);
+        settingsTabPane.setVisible(false);
     }
 
     private void SearchImageButtonAction(ActionEvent event) {
@@ -87,26 +88,26 @@ public class FXMLController implements Initializable {
     }
 
     private void SettingsTabAction(ActionEvent event) {
-        SearchPane.setVisible(false);
-        UploadPane.setVisible(false);
-        SettingsPane.setVisible(true);
+        searchTabPane.setVisible(false);
+        uploadTabPane.setVisible(false);
+        settingsTabPane.setVisible(true);
     }
 
     private void ClearCacheButtonAction(ActionEvent event) {
-        SettingsPane.setDisable(true);
-        CachePane.setVisible(true);
+        settingsTabPane.setDisable(true);
+        clearCachePane.setVisible(true);
         TabPane.setDisable(true);
     }
 
     private void ClearCacheAcceptAction(ActionEvent event) {
-        SettingsPane.setDisable(false);
-        CachePane.setVisible(false);
+        settingsTabPane.setDisable(false);
+        clearCachePane.setVisible(false);
         TabPane.setDisable(false);
     }
 
     private void ClearCacheDenyAction(ActionEvent event) {
-        SettingsPane.setDisable(false);
-        CachePane.setVisible(false);
+        settingsTabPane.setDisable(false);
+        clearCachePane.setVisible(false);
         TabPane.setDisable(false);
     }
 }

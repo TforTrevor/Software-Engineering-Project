@@ -15,7 +15,7 @@
    <left>
       <VBox fx:id="TabPane" alignment="CENTER" styleClass="primaryColor">
          <children>
-            <JFXButton fx:id="ViewTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="viewTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -24,7 +24,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="uploadTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Upload Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="uploadTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Upload Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -33,7 +33,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="searchTab" alignment="BASELINE_LEFT" defaultButton="true" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Search Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="searchTabButton" alignment="BASELINE_LEFT" defaultButton="true" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Search Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -42,7 +42,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="ShareTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Share Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="shareTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Share Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -51,7 +51,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="settingsTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Settings" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="settingsTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Settings" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -66,7 +66,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="SearchPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -132,7 +132,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="UploadPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -159,7 +159,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="SettingsPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -193,7 +193,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="CachePane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="clearCachePane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" styleClass="transparent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
