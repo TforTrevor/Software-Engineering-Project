@@ -68,6 +68,7 @@ public class FXMLController implements Initializable {
     private ArrayList<String> filesArr;
     private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
+    private SearchImages searchImages = new SearchImages();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -92,10 +93,12 @@ public class FXMLController implements Initializable {
     private void SearchTabAction(ActionEvent event) {
         ShowTab(searchTabPane);
     }
-
+    private void SetArray(ArrayList<String> arr) {
+        filesArr = arr;
+    }
     private void SearchImageButtonAction(ActionEvent event) {
         searchImageButton.setDisable(true);
-        if (SearchImages.GetImages(fromDate, toDate) == null) {
+        if (!searchImages.RefreshImages(fromDate, toDate)) {
             FromInvalid.setVisible(true);
             ToInvalid.setVisible(true);
         }

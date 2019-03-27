@@ -19,7 +19,8 @@ public class FileReader {
     //="02/17/2018";
     private String fileSearchLocation;
     //="C:\\";
-    private ArrayList files;
+    private ArrayList fileList;
+    private boolean runThread;
 
     public FileReader(String startingDay, String endingDay, String fileSearchingLocation) {
 
@@ -29,15 +30,10 @@ public class FileReader {
 
         fileSearchLocation = fileSearchingLocation;
 
-        files = new ArrayList<String>();
+        fileList = new ArrayList<String>();
     }
 
-    public void RefreshImageList() {
-        String fileLocation = "";
-
-        while (new File(fileLocation).exists()) {
-            fileLocation = fileLocation + "../";
-        }
+    public void SearchImages() {
         File folder = new File(fileSearchLocation);
 
         filesInFolder(folder);
@@ -45,42 +41,46 @@ public class FileReader {
 
     public void filesInFolder(final File folder) {
         for (final File file : folder.listFiles()) {
-            try {
-                if (file.isDirectory()) {
-                    filesInFolder(file);
+            //Checks to see if thread wants to be run, breaks otherwise
+            if (runThread) {
+                try {
+                    if (file.isDirectory()) {
+                        filesInFolder(file);
+                    } else if (file.getName().toLowerCase().contains(".jpg") || file.getName().toLowerCase().contains(".png")) {
+                        Path file2 = Paths.get(file.getAbsolutePath());
+                        BasicFileAttributes attr = Files.readAttributes(file2, BasicFileAttributes.class);
 
-                } else if (file.getName().toLowerCase().contains(".jpg") || file.getName().toLowerCase().contains(".png")) {
-                    Path file2 = Paths.get(file.getAbsolutePath());
-                    BasicFileAttributes attr = Files.readAttributes(file2, BasicFileAttributes.class);
-
-                    String endDate3 = convertTime(endDate);
-                    String startDate3 = convertTime(startDate);
-                    Integer endYear = Integer.parseInt(endDate3.substring(0, 4));
-                    Integer startYear = Integer.parseInt(startDate3.substring(0, 4));
-                    if (endYear.equals(startYear + 1)) {
-                        String endDate1 = "12/31/" + startYear;
-                        String startDate2 = "01/01/" + endYear;
-                        if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate1)) == true) {
-
-                            files.add(file.getAbsolutePath() + file.getName());
-                        }
-                        if (filter2(attr.creationTime().toString(), convertTime(startDate2), convertTime(endDate)) == true) {
-                            files.add(file.getAbsolutePath() + file.getName());
-                        }
-
-                    } else {
-                        if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate)) == true) {
-                            files.add(file.getAbsolutePath() + file.getName());
+                        String endDate3 = convertTime(endDate);
+                        String startDate3 = convertTime(startDate);
+                        Integer endYear = Integer.parseInt(endDate3.substring(0, 4));
+                        Integer startYear = Integer.parseInt(startDate3.substring(0, 4));
+                        if (endYear.equals(startYear + 1)) {
+                            String endDate1 = "12/31/" + startYear;
+                            String startDate2 = "01/01/" + endYear;
+                            if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate1))) {
+                                fileList.add(file.getAbsolutePath() + file.getName());
+                            }
+                            if (filter2(attr.creationTime().toString(), convertTime(startDate2), convertTime(endDate))) {
+                                fileList.add(file.getAbsolutePath() + file.getName());
+                            }
+                        } else {
+                            if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate))) {
+                                fileList.add(file.getAbsolutePath() + file.getName());
+                            }
                         }
                     }
+
+                } catch (Exception ignore) {
                 }
-
-            } catch (Exception ignore) {
             }
-
+            else {
+                break;
+            }
         }
     }
-
+    public void SetRunThread(boolean value) {
+        runThread = value;
+    }
     private boolean filter(String lastModified, String inputDate) {
         if (Integer.parseInt(lastModified.substring(0, 4)) == Integer.parseInt(inputDate.substring(0, 4))) {
             if (Integer.parseInt(lastModified.substring(5, 7)) >= Integer.parseInt(inputDate.substring(5, 7)) && Integer.parseInt(lastModified.substring(5, 7)) <= Integer.parseInt(inputDate.substring(5, 7)) + 2) {
@@ -97,7 +97,7 @@ public class FileReader {
     }
 
     public ArrayList<String> GetImages() {
-        return files;
+        return fileList;
     }
 
     private boolean filter2(String modifiedDate, String startDate, String endDate) {

@@ -1,5 +1,6 @@
 package org.openjfx;
 
+import amazcart2.FileReader;
 import javafx.scene.control.DatePicker;
 
 import java.text.Format;
@@ -8,51 +9,69 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
-import amazcart2.FileReader;
 
 public class SearchImages {
-    private SearchImages() {
+    private ArrayList<String> images;
+    private Thread searchThread;
+    private FileReader fileReader;
+    
+    protected SearchImages() {
+        searchThread = new Thread(() -> {
+            try {
+                fileReader.SetRunThread(true);
+                fileReader.SearchImages();
+            }
+            catch(Exception e) {
 
-    }
-    private static boolean CheckDate(DatePicker date) {
-                LocalDate to;
-                try {
-                    to = date.getValue();
-                    if (to == null) {
-                        throw new DateTimeParseException("Invalid Date", date.toString(), 0);
-                    }
-                    return true;
-                } catch (DateTimeParseException e) {
-                    return false;
-                }
+            }
+            finally {
+                images = fileReader.GetImages();
+            }
+        });
     }
 
-    private static String ConvertDateFormat(DatePicker date) {
+    private boolean CheckDate(DatePicker date) {
+        LocalDate to;
+        try {
+            to = date.getValue();
+            if (to == null) {
+                throw new DateTimeParseException("Invalid Date", date.toString(), 0);
+            }
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private String ConvertDateFormat(DatePicker date) {
         Format format = new SimpleDateFormat("MM/dd/yyyy");
         //toDate.getvalue returns yyyy/mm/dd
         java.util.Date tempTo = java.sql.Date.valueOf(date.getValue());
-        String formattedString = format.format(tempTo);
-        return formattedString;
+        return format.format(tempTo);
     }
 
-    public static ArrayList<String> GetImages(DatePicker fromDate, DatePicker toDate) {
-        if (CheckDate(fromDate) == false) {
-            return null;
+    public boolean RefreshImages(DatePicker fromDate, DatePicker toDate) {
+        if (!CheckDate(fromDate)) {
+            return false;
         }
-        if (CheckDate(toDate) == false) {
-            return null;
+        if (!CheckDate(toDate)) {
+            return false;
         }
         String stringFromDate = ConvertDateFormat(fromDate);
         String stringToDate = ConvertDateFormat(toDate);
 
-        FileReader fileReader = new FileReader(stringFromDate, stringToDate,"C:\\");
-        fileReader.RefreshImageList();
+        fileReader = new FileReader(stringFromDate, stringToDate,"C:\\");
+        searchThread.start();
 
-        return fileReader.GetImages();
+        return true;
     }
 
-    private void ReadFiles() {
-        FileReader testing = new FileReader("01/09/2019","01/11/2019","C:\\Users\\Jpc\\Documents\\NetBeansProjects");
-        testing.RefreshImageList();
+    public void CancelSearch() {
+        fileReader.SetRunThread(false);
+        images = fileReader.GetImages();
+    }
+
+    public ArrayList<String> GetImages() {
+        return (ArrayList<String>)images.clone();
     }
 }
