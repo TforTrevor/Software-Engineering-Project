@@ -22,9 +22,7 @@ public class FXMLController implements Initializable {
     @FXML
     private Label label;
     @FXML
-    private Label ToInvalid;
-    @FXML
-    private Label FromInvalid;
+    private Label invalidDatesLabel;
     @FXML
     private DatePicker toDate;
     @FXML
@@ -37,8 +35,17 @@ public class FXMLController implements Initializable {
     private JFXButton viewTabButton;
     @FXML
     private JFXButton uploadTabButton;
+
+    //SEARCH TAB
     @FXML
     private JFXButton searchTabButton;
+    @FXML
+    private AnchorPane searchTabPane;
+    @FXML
+    private JFXButton searchImageButton;
+    @FXML
+    private JFXButton cancelSearchButton;
+
     @FXML
     private JFXButton shareTabButton;
     @FXML
@@ -47,8 +54,6 @@ public class FXMLController implements Initializable {
     private AnchorPane viewTabPane;
     @FXML
     private AnchorPane uploadTabPane;
-    @FXML
-    private AnchorPane searchTabPane;
     @FXML
     private AnchorPane shareTabPane;
     @FXML
@@ -62,9 +67,8 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton clearCacheDenyButton;
     @FXML
-    private JFXButton searchImageButton;
-    @FXML
     private ImageView resultsImage;
+
     private ArrayList<String> filesArr;
     private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
@@ -80,6 +84,7 @@ public class FXMLController implements Initializable {
         uploadTabButton.setOnAction(this::UploadTabAction);
         searchTabButton.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
+        cancelSearchButton.setOnAction(this::CancelSearchButtonAction);
         settingsTabButton.setOnAction(this::SettingsTabAction);
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
@@ -93,29 +98,21 @@ public class FXMLController implements Initializable {
     private void SearchTabAction(ActionEvent event) {
         ShowTab(searchTabPane);
     }
-    private void SetArray(ArrayList<String> arr) {
-        filesArr = arr;
-    }
+
     private void SearchImageButtonAction(ActionEvent event) {
         searchImageButton.setDisable(true);
         if (!searchImages.RefreshImages(fromDate, toDate)) {
-            FromInvalid.setVisible(true);
-            ToInvalid.setVisible(true);
+            invalidDatesLabel.setVisible(true);
         }
         else {
             //Display images
+            invalidDatesLabel.setVisible(false);
         }
+    }
 
-        //images.clear();
-        //for (int i = 0;i<filesArr.size();i++) {
-          //  images.add(new ImageView(filesArr.get(i)));
-        //}
-        //for (int i = 0;i<images.size();i++) {
-//            viewScroll.getChildren().add(images.get(i));
-        //}
-        //searchTabPane.setVisible(false);
-//        viewScroll.setVisible(true);
-
+    private void CancelSearchButtonAction(ActionEvent event) {
+        searchImages.CancelSearch();
+        filesArr = searchImages.GetImages();
         searchImageButton.setDisable(false);
     }
 

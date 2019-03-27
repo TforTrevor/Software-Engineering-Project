@@ -14,20 +14,9 @@ public class SearchImages {
     private ArrayList<String> images;
     private Thread searchThread;
     private FileReader fileReader;
-    
-    protected SearchImages() {
-        searchThread = new Thread(() -> {
-            try {
-                fileReader.SetRunThread(true);
-                fileReader.SearchImages();
-            }
-            catch(Exception e) {
 
-            }
-            finally {
-                images = fileReader.GetImages();
-            }
-        });
+    protected SearchImages() {
+
     }
 
     private boolean CheckDate(DatePicker date) {
@@ -61,9 +50,25 @@ public class SearchImages {
         String stringToDate = ConvertDateFormat(toDate);
 
         fileReader = new FileReader(stringFromDate, stringToDate,"C:\\");
-        searchThread.start();
+        searchThread = new Thread(this::SearchThread);
+        if (!searchThread.isAlive()) {
+            searchThread.start();
+        }
 
         return true;
+    }
+
+    private void SearchThread() {
+        try {
+            fileReader.SetRunThread(true);
+            fileReader.SearchImages();
+        }
+        catch(Exception e) {
+
+        }
+        finally {
+            images = fileReader.GetImages();
+        }
     }
 
     public void CancelSearch() {
