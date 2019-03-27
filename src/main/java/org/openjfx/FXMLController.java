@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class FXMLController implements Initializable {
@@ -42,6 +43,8 @@ public class FXMLController implements Initializable {
     @FXML
     private AnchorPane searchTabPane;
     @FXML
+    private Pane searchingImagesPane;
+    @FXML
     private JFXButton searchImageButton;
     @FXML
     private JFXButton cancelSearchButton;
@@ -66,8 +69,6 @@ public class FXMLController implements Initializable {
     private JFXButton clearCacheAcceptButton;
     @FXML
     private JFXButton clearCacheDenyButton;
-    @FXML
-    private ImageView resultsImage;
 
     private ArrayList<String> filesArr;
     private ArrayList<ImageView> images;
@@ -78,7 +79,6 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Image image = new Image("file:"+"C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
         System.out.println("Image loading error? " + image.isError());
-        resultsImage.setImage(image);
         images=new ArrayList<ImageView>();
         tabPanes = new ArrayList<>(Arrays.asList(viewTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
         uploadTabButton.setOnAction(this::UploadTabAction);
@@ -101,6 +101,7 @@ public class FXMLController implements Initializable {
 
     private void SearchImageButtonAction(ActionEvent event) {
         searchImageButton.setDisable(true);
+        searchingImagesPane.setVisible(true);
         if (!searchImages.RefreshImages(fromDate, toDate)) {
             invalidDatesLabel.setVisible(true);
         }
@@ -114,6 +115,7 @@ public class FXMLController implements Initializable {
         searchImages.CancelSearch();
         filesArr = searchImages.GetImages();
         searchImageButton.setDisable(false);
+        searchingImagesPane.setVisible(false);
     }
 
     private void SettingsTabAction(ActionEvent event) {

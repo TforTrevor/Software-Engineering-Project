@@ -72,8 +72,10 @@ public class SearchImages {
     }
 
     public void CancelSearch() {
-        fileReader.SetRunThread(false);
-        images = fileReader.GetImages();
+        if (searchThread != null) {
+            fileReader.SetRunThread(false);
+            images = fileReader.GetImages();
+        }
     }
 
     public ArrayList<String> GetImages() {

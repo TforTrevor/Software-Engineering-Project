@@ -5,7 +5,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -123,14 +122,30 @@
                               <Insets />
                            </VBox.margin>
                         </JFXButton>
-                        <JFXButton fx:id="cancelSearchButton" alignment="CENTER" layoutX="450.0" layoutY="447.0" prefWidth="200.0" ripplerFill="WHITE" styleClass="primaryColor" text="Cancel" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="searchingImagesPane" alignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER" spacing="10.0" styleClass="backgroundColorDark">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" text="Searching for images...." textAlignment="CENTER">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <JFXButton fx:id="cancelSearchButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="Cancel" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </JFXButton>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </children>
@@ -239,15 +254,6 @@
                               <Insets />
                            </VBox.margin>
                         </JFXButton>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <ImageView fx:id="resultsImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </VBox>
                </children>
