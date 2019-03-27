@@ -1,22 +1,18 @@
 package org.openjfx;
 
 import java.net.URL;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Arrays;
 
-import amazcart2.FileReader;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -30,9 +26,9 @@ public class FXMLController implements Initializable {
     @FXML
     private Label FromInvalid;
     @FXML
-    private DatePicker ToDate;
+    private DatePicker toDate;
     @FXML
-    private DatePicker FromDate;
+    private DatePicker fromDate;
     @FXML
     private VBox TabPane;
     @FXML
@@ -67,13 +63,19 @@ public class FXMLController implements Initializable {
     private JFXButton clearCacheDenyButton;
     @FXML
     private JFXButton searchImageButton;
-
+    @FXML
+    private ImageView resultsImage;
+    private ArrayList<String> filesArr;
+    private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Image image = new Image("file:"+"C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
+        System.out.println("Image loading error? " + image.isError());
+        resultsImage.setImage(image);
+        images=new ArrayList<ImageView>();
         tabPanes = new ArrayList<>(Arrays.asList(viewTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
-
         uploadTabButton.setOnAction(this::UploadTabAction);
         searchTabButton.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
@@ -92,15 +94,26 @@ public class FXMLController implements Initializable {
     }
 
     private void SearchImageButtonAction(ActionEvent event) {
-        new CalendarDate().CheckDate(ToDate, FromDate, ToInvalid, FromInvalid);
-        Format format = new SimpleDateFormat("MM/dd/yyyy");
-        java.util.Date tempTo = java.sql.Date.valueOf(ToDate.getValue());
-        java.util.Date tempFrom = java.sql.Date.valueOf(FromDate.getValue());
-        String formattedTo = format.format(tempTo);
-        String formattedFrom = format.format(tempFrom);
-        FileReader testing=new FileReader(formattedTo,formattedFrom,"C:\\Users\\Jpc\\Documents\\NetBeansProjects");
-        testing.readFile();
-        ArrayList filesArr = testing.getArr();
+        searchImageButton.setDisable(true);
+        if (SearchImages.GetImages(fromDate, toDate) == null) {
+            FromInvalid.setVisible(true);
+            ToInvalid.setVisible(true);
+        }
+        else {
+            //Display images
+        }
+
+        //images.clear();
+        //for (int i = 0;i<filesArr.size();i++) {
+          //  images.add(new ImageView(filesArr.get(i)));
+        //}
+        //for (int i = 0;i<images.size();i++) {
+//            viewScroll.getChildren().add(images.get(i));
+        //}
+        //searchTabPane.setVisible(false);
+//        viewScroll.setVisible(true);
+
+        searchImageButton.setDisable(false);
     }
 
     private void SettingsTabAction(ActionEvent event) {
