@@ -1,14 +1,12 @@
 package org.openjfx;
 
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import amazcart2.FileReader;
 
@@ -47,14 +45,14 @@ public class SearchImages {
         String stringFromDate = ConvertDateFormat(fromDate);
         String stringToDate = ConvertDateFormat(toDate);
 
-        FileReader testing = new FileReader(stringFromDate, stringToDate,"C:\\");
-        testing.readFile();
+        FileReader fileReader = new FileReader(stringFromDate, stringToDate,"C:\\");
+        fileReader.RefreshImageList();
 
-        return testing.getArr();
+        return fileReader.GetImages();
     }
 
     private void ReadFiles() {
         FileReader testing = new FileReader("01/09/2019","01/11/2019","C:\\Users\\Jpc\\Documents\\NetBeansProjects");
-        testing.readFile();
+        testing.RefreshImageList();
     }
 }

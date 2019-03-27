@@ -19,7 +19,7 @@ public class FileReader {
     //="02/17/2018";
     private String fileSearchLocation;
     //="C:\\";
-    private ArrayList filesArr;
+    private ArrayList files;
 
     public FileReader(String startingDay, String endingDay, String fileSearchingLocation) {
 
@@ -29,10 +29,10 @@ public class FileReader {
 
         fileSearchLocation = fileSearchingLocation;
 
-        filesArr = new ArrayList<String>();
+        files = new ArrayList<String>();
     }
 
-    public void readFile() {
+    public void RefreshImageList() {
         String fileLocation = "";
 
         while (new File(fileLocation).exists()) {
@@ -62,15 +62,15 @@ public class FileReader {
                         String startDate2 = "01/01/" + endYear;
                         if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate1)) == true) {
 
-                            filesArr.add(file.getAbsolutePath() + file.getName());
+                            files.add(file.getAbsolutePath() + file.getName());
                         }
                         if (filter2(attr.creationTime().toString(), convertTime(startDate2), convertTime(endDate)) == true) {
-                            filesArr.add(file.getAbsolutePath() + file.getName());
+                            files.add(file.getAbsolutePath() + file.getName());
                         }
 
                     } else {
                         if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate)) == true) {
-                            filesArr.add(file.getAbsolutePath() + file.getName());
+                            files.add(file.getAbsolutePath() + file.getName());
                         }
                     }
                 }
@@ -96,8 +96,8 @@ public class FileReader {
         return false;
     }
 
-    public ArrayList<String> getArr() {
-        return filesArr;
+    public ArrayList<String> GetImages() {
+        return files;
     }
 
     private boolean filter2(String modifiedDate, String startDate, String endDate) {
@@ -135,6 +135,3 @@ public class FileReader {
         return format.format(date);
     }
 }
-
-
-
