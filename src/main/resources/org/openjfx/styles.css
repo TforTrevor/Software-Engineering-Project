@@ -28,3 +28,6 @@
 .transparent {
     -fx-background-color: transparent;
 }
+.spinnerPrimaryColor .arc {
+    -fx-stroke: #1976d2;
+}
