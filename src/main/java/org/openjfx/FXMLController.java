@@ -70,6 +70,9 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton clearCacheDenyButton;
 
+    @FXML
+    private Label consoleLabel;
+
     private ArrayList<String> filesArr;
     private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
@@ -91,6 +94,13 @@ public class FXMLController implements Initializable {
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
     }
 
+    public void WriteToConsole(String message) {
+        if (consoleLabel.getText() != "") {
+            consoleLabel.setText(consoleLabel.getText() + System.lineSeparator());
+        }
+        consoleLabel.setText(consoleLabel.getText() + message);
+    }
+
     private void UploadTabAction(ActionEvent event) {
         ShowTab(uploadTabPane);
     }
@@ -100,13 +110,13 @@ public class FXMLController implements Initializable {
     }
 
     private void SearchImageButtonAction(ActionEvent event) {
+        searchImages.SetFXMLController(this);
         searchImageButton.setDisable(true);
-        searchingImagesPane.setVisible(true);
         if (!searchImages.RefreshImages(fromDate, toDate)) {
             invalidDatesLabel.setVisible(true);
         }
         else {
-            //Display images
+            searchingImagesPane.setVisible(true);
             invalidDatesLabel.setVisible(false);
         }
     }
