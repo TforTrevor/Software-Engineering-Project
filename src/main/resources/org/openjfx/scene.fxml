@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXSpinner?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
+<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
    <left>
       <VBox fx:id="TabPane" alignment="CENTER" styleClass="primaryColor">
          <children>
-            <JFXButton fx:id="ViewTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="viewTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -24,7 +25,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="uploadTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Upload Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="uploadTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Upload Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -33,7 +34,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="searchTab" alignment="BASELINE_LEFT" defaultButton="true" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Search Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="searchTabButton" alignment="BASELINE_LEFT" defaultButton="true" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Search Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -42,7 +43,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="ShareTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Share Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="shareTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Share Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -51,7 +52,7 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
-            <JFXButton fx:id="settingsTab" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Settings" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="settingsTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Settings" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -66,7 +67,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="SearchPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -75,48 +76,35 @@
                               <Font size="45.0" />
                            </font>
                         </Label>
-                        <VBox alignment="CENTER">
+                        <HBox alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <Label fx:id="label11" alignment="CENTER" contentDisplay="CENTER" text="To:" textAlignment="CENTER" translateX="-15.0">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <DatePicker fx:id="ToDate" translateX="-15.0">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </DatePicker>
-                                 </children>
-                              </HBox>
-                              <Label fx:id="ToInvalid" alignment="CENTER" contentDisplay="CENTER" text="Invalid Date Format" textAlignment="CENTER" textFill="#f20000" visible="false">
+                              <Label fx:id="label1" alignment="CENTER" contentDisplay="CENTER" text="From:" textAlignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
+                              <JFXDatePicker fx:id="fromDate" styleClass="jfxPrimaryColor">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </JFXDatePicker>
                            </children>
-                        </VBox>
-                        <VBox alignment="CENTER">
+                        </HBox>
+                        <HBox alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <Label fx:id="label1" alignment="CENTER" contentDisplay="CENTER" text="From:" textAlignment="CENTER" translateX="-25.0">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <DatePicker fx:id="FromDate" translateX="-25.0" />
-                                 </children>
-                              </HBox>
-                              <Label fx:id="FromInvalid" alignment="CENTER" contentDisplay="CENTER" text="Invalid Date Format" textAlignment="CENTER" textFill="#f20000" visible="false">
+                              <Label fx:id="label11" alignment="CENTER" contentDisplay="CENTER" text="To:" textAlignment="CENTER">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
+                              <JFXDatePicker fx:id="toDate" styleClass="jfxPrimaryColor" />
                            </children>
-                        </VBox>
+                        </HBox>
+                        <Label fx:id="invalidDatesLabel" alignment="CENTER" contentDisplay="CENTER" text="Invalid Dates" textAlignment="CENTER" textFill="#f20000" visible="false">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                         <JFXButton fx:id="searchImageButton" alignment="CENTER" prefWidth="200.0" ripplerFill="WHITE" styleClass="primaryColor" text="Search" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="24.0" />
@@ -130,9 +118,37 @@
                         </JFXButton>
                      </children>
                   </VBox>
+                  <VBox fx:id="searchingImagesPane" alignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER" spacing="20.0" styleClass="backgroundColorDark">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Searching for images...." textAlignment="CENTER">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <JFXSpinner styleClass="spinnerPrimaryColor" />
+                              <JFXButton fx:id="cancelSearchButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="Cancel" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="UploadPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -159,41 +175,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="SettingsPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label text="Settings">
-                           <font>
-                              <Font size="45.0" />
-                           </font>
-                        </Label>
-                        <JFXButton fx:id="clearCacheButton" prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Clear Cache" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Connect Facebook" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </JFXButton>
-                        <JFXButton prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Email" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </JFXButton>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="CachePane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="clearCachePane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" styleClass="transparent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -239,6 +221,40 @@
                   <String fx:value="backgroundColor" />
                   <String fx:value="transparent" />
                </styleClass>
+            </AnchorPane>
+            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Settings">
+                           <font>
+                              <Font size="45.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="clearCacheButton" prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Clear Cache" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Connect Facebook" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Email" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
             </AnchorPane>
          </children>
       </AnchorPane>
