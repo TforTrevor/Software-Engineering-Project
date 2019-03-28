@@ -31,3 +31,6 @@
 .spinnerPrimaryColor .arc {
     -fx-stroke: #1976d2;
 }
+.jfxPrimaryColor {
+    -jfx-default-color: #1976d2;
+}
