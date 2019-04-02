@@ -14,20 +14,22 @@ public class SearchImages {
     private ArrayList<String> images;
     private Thread searchThread;
     private FileReader fileReader;
+    private FXMLController fxmlController;
 
     protected SearchImages() {
 
     }
 
-    private boolean CheckDate(DatePicker date) {
-        LocalDate to;
+    private boolean CheckDateValidity(DatePicker date) {
         try {
-            to = date.getValue();
-            if (to == null) {
+            if (date.getValue() == null) {
                 throw new DateTimeParseException("Invalid Date", date.toString(), 0);
             }
+            //fxmlController.WriteToConsole("Working");
+            fxmlController.WriteToConsole("Valid Date: " + date.getValue().toString());
             return true;
         } catch (DateTimeParseException e) {
+            fxmlController.WriteToConsole("Invalid Date");
             return false;
         }
     }
@@ -40,12 +42,14 @@ public class SearchImages {
     }
 
     public boolean RefreshImages(DatePicker fromDate, DatePicker toDate) {
-        if (!CheckDate(fromDate)) {
+
+        if (!CheckDateValidity(fromDate)) {
             return false;
         }
-        if (!CheckDate(toDate)) {
+        if (!CheckDateValidity(toDate)) {
             return false;
         }
+
         String stringFromDate = ConvertDateFormat(fromDate);
         String stringToDate = ConvertDateFormat(toDate);
 
@@ -80,5 +84,9 @@ public class SearchImages {
 
     public ArrayList<String> GetImages() {
         return (ArrayList<String>)images.clone();
+    }
+
+    public void SetFXMLController(FXMLController fxmlController) {
+        this.fxmlController = fxmlController;
     }
 }
