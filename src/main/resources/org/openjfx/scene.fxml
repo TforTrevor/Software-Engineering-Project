@@ -121,6 +121,11 @@
                         </JFXMasonryPane>
                      </content>
                   </ScrollPane>
+                  <StackPane fx:id="imageViewerPane" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+                     <children>
+                        <ImageView fx:id="imageViewerImageView" fitHeight="200.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </StackPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
