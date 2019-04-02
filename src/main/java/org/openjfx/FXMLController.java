@@ -6,11 +6,14 @@ import java.util.ResourceBundle;
 import java.util.Arrays;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXMasonryPane;
+import com.jfoenix.controls.JFXScrollPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -33,7 +36,13 @@ public class FXMLController implements Initializable {
     @FXML
     private BorderPane mainPane;
     @FXML
+    //VIEW IMAGES TAB
     private JFXButton viewTabButton;
+    @FXML
+    private AnchorPane viewImageTabPane;
+    @FXML
+    private ScrollPane imagesScrollPane;
+
     @FXML
     private JFXButton uploadTabButton;
 
@@ -73,6 +82,9 @@ public class FXMLController implements Initializable {
     @FXML
     private Label consoleLabel;
 
+    @FXML
+    private JFXMasonryPane imageMasonryPane;
+
     private ArrayList<String> filesArr;
     private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
@@ -84,6 +96,7 @@ public class FXMLController implements Initializable {
         System.out.println("Image loading error? " + image.isError());
         images=new ArrayList<ImageView>();
         tabPanes = new ArrayList<>(Arrays.asList(viewTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
+        viewTabButton.setOnAction(this::ViewTabAction);
         uploadTabButton.setOnAction(this::UploadTabAction);
         searchTabButton.setOnAction(this::SearchTabAction);
         searchImageButton.setOnAction(this::SearchImageButtonAction);
@@ -99,6 +112,10 @@ public class FXMLController implements Initializable {
             consoleLabel.setText(consoleLabel.getText() + System.lineSeparator());
         }
         consoleLabel.setText(consoleLabel.getText() + message);
+    }
+
+    private void ViewTabAction(ActionEvent event) {
+        ShowTab(viewImageTabPane);
     }
 
     private void UploadTabAction(ActionEvent event) {
