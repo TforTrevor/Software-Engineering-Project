@@ -2,6 +2,7 @@ package org.openjfx;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -43,6 +44,7 @@ public class ImageViewer {
     private JFXMasonryPane masonryPane;
     private StackPane imageViewerPane;
     private ImageView imageViewerImageView;
+    private JFXButton closeImageViewerButton;
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
 
     public void Initialize(FXMLController fxmlController) {
@@ -50,7 +52,12 @@ public class ImageViewer {
         masonryPane = this.fxmlController.imageMasonryPane;
         imageViewerPane = this.fxmlController.imageViewerPane;
         imageViewerImageView = this.fxmlController.imageViewerImageView;
+        closeImageViewerButton = this.fxmlController.closeImageViewerButton;
+
         imageViewerPane.setVisible(false);
+        closeImageViewerButton.setDisable(true);
+        closeImageViewerButton.setVisible(false);
+        closeImageViewerButton.setOnAction(this::CloseImage);
     }
 
     private int counter = 0;
@@ -82,9 +89,6 @@ public class ImageViewer {
     }
 
     private void OpenImage(ImageViewerImage imageViewerImage) {
-        JFXButton button = imageViewerImage.GetButton();
-        fxmlController.WriteToConsole(button.getText());
-
         Image image = imageViewerImage.GetImageView().getImage();
         imageViewerImageView.setImage(image);
 
@@ -97,6 +101,14 @@ public class ImageViewer {
         AddDropShadow(imageViewerPane);
 
         imageViewerPane.setVisible(true);
+        closeImageViewerButton.setDisable(false);
+        closeImageViewerButton.setVisible(true);
+    }
+
+    private void CloseImage(ActionEvent event) {
+        imageViewerPane.setVisible(false);
+        closeImageViewerButton.setDisable(true);
+        closeImageViewerButton.setVisible(false);
     }
 
     private void AddDropShadow(Node element) {

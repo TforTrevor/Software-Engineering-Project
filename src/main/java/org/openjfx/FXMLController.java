@@ -45,6 +45,8 @@ public class FXMLController implements Initializable {
     public StackPane imageViewerPane;
     @FXML
     public ImageView imageViewerImageView;
+    @FXML
+    public JFXButton closeImageViewerButton;
 
     @FXML
     private JFXButton uploadTabButton;

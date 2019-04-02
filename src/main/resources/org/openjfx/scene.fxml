@@ -121,6 +121,7 @@
                         </JFXMasonryPane>
                      </content>
                   </ScrollPane>
+                  <JFXButton fx:id="closeImageViewerButton" opacity="0.25" style="-fx-background-color: #000000;" styleClass="sharpButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <StackPane fx:id="imageViewerPane" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
                      <children>
                         <ImageView fx:id="imageViewerImageView" fitHeight="200.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
