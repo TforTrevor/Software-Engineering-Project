@@ -42,6 +42,8 @@ public class FXMLController implements Initializable {
     private AnchorPane viewImageTabPane;
     @FXML
     private ScrollPane imagesScrollPane;
+    @FXML
+    public JFXMasonryPane imageMasonryPane;
 
     @FXML
     private JFXButton uploadTabButton;
@@ -82,8 +84,9 @@ public class FXMLController implements Initializable {
     @FXML
     private Label consoleLabel;
 
-    @FXML
-    private JFXMasonryPane imageMasonryPane;
+
+
+    private ImageViewer imageViewer;
 
     private ArrayList<String> filesArr;
     private ArrayList<ImageView> images;
@@ -105,6 +108,9 @@ public class FXMLController implements Initializable {
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
+
+        imageViewer = new ImageViewer();
+        imageViewer.Initialize(this);
     }
 
     public void WriteToConsole(String message) {
@@ -116,6 +122,7 @@ public class FXMLController implements Initializable {
 
     private void ViewTabAction(ActionEvent event) {
         ShowTab(viewImageTabPane);
+        imageViewer.CreateImageElement();
     }
 
     private void UploadTabAction(ActionEvent event) {
