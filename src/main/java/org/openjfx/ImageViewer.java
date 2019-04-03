@@ -2,16 +2,16 @@ package org.openjfx;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -103,6 +103,8 @@ public class ImageViewer {
         imageViewerPane.setVisible(true);
         closeImageViewerButton.setDisable(false);
         closeImageViewerButton.setVisible(true);
+
+        FadeOpacity(Duration.seconds(0.5), imageViewerPane);
     }
 
     private void CloseImage(ActionEvent event) {
@@ -122,5 +124,12 @@ public class ImageViewer {
         dropShadow.setColor(Color.color(0,0,0,0.5));
 
         element.setEffect(dropShadow);
+    }
+
+    private void FadeOpacity(Duration time, Node element) {
+        FadeTransition fadeTransition = new FadeTransition(time, element);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
     }
 }
