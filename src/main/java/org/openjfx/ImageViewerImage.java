@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -26,10 +27,8 @@ class ImageViewerImage {
         checkBox = new JFXCheckBox();
 
         anchorPane.getChildren().add(vBox);
-        vBox.getChildren().add(imageView);
-        vBox.getChildren().add(imageName);
-        anchorPane.getChildren().add(button);
-        anchorPane.getChildren().add(checkBox);
+        vBox.getChildren().addAll(imageView, imageName);
+        anchorPane.getChildren().addAll(button, checkBox);
 
         vBox.setAlignment(Pos.CENTER);
         imageView.setFitWidth(225);
