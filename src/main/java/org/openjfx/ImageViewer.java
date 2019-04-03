@@ -3,46 +3,26 @@ package org.openjfx;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 class ImageViewerImage {
     private StackPane stackPane;
-    private VBox vBox;
     private ImageView imageView;
-    private Label imageName;
     private JFXButton button;
     ImageViewerImage() {
         stackPane = new StackPane();
-        vBox = new VBox();
         imageView = new ImageView();
-        imageName = new Label();
         button = new JFXButton();
 
-        stackPane.getChildren().add(vBox);
-        vBox.getChildren().add(imageView);
-        vBox.getChildren().add(imageName);
+        stackPane.getChildren().add(imageView);
         stackPane.getChildren().add(button);
-
-        vBox.setAlignment(Pos.CENTER);
-
-        imageView.setFitWidth(225);
-        imageView.setFitHeight(225);
-
-        imageName.setPadding(new Insets(5, 0, 0, 0));
-
-        button.setPrefSize(256, 256);
     }
     StackPane GetStackPane() {
         return stackPane;
@@ -50,7 +30,6 @@ class ImageViewerImage {
     ImageView GetImageView() {
         return imageView;
     }
-    Label GetImageName() { return imageName; }
     JFXButton GetButton() {
         return button;
     }
@@ -78,20 +57,21 @@ public class ImageViewer {
     }
 
     public void CreateImageElement() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
-        File file = new File(classLoader.getResource("ani2.png").getFile());
-        Image image = new Image(inputStream);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream file = classloader.getResourceAsStream("ani2.png");
+        Image image = new Image(file);
 
         ImageViewerImage imageViewerImage = new ImageViewerImage();
         imageViewerImages.add(imageViewerImage);
 
         imageViewerImage.GetImageView().setImage(image);
+        imageViewerImage.GetImageView().setFitWidth(256);
+        imageViewerImage.GetImageView().setFitHeight(256);
         imageViewerImage.GetImageView().setPreserveRatio(true);
         imageViewerImage.GetImageView().setSmooth(true);
 
-        imageViewerImage.GetImageName().setText(file.getName());
-
+        imageViewerImage.GetButton().setPrefWidth(266);
+        imageViewerImage.GetButton().setPrefHeight(266);
         imageViewerImage.GetButton().getStyleClass().add("sharpButton");
         imageViewerImage.GetButton().setRipplerFill(Color.color(1,1,1));
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
@@ -115,7 +95,7 @@ public class ImageViewer {
         closeImageViewerButton.setDisable(false);
         closeImageViewerButton.setVisible(true);
 
-        JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
+        JavaFXHelper.FadeOpacity(Duration.seconds(0.25), imageViewerPane);
     }
 
     private void CloseImage(ActionEvent event) {
