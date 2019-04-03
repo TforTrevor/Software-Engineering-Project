@@ -2,11 +2,7 @@ package org.openjfx;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -60,8 +56,6 @@ public class ImageViewer {
         closeImageViewerButton.setOnAction(this::CloseImage);
     }
 
-    private int counter = 0;
-
     public void CreateImageElement() {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream file = classloader.getResourceAsStream("ani2.png");
@@ -78,12 +72,11 @@ public class ImageViewer {
 
         imageViewerImage.GetButton().setPrefWidth(266);
         imageViewerImage.GetButton().setPrefHeight(266);
-        imageViewerImage.GetButton().setText(Integer.toString(counter++));
         imageViewerImage.GetButton().getStyleClass().add("sharpButton");
         imageViewerImage.GetButton().setRipplerFill(Color.color(1,1,1));
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
 
-        AddDropShadow(imageViewerImage.GetImageView());
+        JavaFXHelper.AddDropShadow(imageViewerImage.GetImageView());
 
         masonryPane.getChildren().add(imageViewerImage.GetStackPane());
     }
@@ -95,41 +88,19 @@ public class ImageViewer {
         imageViewerPane.setMinSize(0, 0);
         imageViewerImageView.fitWidthProperty().bind(imageViewerPane.widthProperty());
         imageViewerImageView.fitHeightProperty().bind(imageViewerPane.heightProperty());
-        fxmlController.WriteToConsole(Double.toString(imageViewerImageView.getFitWidth()));
-        fxmlController.WriteToConsole(Double.toString(imageViewerImageView.getFitHeight()));
 
-        AddDropShadow(imageViewerPane);
+        JavaFXHelper.AddDropShadow(imageViewerPane);
 
         imageViewerPane.setVisible(true);
         closeImageViewerButton.setDisable(false);
         closeImageViewerButton.setVisible(true);
 
-        FadeOpacity(Duration.seconds(0.5), imageViewerPane);
+        JavaFXHelper.FadeOpacity(Duration.seconds(0.25), imageViewerPane);
     }
 
     private void CloseImage(ActionEvent event) {
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
-    }
-
-    private void AddDropShadow(Node element) {
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setBlurType(BlurType.GAUSSIAN);
-        dropShadow.setWidth(20);
-        dropShadow.setHeight(20);
-        dropShadow.setRadius(10);
-        dropShadow.setOffsetX(2.5);
-        dropShadow.setOffsetY(2.5);
-        dropShadow.setColor(Color.color(0,0,0,0.5));
-
-        element.setEffect(dropShadow);
-    }
-
-    private void FadeOpacity(Duration time, Node element) {
-        FadeTransition fadeTransition = new FadeTransition(time, element);
-        fadeTransition.setFromValue(0);
-        fadeTransition.setToValue(1);
-        fadeTransition.play();
     }
 }
