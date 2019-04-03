@@ -10,6 +10,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ImageViewer {
@@ -33,11 +34,30 @@ public class ImageViewer {
         closeImageViewerButton.setOnAction(this::CloseImage);
     }
 
-    public void CreateImageElement() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
-        File file = new File(classLoader.getResource("ani2.png").getFile());
-        Image image = new Image(inputStream);
+    public void LoadImages() {
+        //SearchImages searchImages = new SearchImages();
+        //ArrayList<String> imageList = searchImages.GetImages();
+        //imageList.clear();
+        ArrayList<String> imageList = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            imageList.add("C:/Users/Trevor/Desktop/ani2.png");
+        }
+        for (int i = 0; i < imageList.size(); i++) {
+            CreateImageElement(imageList.get(i));
+        }
+        //CreateImageElement("C:/Users/Trevor/Desktop/ani2.png");
+    }
+
+    public void CreateImageElement(String filePath) {
+        //RESOURCES FOLDER
+//        ClassLoader classLoader = getClass().getClassLoader();
+//        InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
+//        File file = new File(classLoader.getResource("ani2.png").getFile());
+//        Image image = new Image(inputStream);
+
+        //DIRECT FILE PATH
+        File file = new File(filePath);
+        Image image = new Image(file.toURI().toString());
 
         ImageViewerImage imageViewerImage = new ImageViewerImage();
         imageViewerImages.add(imageViewerImage);

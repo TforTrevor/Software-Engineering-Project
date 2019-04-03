@@ -125,7 +125,7 @@ public class FXMLController implements Initializable {
 
     private void ViewTabAction(ActionEvent event) {
         ShowTab(viewImageTabPane);
-        imageViewer.CreateImageElement();
+        imageViewer.LoadImages();
     }
 
     private void UploadTabAction(ActionEvent event) {
