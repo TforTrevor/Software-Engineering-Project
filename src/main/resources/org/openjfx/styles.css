@@ -34,6 +34,9 @@
 .jfxPrimaryColor {
     -jfx-default-color: #1976d2;
 }
+.jfx-check-box {
+     -jfx-checked-color: #1976d2;
+}
 
 
 /*******************************************************************************

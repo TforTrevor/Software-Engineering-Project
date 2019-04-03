@@ -3,63 +3,14 @@ package org.openjfx;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
-
-class ImageViewerImage {
-    private StackPane stackPane;
-    private VBox vBox;
-    private ImageView imageView;
-    private Label imageName;
-    private JFXButton button;
-    ImageViewerImage() {
-        stackPane = new StackPane();
-        vBox = new VBox();
-        imageView = new ImageView();
-        imageName = new Label();
-        button = new JFXButton();
-
-        stackPane.getChildren().add(vBox);
-        vBox.getChildren().add(imageView);
-        vBox.getChildren().add(imageName);
-        stackPane.getChildren().add(button);
-
-        vBox.setAlignment(Pos.CENTER);
-        imageView.setFitWidth(225);
-        imageView.setFitHeight(225);
-        imageName.setPadding(new Insets(5, 0, 0, 0));
-        button.setPrefSize(256, 256);
-
-        imageView.setPreserveRatio(true);
-        imageView.setSmooth(true);
-        button.getStyleClass().add("sharpButton");
-        button.setRipplerFill(Color.color(1,1,1));
-        JavaFXHelper.AddDropShadow(imageView);
-    }
-    StackPane GetStackPane() {
-        return stackPane;
-    }
-    ImageView GetImageView() {
-        return imageView;
-    }
-    Label GetImageName() {
-        return imageName;
-    }
-    JFXButton GetButton() {
-        return button;
-    }
-}
 
 public class ImageViewer {
     private FXMLController fxmlController;
@@ -95,7 +46,7 @@ public class ImageViewer {
         imageViewerImage.GetImageName().setText(file.getName());
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
 
-        masonryPane.getChildren().add(imageViewerImage.GetStackPane());
+        masonryPane.getChildren().add(imageViewerImage.GetAnchorPane());
     }
 
     private void OpenImage(ImageViewerImage imageViewerImage) {

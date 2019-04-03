@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
 <?import com.jfoenix.controls.JFXSpinner?>
@@ -79,9 +80,21 @@
                      <content>
                         <JFXMasonryPane fx:id="imageMasonryPane" HSpacing="10.0" VSpacing="10.0" cellHeight="256.0" cellWidth="256.0" styleClass="backgroundColor">
                            <children>
-                              <StackPane>
+                              <StackPane layoutX="20.0" layoutY="20.0">
                                  <children>
-                                    <VBox alignment="CENTER">
+                                    <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Desktop/Capture.PNG" />
+                                       </image>
+                                       <effect>
+                                          <DropShadow blurType="GAUSSIAN" color="#00000080" height="20.0" offsetX="2.5" offsetY="2.5" radius="9.5" width="20.0" />
+                                       </effect>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <AnchorPane>
+                                 <children>
+                                    <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <ImageView fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -92,37 +105,19 @@
                                              </effect>
                                           </ImageView>
                                           <Label text="ani2">
-                                             <VBox.margin>
-                                                <Insets top="5.0" />
-                                             </VBox.margin>
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <JFXButton alignment="CENTER" prefHeight="256.0" prefWidth="256.0" ripplerFill="WHITE" styleClass="sharpButton">
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
-                                    </JFXButton>
+                                    <JFXButton alignment="CENTER" ripplerFill="WHITE" styleClass="sharpButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <JFXCheckBox alignment="CENTER" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                                  </children>
-                              </StackPane>
-                              <StackPane layoutX="20.0" layoutY="20.0">
-                                 <children>
-                                    <ImageView fitHeight="246.0" fitWidth="246.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../../../../../../../Desktop/Capture.PNG" />
-                                       </image>
-                                       <effect>
-                                          <DropShadow blurType="GAUSSIAN" color="#00000080" height="20.0" offsetX="2.5" offsetY="2.5" radius="9.5" width="20.0" />
-                                       </effect>
-                                    </ImageView>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </StackPane>
+                              </AnchorPane>
                            </children>
                            <padding>
                               <Insets bottom="50.0" left="10.0" right="10.0" top="10.0" />
