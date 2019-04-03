@@ -36,13 +36,16 @@ class ImageViewerImage {
         stackPane.getChildren().add(button);
 
         vBox.setAlignment(Pos.CENTER);
-
         imageView.setFitWidth(225);
         imageView.setFitHeight(225);
-
         imageName.setPadding(new Insets(5, 0, 0, 0));
-
         button.setPrefSize(256, 256);
+
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        button.getStyleClass().add("sharpButton");
+        button.setRipplerFill(Color.color(1,1,1));
+        JavaFXHelper.AddDropShadow(imageView);
     }
     StackPane GetStackPane() {
         return stackPane;
@@ -50,7 +53,9 @@ class ImageViewerImage {
     ImageView GetImageView() {
         return imageView;
     }
-    Label GetImageName() { return imageName; }
+    Label GetImageName() {
+        return imageName;
+    }
     JFXButton GetButton() {
         return button;
     }
@@ -87,16 +92,8 @@ public class ImageViewer {
         imageViewerImages.add(imageViewerImage);
 
         imageViewerImage.GetImageView().setImage(image);
-        imageViewerImage.GetImageView().setPreserveRatio(true);
-        imageViewerImage.GetImageView().setSmooth(true);
-
         imageViewerImage.GetImageName().setText(file.getName());
-
-        imageViewerImage.GetButton().getStyleClass().add("sharpButton");
-        imageViewerImage.GetButton().setRipplerFill(Color.color(1,1,1));
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
-
-        JavaFXHelper.AddDropShadow(imageViewerImage.GetImageView());
 
         masonryPane.getChildren().add(imageViewerImage.GetStackPane());
     }
