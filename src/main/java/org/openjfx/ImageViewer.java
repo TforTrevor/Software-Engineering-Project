@@ -24,6 +24,7 @@ public class ImageViewer {
     private StackPane imageViewerPane;
     private ImageView imageViewerImageView;
     private JFXButton closeImageViewerButton;
+    ArrayList<String> imageList = new ArrayList<>();
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
     private Thread hideImagesThread;
 
@@ -41,6 +42,13 @@ public class ImageViewer {
         closeImageViewerButton.setOnAction(this::CloseImage);
 
         hideImagesThread = new Thread();
+
+        JFXButton button = new JFXButton();
+        button.setOnAction(this::CreateImages);
+        button.setPrefSize(256, 256);
+        button.getStyleClass().add("primaryColor");
+        button.setText("Create 100 Images");
+        masonryPane.getChildren().add(button);
     }
 
     private void HideOffScreenImages() {
@@ -87,14 +95,17 @@ public class ImageViewer {
         }
     }
 
+    private void CreateImages(ActionEvent event) {
+        for (int i = 0; i < 100; i++) {
+            imageList.add("C:/Users/Trevor/Desktop/ani2.png");
+        }
+        LoadImages();
+    }
+
     public void LoadImages() {
         //SearchImages searchImages = new SearchImages();
         //ArrayList<String> imageList = searchImages.GetImages();
         //imageList.clear();
-        ArrayList<String> imageList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            imageList.add("C:/Users/Trevor/Desktop/ani2.png");
-        }
         Thread imageThread = new Thread(() -> {
             for (int i = 0; i < imageList.size(); i++) {
                 //RESOURCES FOLDER
@@ -108,7 +119,6 @@ public class ImageViewer {
                 ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
                 Platform.runLater(() -> {
                     masonryPane.getChildren().add(imageViewerImage.GetAnchorPane());
-                    fxmlController.WriteToConsole("Hello");
                 });
             }
         });
