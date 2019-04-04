@@ -10,24 +10,22 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ImageViewer {
     private FXMLController fxmlController;
     private ScrollPane scrollPane;
+    private Bounds scrollBounds;
     private JFXMasonryPane masonryPane;
     private StackPane imageViewerPane;
     private ImageView imageViewerImageView;
     private JFXButton closeImageViewerButton;
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
-    private boolean showImages = true;
+    private Thread hideImagesThread;
 
     public void Initialize(FXMLController fxmlController) {
         this.fxmlController = fxmlController;
@@ -42,53 +40,51 @@ public class ImageViewer {
         closeImageViewerButton.setVisible(false);
         closeImageViewerButton.setOnAction(this::CloseImage);
 
-        JFXButton button = new JFXButton();
-        button.getStyleClass().addAll("sharpButton", "primaryColor");
-        masonryPane.getChildren().addAll(button);
-        button.setOnAction(this::ToggleHideImages);
+        hideImagesThread = new Thread();
     }
 
-    private void ToggleHideImages(ActionEvent event) {
-        showImages = !showImages;
-//        for (int i = 0; i < imageViewerImages.size(); i++) {
-//            ImageView image = imageViewerImages.get(i).GetImageView();
-//            image.setVisible(showImages);
-//        }
-        fxmlController.WriteToConsole(Boolean.toString(showImages));
-        Thread hideImagesThread = new Thread(() -> {
-            while (masonryPane.isVisible() && !showImages) {
-                for (int i = 0; i < imageViewerImages.size(); i++) {
-                    final int num = i;
-                    AnchorPane anchorPane = imageViewerImages.get(i).GetAnchorPane();
-                    ImageView imageView = imageViewerImages.get(i).GetImageView();
-                    Bounds scrollBounds = scrollPane.localToScene(scrollPane.getBoundsInParent());
-                    Bounds nodeBounds = anchorPane.localToScene(anchorPane.getBoundsInLocal());
-                    if (scrollBounds.intersects(nodeBounds)) {
-                        if (!imageView.isVisible()) {
-                            Platform.runLater(() -> {
-                                imageView.setVisible(true);
-                                fxmlController.WriteToConsole("Showing image " + num);
-                            });
-
-                        }
-                    }
-                    else {
-                        if (imageView.isVisible()) {
-                            Platform.runLater(() -> {
-                                imageView.setVisible(false);
-                            });
-                        }
-                    }
+    private void HideOffScreenImages() {
+        if (!hideImagesThread.isAlive()) {
+            scrollBounds = scrollPane.localToScene(scrollPane.getBoundsInParent());
+            hideImagesThread = new Thread(() -> {
+                double scrollProgress = scrollPane.getVvalue();
+                double prevScrollProgress = scrollProgress;
+                while (masonryPane.isVisible()) {
                     try {
-                        Thread.sleep(5);
+                        prevScrollProgress = scrollProgress;
+                        scrollProgress = scrollPane.getVvalue();
+                        if (scrollProgress != prevScrollProgress) {
+                            final int count = imageViewerImages.size();
+                            for (int i = 0; i < count; i++) {
+                                AnchorPane anchorPane = imageViewerImages.get(i).GetAnchorPane();
+                                ImageView imageView = imageViewerImages.get(i).GetImageView();
+                                Bounds nodeBounds = anchorPane.localToScene(anchorPane.getBoundsInLocal());
+                                if (scrollBounds.intersects(nodeBounds)) {
+                                    if (!imageView.isVisible()) {
+                                        Platform.runLater(() -> {
+                                            imageView.setVisible(true);
+                                        });
+                                        Thread.sleep(5);
+                                    }
+                                } else {
+                                    if (imageView.isVisible()) {
+                                        Platform.runLater(() -> {
+                                            imageView.setVisible(false);
+                                        });
+                                        Thread.sleep(5);
+                                    }
+                                }
+                            }
+                        }
+                        Thread.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-            }
-        });
-        hideImagesThread.setDaemon(true);
-        hideImagesThread.start();
+            });
+            hideImagesThread.setDaemon(true);
+            hideImagesThread.start();
+        }
     }
 
     public void LoadImages() {
@@ -109,21 +105,18 @@ public class ImageViewer {
                 //DIRECT FILE PATH
                 //File file = new File(imageList.get(i));
                 //Image image = new Image(file.toURI().toString());
+                ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
                 Platform.runLater(() -> {
-                    CreateImageElement(image, file.getName());
+                    masonryPane.getChildren().add(imageViewerImage.GetAnchorPane());
                 });
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
         });
         imageThread.setDaemon(true);
         imageThread.start();
+        HideOffScreenImages();
     }
 
-    public void CreateImageElement(Image image, String name) {
+    public ImageViewerImage CreateImageElement(Image image, String name) {
         ImageViewerImage imageViewerImage = new ImageViewerImage();
         imageViewerImages.add(imageViewerImage);
 
@@ -131,8 +124,7 @@ public class ImageViewer {
         imageViewerImage.GetImageName().setText(name);
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
 
-        masonryPane.getChildren().add(imageViewerImage.GetAnchorPane());
-
+        return imageViewerImage;
         //fxmlController.WriteToConsole(Boolean.toString(imageViewerImage.GetImageView().isCache()));
     }
 

@@ -51,6 +51,7 @@ class ImageViewerImage {
 
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
+        imageView.setVisible(true);
         button.getStyleClass().add("sharpButton");
         button.setRipplerFill(Color.color(1,1,1));
         JavaFXHelper.AddDropShadow(imageView);
