@@ -108,6 +108,7 @@ public class ImageViewer {
                 ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
                 Platform.runLater(() -> {
                     masonryPane.getChildren().add(imageViewerImage.GetAnchorPane());
+                    fxmlController.WriteToConsole("Hello");
                 });
             }
         });

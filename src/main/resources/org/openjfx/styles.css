@@ -23,6 +23,7 @@
     -fx-background-color: #FFFFFF;
 }
 .backgroundColorDark {
+    -fx-background: #E1E2E1;
     -fx-background-color: #E1E2E1;
 }
 .transparent {

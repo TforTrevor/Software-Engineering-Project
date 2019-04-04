@@ -17,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 public class FXMLController implements Initializable {
 
@@ -85,7 +86,7 @@ public class FXMLController implements Initializable {
     private JFXButton clearCacheDenyButton;
 
     @FXML
-    private Label consoleLabel;
+    private Text consoleLabel;
 
 
 
