@@ -68,8 +68,6 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton settingsTabButton;
     @FXML
-    private AnchorPane viewTabPane;
-    @FXML
     private AnchorPane uploadTabPane;
     @FXML
     private AnchorPane shareTabPane;
@@ -101,7 +99,7 @@ public class FXMLController implements Initializable {
         Image image = new Image("file:"+"C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
         System.out.println("Image loading error? " + image.isError());
         images=new ArrayList<ImageView>();
-        tabPanes = new ArrayList<>(Arrays.asList(viewTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
+        tabPanes = new ArrayList<>(Arrays.asList(uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
         viewTabButton.setOnAction(this::ViewTabAction);
         uploadTabButton.setOnAction(this::UploadTabAction);
         searchTabButton.setOnAction(this::SearchTabAction);
