@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Arrays;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXMasonryPane;
-import com.jfoenix.controls.JFXScrollPane;
+import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -87,6 +85,12 @@ public class FXMLController implements Initializable {
 
     @FXML
     private JFXButton sendEmailButton;
+    @FXML
+    private JFXTextField subjectTextField;
+    @FXML
+    private JFXTextField recipientTextField;
+    @FXML
+    private JFXTextArea bodyTextArea;
 
     private ImageViewer imageViewer;
 
@@ -94,6 +98,8 @@ public class FXMLController implements Initializable {
     private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
     private SearchImages searchImages = new SearchImages();
+
+    private EmailHelper emailHelper;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -113,6 +119,7 @@ public class FXMLController implements Initializable {
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
         imageViewer = new ImageViewer();
         imageViewer.Initialize(this);
+        emailHelper = new EmailHelper();
     }
 
     public void WriteToConsole(String message) {
@@ -155,10 +162,13 @@ public class FXMLController implements Initializable {
     }
 
     private void SendEmailButtonAction(ActionEvent event) {
-        EmailHelper emailHelper = new EmailHelper();
-        emailHelper.AddRecipient("bgodbout2014@fau.edu");
-        emailHelper.SetSubject("First Try");
-        emailHelper.SetBody("WOOHOO");
+        String recipients = recipientTextField.getText();
+        String[] parsedRecipients=recipients.split(",");
+        for (String s: parsedRecipients) {
+            emailHelper.AddRecipient(s);
+        }
+        emailHelper.SetSubject(subjectTextField.getText());
+        emailHelper.SetBody(bodyTextArea.getText());
         emailHelper.SendEmail();
         emailHelper.ClearRecipients();
     }
