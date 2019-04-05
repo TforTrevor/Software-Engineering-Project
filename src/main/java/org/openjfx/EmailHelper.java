@@ -1,8 +1,13 @@
 package org.openjfx;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.activation.DataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
@@ -56,8 +61,22 @@ public class EmailHelper {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(s));
             }
             message.setSubject(subject);
-            message.setText(body);
             message.setSentDate(new Date());
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            ((MimeBodyPart) messageBodyPart).setText(body);
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            BodyPart attachmentBodyPart = new MimeBodyPart();
+            DataSource image = new FileDataSource("C:\\Users\\godbo\\IdeaProjects\\Software-Engineering-Project\\src\\main\\resources\\ani2.png");
+            attachmentBodyPart.setDataHandler(new DataHandler(image));
+            attachmentBodyPart.setFileName("sheenLUL.png");
+            multipart.addBodyPart(attachmentBodyPart);
+
+            message.setContent(multipart);
+
             Transport.send(message);
             System.out.println("Sent successfully");
         } catch (Exception e) {
