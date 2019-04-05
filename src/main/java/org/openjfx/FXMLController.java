@@ -85,7 +85,8 @@ public class FXMLController implements Initializable {
     @FXML
     private Label consoleLabel;
 
-
+    @FXML
+    private JFXButton sendEmailButton;
 
     private ImageViewer imageViewer;
 
@@ -109,7 +110,7 @@ public class FXMLController implements Initializable {
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
-
+        sendEmailButton.setOnAction(this::SendEmailButtonAction);
         imageViewer = new ImageViewer();
         imageViewer.Initialize(this);
     }
@@ -151,6 +152,15 @@ public class FXMLController implements Initializable {
         filesArr = searchImages.GetImages();
         searchImageButton.setDisable(false);
         searchingImagesPane.setVisible(false);
+    }
+
+    private void SendEmailButtonAction(ActionEvent event) {
+        EmailHelper emailHelper = new EmailHelper();
+        emailHelper.AddRecipient("bgodbout2014@fau.edu");
+        emailHelper.SetSubject("First Try");
+        emailHelper.SetBody("WOOHOO");
+        emailHelper.SendEmail();
+        emailHelper.ClearRecipients();
     }
 
     private void SettingsTabAction(ActionEvent event) {

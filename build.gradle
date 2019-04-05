@@ -1,7 +1,6 @@
 buildscript {
     dependencies {
         classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
-        classpath group: 'javax.mail', name: 'mail', version: '1.4.7'
     }
 
     repositories {
@@ -24,6 +23,7 @@ dependencies{
     // when using OpenJFX (Ubuntu), please adjust accordingly
     // compile files("/usr/share/java/openjfx/lib/packager.jar")
     compile 'com.jfoenix:jfoenix:8.0.8'
+    compile 'javax.mail:mail:1.4.7'
 }
 
 apply plugin: 'javafx-gradle-plugin'

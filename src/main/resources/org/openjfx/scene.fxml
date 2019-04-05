@@ -325,6 +325,15 @@
                <children>
                   <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
+                        <HBox alignment="CENTER" prefHeight="45.0" prefWidth="530.0">
+                           <children>
+                              <Label text="Share">
+                                 <font>
+                                    <Font size="45.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
                               <JFXTextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="211.0" promptText="Recipients' e-mail" styleClass="textFieldBackground" />
@@ -340,7 +349,10 @@
                               <JFXTextArea promptText="Message Body" styleClass="textFieldBackground" />
                            </children>
                         </HBox>
-                        <JFXButton prefHeight="31.0" prefWidth="122.0" styleClass="primaryColor" text="Share" />
+                        <JFXButton fx:id="sendEmailButton" prefHeight="31.0" prefWidth="122.0" styleClass="primaryColor" text="Share">
+                           <font>
+                              <Font size="24.0" />
+                           </font></JFXButton>
                      </children>
                   </VBox>
                </children>
