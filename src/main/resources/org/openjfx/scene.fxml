@@ -321,9 +321,9 @@
                </children>
             </AnchorPane>
             <AnchorPane fx:id="shareTabPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <AnchorPane fx:id="emailPane" prefHeight="200.0" prefWidth="630.0" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="125.0">
+            <AnchorPane fx:id="emailPane" layoutX="32.0" layoutY="-41.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="CENTER" layoutX="215.0" layoutY="207.0" prefHeight="463.0" prefWidth="565.0" spacing="20.0" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="157.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="45.0" prefWidth="530.0">
                            <children>
@@ -346,13 +346,19 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT">
                            <children>
-                              <JFXTextArea fx:id="bodyTextArea" promptText="Message Body" styleClass="textFieldBackground" />
+                              <JFXTextArea fx:id="bodyTextArea" prefHeight="64.0" prefWidth="380.0" promptText="Message Body" styleClass="textFieldBackground" />
                            </children>
                         </HBox>
                         <JFXButton fx:id="sendEmailButton" prefHeight="31.0" prefWidth="122.0" styleClass="primaryColor" text="Share">
                            <font>
                               <Font size="24.0" />
-                           </font></JFXButton>
+                           </font>
+                        </JFXButton>
+                        <Label fx:id="emailLabel" text="Invald Emails" textFill="RED" visible="false">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
                      </children>
                   </VBox>
                </children>
