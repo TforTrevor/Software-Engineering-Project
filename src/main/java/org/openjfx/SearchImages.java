@@ -36,9 +36,9 @@ public class SearchImages {
 
     private String ConvertDateFormat(DatePicker date) {
         Format format = new SimpleDateFormat("MM/dd/yyyy");
-        //toDate.getvalue returns yyyy/mm/dd
-        java.util.Date tempTo = java.sql.Date.valueOf(date.getValue());
-        return format.format(tempTo);
+        //date.getvalue returns yyyy/mm/dd
+        java.util.Date tempDate = java.sql.Date.valueOf(date.getValue());
+        return format.format(tempDate);
     }
 
     public boolean RefreshImages(DatePicker fromDate, DatePicker toDate) {
