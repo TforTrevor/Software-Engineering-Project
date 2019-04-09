@@ -117,8 +117,10 @@ public class ImageViewer {
                 //File file = new File(imageList.get(i));
                 //Image image = new Image(file.toURI().toString());
                 ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
+                AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
+                imageViewerImages.add(imageViewerImage);
                 Platform.runLater(() -> {
-                    masonryPane.getChildren().add(imageViewerImage.GetAnchorPane());
+                    masonryPane.getChildren().add(imageAnchorPane);
                 });
             }
         });
@@ -129,7 +131,6 @@ public class ImageViewer {
 
     public ImageViewerImage CreateImageElement(Image image, String name) {
         ImageViewerImage imageViewerImage = new ImageViewerImage();
-        imageViewerImages.add(imageViewerImage);
 
         imageViewerImage.GetImageView().setImage(image);
         imageViewerImage.GetImageName().setText(name);
