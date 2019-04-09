@@ -45,9 +45,7 @@ public class FileReader {
             if (runThread) {
                 try {
                     if (file.isDirectory()) {
-                        if(!file.getAbsolutePath().contains("Downloads")) {
-                            filesInFolder(file);
-                        }
+                        filesInFolder(file);
                     } else if (file.getName().toLowerCase().contains(".jpg") || file.getName().toLowerCase().contains(".png")) {
                         Path file2 = Paths.get(file.getAbsolutePath());
                         BasicFileAttributes attr = Files.readAttributes(file2, BasicFileAttributes.class);
