@@ -16,16 +16,21 @@ public class EmailHelper {
     private String from;
     private String subject;
     private String body;
-    private String host;
     private Properties props;
     private Session session;
 
     public EmailHelper() {
+        images = new ArrayList<>();
+        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\dragon_fire.jpg"));
+        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\momoyaz.png"));
+        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\scorbunnyHop.png"));
+        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\deep.png"));
+        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\maxresdefault.jpg"));
+        //images.add(new File("D:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\datapc64_merged_bnk_textures3.forge"));
         to = new ArrayList<>();
         from = "oldtimerimagefinder@gmail.com";
-        host = "smtp.gmail.com";
         props = System.getProperties();
-        props.setProperty("mail.smtp.host", host);
+        props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.port", "465");
@@ -56,14 +61,13 @@ public class EmailHelper {
             InternetAddress newAddress = new InternetAddress(address);
             newAddress.validate();
             isValid = true;
-        } catch (AddressException aex) {
-            System.out.println("Invalid email");
-        }
+        } catch (AddressException aex) {}
         return isValid;
     }
 
-    public void ClearRecipients() {
+    public void ClearAll() {
         to.clear();
+        images.clear();
     }
 
     public void SetBody(String message) {
@@ -76,6 +80,8 @@ public class EmailHelper {
 
     public void SendEmail() {
         try {
+            int imagesAttached = 0;
+            int imageBytes=0;
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             for (InternetAddress address : to) {
@@ -90,19 +96,38 @@ public class EmailHelper {
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
 
-//            for (File f : images) {
-//                BodyPart attachmentBodyPart = new MimeBodyPart();
-//                //DataSource image = new FileDataSource("C:\\Users\\godbo\\IdeaProjects\\Software-Engineering-Project\\src\\main\\resources\\ani2.png");
-//                DataSource image = new FileDataSource(f);
-//                attachmentBodyPart.setDataHandler(new DataHandler(image));
-//                attachmentBodyPart.setFileName("sheenLUL.png");
-//                multipart.addBodyPart(attachmentBodyPart);
-//            }
-
+            for (File f : images) {
+                imageBytes += f.length();
+                System.out.println("IMAGE LENGTH: "+f.length());
+                //Max gmail size is 25 MB, rounded to 1000000B=1MB to account for encoding and convenience
+                if (imageBytes < 25000000) {
+                    imagesAttached+=1;
+                    System.out.println(imagesAttached);
+                    BodyPart attachmentBodyPart = new MimeBodyPart();
+                    DataSource image = new FileDataSource(f);
+                    attachmentBodyPart.setDataHandler(new DataHandler(image));
+                    attachmentBodyPart.setFileName(f.getName());
+                    multipart.addBodyPart(attachmentBodyPart);
+                }
+                else {
+                    break;
+                }
+            }
+            for (int i=0;i<imagesAttached;i++) {
+                images.remove(0);
+            }
             message.setContent(multipart);
 
-            Transport.send(message);
             System.out.println("Sent successfully");
+            if (imagesAttached>0) {
+                Transport.send(message);
+            }
+            else {
+                images.remove(0);
+            }
+            if (images.size()>0) {
+                SendEmail();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

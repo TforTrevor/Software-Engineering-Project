@@ -321,7 +321,7 @@
                </children>
             </AnchorPane>
             <AnchorPane fx:id="shareTabPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <AnchorPane fx:id="emailPane" layoutX="32.0" layoutY="-41.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="emailPane" layoutX="32.0" layoutY="-41.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" layoutX="215.0" layoutY="207.0" prefHeight="463.0" prefWidth="565.0" spacing="20.0" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="157.0">
                      <children>

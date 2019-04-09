@@ -182,7 +182,7 @@ public class FXMLController implements Initializable {
             emailHelper.SetSubject(subjectTextField.getText());
             emailHelper.SetBody(bodyTextArea.getText());
             emailHelper.SendEmail();
-            emailHelper.ClearRecipients();
+            emailHelper.ClearAll();
             emailLabel.setTextFill(Color.web("#000000"));
             emailLabel.setText("Sent Successfully");
             emailLabel.setVisible(true);
