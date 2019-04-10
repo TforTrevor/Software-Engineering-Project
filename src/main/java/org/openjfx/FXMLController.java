@@ -25,34 +25,31 @@ import java.util.ResourceBundle;
 public class FXMLController implements Initializable {
 
     @FXML
-    public JFXMasonryPane imageMasonryPane;
-    @FXML
-    public StackPane imageViewerPane;
-    @FXML
-    public ImageView imageViewerImageView;
-    @FXML
-    public JFXButton closeImageViewerButton;
-    @FXML
-    private Label label;
-    @FXML
-    private Label invalidDatesLabel;
-    @FXML
-    private DatePicker toDate;
-    @FXML
-    private DatePicker fromDate;
-    @FXML
-    private VBox TabPane;
-    @FXML
     private BorderPane mainPane;
     @FXML
+    private VBox tabPane;
+
     //VIEW IMAGES TAB
+    @FXML
     private JFXButton viewTabButton;
     @FXML
-    public AnchorPane viewImageTabPane;
+    private AnchorPane viewImageTabPane;
     @FXML
     public ScrollPane imagesScrollPane;
     @FXML
     private JFXButton uploadTabButton;
+    @FXML
+    JFXMasonryPane imageMasonryPane;
+    @FXML
+    StackPane imageViewerPane;
+    @FXML
+    ImageView imageViewerImageView;
+    @FXML
+    JFXButton closeImageViewerButton;
+
+    //UPLOAD TAB
+    @FXML
+    private AnchorPane uploadTabPane;
 
     //SEARCH TAB
     @FXML
@@ -65,15 +62,32 @@ public class FXMLController implements Initializable {
     private JFXButton searchImageButton;
     @FXML
     private JFXButton cancelSearchButton;
+    @FXML
+    private DatePicker toDate;
+    @FXML
+    private DatePicker fromDate;
+    @FXML
+    private Label invalidDatesLabel;
 
+    //SHARE TAB
     @FXML
     private JFXButton shareTabButton;
     @FXML
-    private JFXButton settingsTabButton;
-    @FXML
-    private AnchorPane uploadTabPane;
-    @FXML
     private AnchorPane shareTabPane;
+    @FXML
+    private JFXButton sendEmailButton;
+    @FXML
+    private JFXTextField subjectTextField;
+    @FXML
+    private JFXTextField recipientTextField;
+    @FXML
+    private JFXTextArea bodyTextArea;
+    @FXML
+    private Label emailLabel;
+
+    //SETTINGS TAB
+    @FXML
+    private JFXButton settingsTabButton;
     @FXML
     private AnchorPane settingsTabPane;
     @FXML
@@ -87,18 +101,6 @@ public class FXMLController implements Initializable {
 
     @FXML
     private Text consoleLabel;
-
-    @FXML
-    private JFXButton sendEmailButton;
-    @FXML
-    private JFXTextField subjectTextField;
-    @FXML
-    private JFXTextField recipientTextField;
-    @FXML
-    private JFXTextArea bodyTextArea;
-    @FXML
-    private Label emailLabel;
-
     private ImageViewer imageViewer;
 
     private ArrayList<String> filesArr;
@@ -113,40 +115,34 @@ public class FXMLController implements Initializable {
         Image image = new Image("file:" + "C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
         System.out.println("Image loading error? " + image.isError());
         images = new ArrayList<ImageView>();
-        tabPanes = new ArrayList<>(Arrays.asList(uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
-        viewTabButton.setOnAction(this::ViewTabAction);
-        uploadTabButton.setOnAction(this::UploadTabAction);
-        searchTabButton.setOnAction(this::SearchTabAction);
+        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
+        //VIEW IMAGES TAB
+        viewTabButton.setOnAction((event) -> ShowTab(viewImageTabPane));
+        //UPLOAD TAB
+        uploadTabButton.setOnAction((event) -> ShowTab(uploadTabPane));
+        //SEARCH TAB
+        searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         searchImageButton.setOnAction(this::SearchImageButtonAction);
         cancelSearchButton.setOnAction(this::CancelSearchButtonAction);
-        settingsTabButton.setOnAction(this::SettingsTabAction);
+        //SHARE TAB
+        shareTabButton.setOnAction((event) -> ShowTab(shareTabPane));
+        sendEmailButton.setOnAction(this::SendEmailButtonAction);
+        //SETTINGS TAB
+        settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
-        sendEmailButton.setOnAction(this::SendEmailButtonAction);
+
         imageViewer = new ImageViewer();
         imageViewer.Initialize(this);
         emailHelper = new EmailHelper();
     }
 
     public void WriteToConsole(String message) {
-        if (consoleLabel.getText() != "") {
+        if (!consoleLabel.getText().equals("")) {
             consoleLabel.setText(consoleLabel.getText() + System.lineSeparator());
         }
         consoleLabel.setText(consoleLabel.getText() + message);
-    }
-
-    private void ViewTabAction(ActionEvent event) {
-        ShowTab(viewImageTabPane);
-        //imageViewer.LoadImages();
-    }
-
-    private void UploadTabAction(ActionEvent event) {
-        ShowTab(uploadTabPane);
-    }
-
-    private void SearchTabAction(ActionEvent event) {
-        ShowTab(searchTabPane);
     }
 
     private void SearchImageButtonAction(ActionEvent event) {
@@ -195,26 +191,22 @@ public class FXMLController implements Initializable {
         }
     }
 
-    private void SettingsTabAction(ActionEvent event) {
-        ShowTab(settingsTabPane);
-    }
-
     private void ClearCacheButtonAction(ActionEvent event) {
         settingsTabPane.setDisable(true);
         clearCachePane.setVisible(true);
-        TabPane.setDisable(true);
+        tabPane.setDisable(true);
     }
 
     private void ClearCacheAcceptAction(ActionEvent event) {
         settingsTabPane.setDisable(false);
         clearCachePane.setVisible(false);
-        TabPane.setDisable(false);
+        tabPane.setDisable(false);
     }
 
     private void ClearCacheDenyAction(ActionEvent event) {
         settingsTabPane.setDisable(false);
         clearCachePane.setVisible(false);
-        TabPane.setDisable(false);
+        tabPane.setDisable(false);
     }
 
     private void ShowTab(AnchorPane keepPane) {
