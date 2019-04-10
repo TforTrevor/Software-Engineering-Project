@@ -141,8 +141,7 @@ public class ImageViewer {
         closeImageViewerButton.setDisable(false);
         closeImageViewerButton.setVisible(true);
 
-        //JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
-        imageViewerPane.setVisible(true);
+        JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
     }
 
     private void CloseImage() {
