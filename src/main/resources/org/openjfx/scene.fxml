@@ -23,20 +23,11 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
+<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
    <left>
       <VBox fx:id="tabPane" alignment="CENTER" styleClass="primaryColor">
          <children>
-            <JFXButton fx:id="helpTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="Help" textAlignment="CENTER" textFill="WHITE">
-               <padding>
-                  <Insets left="30.0" />
-               </padding>
-               <styleClass>
-                  <String fx:value="sharpButton" />
-                  <String fx:value="primaryColor" />
-               </styleClass>
-            </JFXButton>
-            <JFXButton fx:id="viewTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="viewTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -87,38 +78,6 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="helpTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../sassy.png" />
-                           </image>
-                        </ImageView>
-                        <Label text="Hello! How can I help you?">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Label>
-                        <JFXButton fx:id="clearCacheButton" prefWidth="350.0" styleClass="primaryColor" stylesheets="@styles.css" text="Tutorial" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton fx:id="clearCacheButton" prefWidth="350.0" styleClass="primaryColor" stylesheets="@styles.css" text="How do I upload images?" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton fx:id="clearCacheButton" prefWidth="350.0" styleClass="primaryColor" stylesheets="@styles.css" text="How do I share my images?" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </JFXButton>
-                     </children></VBox>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="viewImageTabPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ScrollPane fx:id="imagesScrollPane" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -286,7 +245,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="shareTabPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="shareTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" layoutX="215.0" layoutY="207.0" prefHeight="463.0" prefWidth="565.0" spacing="20.0" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="157.0">
                      <children>
@@ -331,7 +290,7 @@
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </padding>
             </AnchorPane>
-            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
