@@ -29,12 +29,6 @@ public class FXMLController implements Initializable {
     @FXML
     private VBox tabPane;
 
-    //HELP TAB
-    @FXML
-    private JFXButton helpTabButton;
-    @FXML
-    private AnchorPane helpTabPane;
-
     //VIEW IMAGES TAB
     @FXML
     private JFXButton viewTabButton;
@@ -121,9 +115,7 @@ public class FXMLController implements Initializable {
         Image image = new Image("file:" + "C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
         System.out.println("Image loading error? " + image.isError());
         images = new ArrayList<ImageView>();
-        tabPanes = new ArrayList<>(Arrays.asList(helpTabPane, viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
-        //HELP TAB
-        helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
+        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
         //VIEW IMAGES TAB
         viewTabButton.setOnAction((event) -> ShowTab(viewImageTabPane));
         //UPLOAD TAB
