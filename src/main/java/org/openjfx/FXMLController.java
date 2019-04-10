@@ -30,7 +30,7 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton viewTabButton;
     @FXML
-    private AnchorPane viewImageTabPane;
+    AnchorPane viewImageTabPane;
     @FXML
     ScrollPane imagesScrollPane;
     @FXML
