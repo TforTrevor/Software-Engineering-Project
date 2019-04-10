@@ -5,10 +5,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-import java.awt.*;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
@@ -36,7 +34,7 @@ public class SearchImages {
         searchingImagesPane = fxmlController.searchingImagesPane;
 
         searchImageButton.setOnAction((event) -> SearchImageButtonAction());
-        cancelSearchButton.setOnAction((event) -> CancelSearchButtonAction());
+        cancelSearchButton.setOnAction((event) -> CancelSearch());
     }
 
     private void SearchImageButtonAction() {
@@ -48,11 +46,6 @@ public class SearchImages {
             searchingImagesPane.setVisible(true);
             invalidDatesLabel.setVisible(false);
         }
-    }
-
-    private void CancelSearchButtonAction() {
-        CancelSearch();
-
     }
 
     private boolean CheckDateValidity(DatePicker date) {
