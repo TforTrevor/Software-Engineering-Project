@@ -5,6 +5,8 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
 <?import com.jfoenix.controls.JFXSpinner?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -23,7 +25,7 @@
 
 <BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
    <left>
-      <VBox fx:id="TabPane" alignment="CENTER" styleClass="primaryColor">
+      <VBox fx:id="tabPane" alignment="CENTER" styleClass="primaryColor">
          <children>
             <JFXButton fx:id="viewTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
@@ -76,7 +78,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="viewImageTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="viewImageTabPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ScrollPane fx:id="imagesScrollPane" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
@@ -133,6 +135,33 @@
                         <ImageView fx:id="imageViewerImageView" fitHeight="200.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </StackPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Upload Images">
+                           <font>
+                              <Font size="45.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
+                           <children>
+                              <JFXButton styleClass="primaryColor" stylesheets="@styles.css" text="Choose Files" textFill="WHITE">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </JFXButton>
+                              <Label text="No File Chosen">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -216,81 +245,52 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="shareTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="CENTER" layoutX="215.0" layoutY="207.0" prefHeight="463.0" prefWidth="565.0" spacing="20.0" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="157.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Upload Images">
-                           <font>
-                              <Font size="45.0" />
-                           </font>
-                        </Label>
-                        <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
+                        <HBox alignment="CENTER" prefHeight="45.0" prefWidth="530.0">
                            <children>
-                              <JFXButton styleClass="primaryColor" stylesheets="@styles.css" text="Choose Files" textFill="WHITE">
+                              <Label text="Share">
                                  <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </JFXButton>
-                              <Label text="No File Chosen">
-                                 <font>
-                                    <Font size="24.0" />
+                                    <Font size="45.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="clearCachePane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox alignment="CENTER" styleClass="transparent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <VBox alignment="CENTER" styleClass="backgroundColorDark">
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Are you sure you want to clear the cache?" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <JFXButton fx:id="clearCacheAcceptButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="Yes" textAlignment="CENTER">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font size="25.0" />
-                                       </font>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </JFXButton>
-                                    <JFXButton fx:id="clearCacheDenyButton" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="No">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font size="25.0" />
-                                       </font>
-                                    </JFXButton>
-                                 </children>
-                              </HBox>
+                              <JFXTextField fx:id="recipientTextField" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="211.0" promptText="Recipients' e-mail" styleClass="textFieldBackground" />
                            </children>
-                        </VBox>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <JFXTextField fx:id="subjectTextField" prefHeight="25.0" prefWidth="211.0" promptText="Subject" styleClass="textFieldBackground" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <JFXTextArea fx:id="bodyTextArea" prefHeight="64.0" prefWidth="380.0" promptText="Message Body" styleClass="textFieldBackground" />
+                           </children>
+                        </HBox>
+                        <JFXButton fx:id="sendEmailButton" prefHeight="31.0" prefWidth="122.0" styleClass="primaryColor" text="Share">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </JFXButton>
+                        <Label fx:id="emailLabel" text="Invald Emails" textFill="RED" visible="false">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
                      </children>
                   </VBox>
                </children>
-               <styleClass>
-                  <String fx:value="backgroundColor" />
-                  <String fx:value="transparent" />
-               </styleClass>
+               <padding>
+                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+               </padding>
             </AnchorPane>
-            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -322,6 +322,53 @@
                         </JFXButton>
                      </children>
                   </VBox>
+                  <AnchorPane fx:id="clearCachePane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER" styleClass="transparent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox alignment="CENTER" styleClass="backgroundColorDark">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Are you sure you want to clear the cache?" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <JFXButton fx:id="clearCacheAcceptButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="Yes" textAlignment="CENTER">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="25.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                          </JFXButton>
+                                          <JFXButton fx:id="clearCacheDenyButton" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="No">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="25.0" />
+                                             </font>
+                                          </JFXButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <styleClass>
+                        <String fx:value="backgroundColor" />
+                        <String fx:value="transparent" />
+                     </styleClass>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>

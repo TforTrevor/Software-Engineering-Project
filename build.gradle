@@ -23,6 +23,7 @@ dependencies{
     // when using OpenJFX (Ubuntu), please adjust accordingly
     // compile files("/usr/share/java/openjfx/lib/packager.jar")
     compile 'com.jfoenix:jfoenix:8.0.8'
+    compile 'javax.mail:mail:1.4.7'
 }
 
 apply plugin: 'javafx-gradle-plugin'

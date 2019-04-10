@@ -38,6 +38,9 @@
 .jfx-check-box {
      -jfx-checked-color: #1976d2;
 }
+.textFieldBackground {
+    -fx-background-color: #c8c8c8;
+}
 
 
 /*******************************************************************************
