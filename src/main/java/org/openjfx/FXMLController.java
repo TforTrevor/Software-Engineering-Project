@@ -1,9 +1,6 @@
 package org.openjfx;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXMasonryPane;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,11 +36,9 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton viewTabButton;
     @FXML
-    private AnchorPane viewImageTabPane;
+    AnchorPane viewImageTabPane;
     @FXML
-    public ScrollPane imagesScrollPane;
-    @FXML
-    private JFXButton uploadTabButton;
+    ScrollPane imagesScrollPane;
     @FXML
     JFXMasonryPane imageMasonryPane;
     @FXML
@@ -55,6 +50,8 @@ public class FXMLController implements Initializable {
 
     //UPLOAD TAB
     @FXML
+    private JFXButton uploadTabButton;
+    @FXML
     private AnchorPane uploadTabPane;
 
     //SEARCH TAB
@@ -63,17 +60,17 @@ public class FXMLController implements Initializable {
     @FXML
     private AnchorPane searchTabPane;
     @FXML
-    private Pane searchingImagesPane;
+    Pane searchingImagesPane;
     @FXML
-    private JFXButton searchImageButton;
+    JFXButton searchImageButton;
     @FXML
-    private JFXButton cancelSearchButton;
+    JFXButton cancelSearchButton;
     @FXML
-    private DatePicker toDate;
+    JFXDatePicker toDate;
     @FXML
-    private DatePicker fromDate;
+    JFXDatePicker fromDate;
     @FXML
-    private Label invalidDatesLabel;
+    Label invalidDatesLabel;
 
     //SHARE TAB
     @FXML
@@ -112,7 +109,7 @@ public class FXMLController implements Initializable {
     private ArrayList<String> filesArr;
     private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
-    private SearchImages searchImages = new SearchImages();
+    private SearchImages searchImages;
 
     private EmailHelper emailHelper;
 
@@ -126,12 +123,12 @@ public class FXMLController implements Initializable {
         helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
         //VIEW IMAGES TAB
         viewTabButton.setOnAction((event) -> ShowTab(viewImageTabPane));
+        imageViewer = new ImageViewer(this);
         //UPLOAD TAB
         uploadTabButton.setOnAction((event) -> ShowTab(uploadTabPane));
         //SEARCH TAB
         searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
-        searchImageButton.setOnAction(this::SearchImageButtonAction);
-        cancelSearchButton.setOnAction(this::CancelSearchButtonAction);
+        searchImages = new SearchImages(this);
         //SHARE TAB
         shareTabButton.setOnAction((event) -> ShowTab(shareTabPane));
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
@@ -141,8 +138,6 @@ public class FXMLController implements Initializable {
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
 
-        imageViewer = new ImageViewer();
-        imageViewer.Initialize(this);
         emailHelper = new EmailHelper();
     }
 
@@ -151,24 +146,6 @@ public class FXMLController implements Initializable {
             consoleLabel.setText(consoleLabel.getText() + System.lineSeparator());
         }
         consoleLabel.setText(consoleLabel.getText() + message);
-    }
-
-    private void SearchImageButtonAction(ActionEvent event) {
-        searchImages.SetFXMLController(this);
-        searchImageButton.setDisable(true);
-        if (!searchImages.RefreshImages(fromDate, toDate)) {
-            invalidDatesLabel.setVisible(true);
-        } else {
-            searchingImagesPane.setVisible(true);
-            invalidDatesLabel.setVisible(false);
-        }
-    }
-
-    private void CancelSearchButtonAction(ActionEvent event) {
-        searchImages.CancelSearch();
-        filesArr = searchImages.GetImages();
-        searchImageButton.setDisable(false);
-        searchingImagesPane.setVisible(false);
     }
 
     private void SendEmailButtonAction(ActionEvent event) {
@@ -191,8 +168,7 @@ public class FXMLController implements Initializable {
             emailLabel.setTextFill(Color.web("#000000"));
             emailLabel.setText("Sent Successfully");
             emailLabel.setVisible(true);
-        }
-        else {
+        } else {
             emailLabel.setTextFill(Color.web("#FF0000"));
             emailLabel.setText("Invalid Emails");
             emailLabel.setVisible(true);
