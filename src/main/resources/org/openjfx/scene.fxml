@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXMasonryPane?>
 <?import com.jfoenix.controls.JFXSpinner?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
    <left>
@@ -67,7 +76,66 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="viewImageTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane fx:id="imagesScrollPane" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <JFXMasonryPane fx:id="imageMasonryPane" HSpacing="10.0" VSpacing="10.0" cellHeight="256.0" cellWidth="256.0" styleClass="backgroundColor">
+                           <children>
+                              <StackPane layoutX="20.0" layoutY="20.0">
+                                 <children>
+                                    <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Desktop/Capture.PNG" />
+                                       </image>
+                                       <effect>
+                                          <DropShadow blurType="GAUSSIAN" color="#00000080" height="20.0" offsetX="2.5" offsetY="2.5" radius="9.5" width="20.0" />
+                                       </effect>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <AnchorPane>
+                                 <children>
+                                    <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <ImageView fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../../../../../Desktop/ani2.png" />
+                                             </image>
+                                             <effect>
+                                                <DropShadow blurType="GAUSSIAN" color="#00000080" height="20.0" offsetX="2.5" offsetY="2.5" radius="9.5" width="20.0" />
+                                             </effect>
+                                          </ImageView>
+                                          <Label text="ani2">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <JFXButton alignment="CENTER" ripplerFill="WHITE" styleClass="sharpButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <JFXCheckBox alignment="CENTER" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="50.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </JFXMasonryPane>
+                     </content>
+                  </ScrollPane>
+                  <JFXButton fx:id="closeImageViewerButton" opacity="0.25" style="-fx-background-color: #000000;" styleClass="sharpButton" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <StackPane fx:id="imageViewerPane" styleClass="backgroundColorDark" visible="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+                     <children>
+                        <ImageView fx:id="imageViewerImageView" fitHeight="200.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </StackPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -259,4 +327,22 @@
          </children>
       </AnchorPane>
    </center>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="backgroundColorDark" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <TextFlow prefWidth="185.0">
+                     <children>
+                        <Text fx:id="consoleLabel" strokeType="OUTSIDE" strokeWidth="0.0" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" top="5.0" />
+                     </padding>
+                  </TextFlow>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </right>
 </BorderPane>
