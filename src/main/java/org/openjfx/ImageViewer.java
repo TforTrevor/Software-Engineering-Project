@@ -57,25 +57,21 @@ public class ImageViewer {
 
     private void LoadImages() {
         Thread imageThread = new Thread(() -> {
-            try {
-                for (int i = 0; i < imageList.size(); i++) {
-                    //RESOURCES FOLDER
-                    ClassLoader classLoader = getClass().getClassLoader();
-                    InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
-                    File file = new File(classLoader.getResource("ani2.png").getFile());
-                    Image image = new Image(inputStream);
-                    //DIRECT FILE PATH
-                    //File file = new File(imageList.get(i));
-                    //Image image = new Image(file.toURI().toString());
-                    ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
-                    AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
-                    imageViewerImages.add(imageViewerImage);
-                    Platform.runLater(() -> {
-                        masonryPane.getChildren().add(imageAnchorPane);
-                    });
-                }
-            } finally {
-                //HideOffScreenImages();
+            for (int i = 0; i < imageList.size(); i++) {
+                //RESOURCES FOLDER
+                ClassLoader classLoader = getClass().getClassLoader();
+                InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
+                File file = new File(classLoader.getResource("ani2.png").getFile());
+                Image image = new Image(inputStream);
+                //DIRECT FILE PATH
+                //File file = new File(imageList.get(i));
+                //Image image = new Image(file.toURI().toString());
+                ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
+                AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
+                imageViewerImages.add(imageViewerImage);
+                Platform.runLater(() -> {
+                    masonryPane.getChildren().add(imageAnchorPane);
+                });
             }
         });
         imageThread.setDaemon(true);
@@ -97,12 +93,10 @@ public class ImageViewer {
                             if (scrollBounds.intersects(nodeBounds)) {
                                 if (!imageView.isVisible()) {
                                     imageView.setVisible(true);
-                                    System.out.println("Showing Image");
                                 }
                             } else {
                                 if (imageView.isVisible()) {
                                     imageView.setVisible(false);
-                                    System.out.println("Hiding Image");
                                 }
                             }
                         });
