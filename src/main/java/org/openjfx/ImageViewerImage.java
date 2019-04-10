@@ -30,6 +30,13 @@ class ImageViewerImage {
         vBox.getChildren().addAll(imageView, imageName);
         anchorPane.getChildren().addAll(button, checkBox);
 
+        anchorPane.setCache(true);
+        vBox.setCache(true);
+        imageView.setCache(true);
+        imageName.setCache(true);
+        button.setCache(true);
+        checkBox.setCache(true);
+
         vBox.setAlignment(Pos.CENTER);
         imageView.setFitWidth(225);
         imageView.setFitHeight(225);

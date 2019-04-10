@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ImageViewer {
-    private FXMLController fxmlController;
     private ScrollPane scrollPane;
     private Bounds scrollBounds;
     private JFXMasonryPane masonryPane;
@@ -28,27 +27,57 @@ public class ImageViewer {
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
     private Thread hideImagesThread;
 
-    public void Initialize(FXMLController fxmlController) {
-        this.fxmlController = fxmlController;
-        scrollPane = this.fxmlController.imagesScrollPane;
-        masonryPane = this.fxmlController.imageMasonryPane;
-        imageViewerPane = this.fxmlController.imageViewerPane;
-        imageViewerImageView = this.fxmlController.imageViewerImageView;
-        closeImageViewerButton = this.fxmlController.closeImageViewerButton;
+    ImageViewer(FXMLController fxmlController) {
+        scrollPane = fxmlController.imagesScrollPane;
+        masonryPane = fxmlController.imageMasonryPane;
+        imageViewerPane = fxmlController.imageViewerPane;
+        imageViewerImageView = fxmlController.imageViewerImageView;
+        closeImageViewerButton = fxmlController.closeImageViewerButton;
 
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
-        closeImageViewerButton.setOnAction(this::CloseImage);
+        closeImageViewerButton.setOnAction((event) -> CloseImage());
 
         hideImagesThread = new Thread();
 
         JFXButton button = new JFXButton();
-        button.setOnAction(this::CreateImages);
+        button.setOnAction((event) -> CreateImages());
         button.setPrefSize(256, 256);
         button.getStyleClass().add("primaryColor");
         button.setText("Create 100 Images");
         masonryPane.getChildren().add(button);
+    }
+
+    private void CreateImages() {
+        for (int i = 0; i < 100; i++) {
+            imageList.add("C:/Users/Trevor/Desktop/ani2.png");
+        }
+        LoadImages();
+    }
+
+    private void LoadImages() {
+        Thread imageThread = new Thread(() -> {
+            for (int i = 0; i < imageList.size(); i++) {
+                //RESOURCES FOLDER
+                ClassLoader classLoader = getClass().getClassLoader();
+                InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
+                File file = new File(classLoader.getResource("ani2.png").getFile());
+                Image image = new Image(inputStream);
+                //DIRECT FILE PATH
+                //File file = new File(imageList.get(i));
+                //Image image = new Image(file.toURI().toString());
+                ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
+                AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
+                imageViewerImages.add(imageViewerImage);
+                Platform.runLater(() -> {
+                    masonryPane.getChildren().add(imageAnchorPane);
+                });
+            }
+        });
+        imageThread.setDaemon(true);
+        imageThread.start();
+        HideOffScreenImages();
     }
 
     private void HideOffScreenImages() {
@@ -95,41 +124,7 @@ public class ImageViewer {
         }
     }
 
-    private void CreateImages(ActionEvent event) {
-        for (int i = 0; i < 100; i++) {
-            imageList.add("C:/Users/Trevor/Desktop/ani2.png");
-        }
-        LoadImages();
-    }
-
-    public void LoadImages() {
-        //SearchImages searchImages = new SearchImages();
-        //ArrayList<String> imageList = searchImages.GetImages();
-        //imageList.clear();
-        Thread imageThread = new Thread(() -> {
-            for (int i = 0; i < imageList.size(); i++) {
-                //RESOURCES FOLDER
-                ClassLoader classLoader = getClass().getClassLoader();
-                InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
-                File file = new File(classLoader.getResource("ani2.png").getFile());
-                Image image = new Image(inputStream);
-                //DIRECT FILE PATH
-                //File file = new File(imageList.get(i));
-                //Image image = new Image(file.toURI().toString());
-                ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
-                AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
-                imageViewerImages.add(imageViewerImage);
-                Platform.runLater(() -> {
-                    masonryPane.getChildren().add(imageAnchorPane);
-                });
-            }
-        });
-        imageThread.setDaemon(true);
-        imageThread.start();
-        HideOffScreenImages();
-    }
-
-    public ImageViewerImage CreateImageElement(Image image, String name) {
+    private ImageViewerImage CreateImageElement(Image image, String name) {
         ImageViewerImage imageViewerImage = new ImageViewerImage();
 
         imageViewerImage.GetImageView().setImage(image);
@@ -137,7 +132,6 @@ public class ImageViewer {
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
 
         return imageViewerImage;
-        //fxmlController.WriteToConsole(Boolean.toString(imageViewerImage.GetImageView().isCache()));
     }
 
     private void OpenImage(ImageViewerImage imageViewerImage) {
@@ -157,7 +151,7 @@ public class ImageViewer {
         JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
     }
 
-    private void CloseImage(ActionEvent event) {
+    private void CloseImage() {
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
