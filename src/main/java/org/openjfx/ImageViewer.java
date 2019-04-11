@@ -3,7 +3,6 @@ package org.openjfx;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -12,8 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ImageViewer {
@@ -23,8 +20,9 @@ public class ImageViewer {
     private StackPane imageViewerPane;
     private ImageView imageViewerImageView;
     private JFXButton closeImageViewerButton;
-    ArrayList<String> imageList = new ArrayList<>();
+    private ArrayList<XMLImage> imageList;
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
+    private XMLImageEditor imagePaths;
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -45,14 +43,13 @@ public class ImageViewer {
         button.getStyleClass().add("primaryColor");
         button.setText("Create 100 Images");
         masonryPane.getChildren().add(button);
+
+        imagePaths = new XMLImageEditor();
     }
 
     private void CreateImages() {
-        for (int i = 0; i < 100; i++) {
-            imageList.add("C:/Users/Trevor/Desktop/ani2.png");
-        }
-        XMLImagePaths imagePaths = new XMLImagePaths();
-        imagePaths.PrintImages();
+        //imagePaths.PrintImages();
+        imageList = imagePaths.GetXMLImages();
         LoadImages();
     }
 
@@ -60,19 +57,23 @@ public class ImageViewer {
         Thread imageThread = new Thread(() -> {
             for (int i = 0; i < imageList.size(); i++) {
                 //RESOURCES FOLDER
-                ClassLoader classLoader = getClass().getClassLoader();
-                InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
-                File file = new File(classLoader.getResource("ani2.png").getFile());
-                Image image = new Image(inputStream);
+//                ClassLoader classLoader = getClass().getClassLoader();
+//                InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
+//                File file = new File(classLoader.getResource("ani2.png").getFile());
+//                Image image = new Image(inputStream);
                 //DIRECT FILE PATH
-                //File file = new File(imageList.get(i));
-                //Image image = new Image(file.toURI().toString());
-                ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
-                AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
-                imageViewerImages.add(imageViewerImage);
-                Platform.runLater(() -> {
-                    masonryPane.getChildren().add(imageAnchorPane);
-                });
+                try {
+                    Image image = new Image(imageList.get(i).GetURIPath());
+                    ImageViewerImage imageViewerImage = CreateImageElement(image, imageList.get(i).GetName());
+                    AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
+                    imageViewerImages.add(imageViewerImage);
+                    Platform.runLater(() -> {
+                        masonryPane.getChildren().add(imageAnchorPane);
+                    });
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         imageThread.setDaemon(true);

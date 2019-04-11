@@ -1,12 +1,13 @@
 <images>
     <imageGroup tag="Test">
-        <image>
-            <name>ani2</name>
+        <image name="ani2">
             <path>C:/Users/Trevor/Desktop/ani2.png</path>
         </image>
-        <image>
-            <name>Capture</name>
+        <image name="Capture">
             <path>C:/Users/Trevor/Desktop/Capture.png</path>
+        </image>
+        <image name="Dingus">
+            <path>C:/Users/Trevor/Desktop/ani.png</path>
         </image>
     </imageGroup>
 </images>
