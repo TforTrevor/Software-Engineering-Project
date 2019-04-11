@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import javax.management.RuntimeErrorException;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -52,6 +51,8 @@ public class ImageViewer {
         for (int i = 0; i < 100; i++) {
             imageList.add("C:/Users/Trevor/Desktop/ani2.png");
         }
+        XMLImagePaths imagePaths = new XMLImagePaths();
+        imagePaths.PrintImages();
         LoadImages();
     }
 
