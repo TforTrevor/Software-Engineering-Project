@@ -12,18 +12,14 @@ import java.util.ArrayList;
 
 public class XMLImageEditor {
 
-    private ClassLoader classLoader;
-    private InputStream xmlInputStream;
-    private DocumentBuilderFactory dbFactory;
-    private DocumentBuilder dBuilder;
     private Document document;
 
     XMLImageEditor() {
         try {
-            classLoader = getClass().getClassLoader();
-            xmlInputStream = classLoader.getResourceAsStream("images.xml");
-            dbFactory = DocumentBuilderFactory.newInstance();
-            dBuilder = dbFactory.newDocumentBuilder();
+            ClassLoader classLoader = getClass().getClassLoader();
+            InputStream xmlInputStream = classLoader.getResourceAsStream("images.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             document = dBuilder.parse(xmlInputStream);
             document.getDocumentElement().normalize();
         }
@@ -60,7 +56,7 @@ public class XMLImageEditor {
         return xmlImageList;
     }
 
-    public void PrintImages() {
+    void PrintImages() {
         ArrayList<XMLImage> xmlImages = GetXMLImages();
         for (int i = 0; i < xmlImages.size(); i++) {
             System.out.println("Tag: " + xmlImages.get(i).GetTag());

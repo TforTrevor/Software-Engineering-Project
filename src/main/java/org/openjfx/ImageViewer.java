@@ -48,7 +48,6 @@ public class ImageViewer {
     }
 
     private void CreateImages() {
-        //imagePaths.PrintImages();
         imageList = imagePaths.GetXMLImages();
         LoadImages();
     }
@@ -56,12 +55,6 @@ public class ImageViewer {
     private void LoadImages() {
         Thread imageThread = new Thread(() -> {
             for (int i = 0; i < imageList.size(); i++) {
-                //RESOURCES FOLDER
-//                ClassLoader classLoader = getClass().getClassLoader();
-//                InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
-//                File file = new File(classLoader.getResource("ani2.png").getFile());
-//                Image image = new Image(inputStream);
-                //DIRECT FILE PATH
                 try {
                     Image image = new Image(imageList.get(i).GetURIPath());
                     ImageViewerImage imageViewerImage = CreateImageElement(image, imageList.get(i).GetName());
@@ -109,7 +102,7 @@ public class ImageViewer {
                     }
                     Thread.sleep(1);
                 }
-            } catch (RuntimeException | InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 System.out.println("Stopping Hiding");

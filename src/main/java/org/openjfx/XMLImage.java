@@ -11,16 +11,16 @@ public class XMLImage {
         this.path = path;
     }
 
-    public String GetTag() {
+    String GetTag() {
         return tag;
     }
-    public String GetName() {
+    String GetName() {
         return name;
     }
-    public String GetPath() {
+    String GetPath() {
         return path;
     }
-    public String GetURIPath() {
+    String GetURIPath() {
         return "file:///" + path;
     }
 }
