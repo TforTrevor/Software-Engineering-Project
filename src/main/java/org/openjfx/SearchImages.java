@@ -6,7 +6,9 @@ import com.jfoenix.controls.JFXDatePicker;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
@@ -100,6 +102,14 @@ public class SearchImages {
     private void CancelSearch() {
         fileReader.SetRunThread(false);
         images = fileReader.GetImages();
+
+        XMLImageEditor xmlImageEditor = new XMLImageEditor();
+        for (int i = 0; i < images.size(); i++) {
+            String path = images.get(i);
+            path.replace("\\", "/");
+            File file = new File(path);
+            xmlImageEditor.CreateXMLImage("Test", FilenameUtils.removeExtension(file.getName()), path);
+        }
 
         searchImageButton.setDisable(false);
         searchingImagesPane.setVisible(false);

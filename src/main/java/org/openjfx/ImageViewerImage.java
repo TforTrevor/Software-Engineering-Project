@@ -4,40 +4,50 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.io.File;
 
 class ImageViewerImage {
     private AnchorPane anchorPane;
     private VBox vBox;
+    private StackPane stackPane;
+    private XMLImage xmlImage;
     private ImageView imageView;
     private Label imageName;
     private JFXButton button;
     private JFXCheckBox checkBox;
-    ImageViewerImage() {
+    ImageViewerImage(XMLImage xmlImage) {
         anchorPane = new AnchorPane();
         vBox = new VBox();
+        stackPane = new StackPane();
         imageView = new ImageView();
         imageName = new Label();
         button = new JFXButton();
         checkBox = new JFXCheckBox();
 
         anchorPane.getChildren().add(vBox);
-        vBox.getChildren().addAll(imageView, imageName);
+        vBox.getChildren().addAll(stackPane, imageName);
+        stackPane.getChildren().add(imageView);
         anchorPane.getChildren().addAll(button, checkBox);
 
         anchorPane.setCache(true);
         vBox.setCache(true);
+        stackPane.setCache(true);
         imageView.setCache(true);
         imageName.setCache(true);
         button.setCache(true);
         checkBox.setCache(true);
 
         vBox.setAlignment(Pos.CENTER);
+        stackPane.setPrefWidth(225);
+        stackPane.setPrefHeight(225);
         imageView.setFitWidth(225);
         imageView.setFitHeight(225);
         imageName.setPadding(new Insets(5, 0, 0, 0));
@@ -62,6 +72,12 @@ class ImageViewerImage {
         button.getStyleClass().add("sharpButton");
         button.setRipplerFill(Color.color(1,1,1));
         JavaFXHelper.AddDropShadow(imageView);
+
+        this.xmlImage = xmlImage;
+        File file = new File(xmlImage.GetPath());
+        Image image = new Image(file.toURI().toString());
+        imageView.setImage(image);
+        imageName.setText(xmlImage.GetName());
     }
     AnchorPane GetAnchorPane() {
         return anchorPane;
@@ -78,4 +94,5 @@ class ImageViewerImage {
     JFXCheckBox GetCheckBox() {
         return checkBox;
     }
+    XMLImage GetXMLImage() { return xmlImage; }
 }

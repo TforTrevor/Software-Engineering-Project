@@ -41,6 +41,12 @@ public class FXMLController implements Initializable {
     ImageView imageViewerImageView;
     @FXML
     JFXButton closeImageViewerButton;
+    @FXML
+    HBox imageOptions;
+    @FXML
+    JFXButton imageOptionsShare;
+    @FXML
+    JFXButton imageOptionsRemove;
 
     //UPLOAD TAB
     @FXML
@@ -114,13 +120,16 @@ public class FXMLController implements Initializable {
         images = new ArrayList<ImageView>();
         tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
         //VIEW IMAGES TAB
-        viewTabButton.setOnAction((event) -> ShowTab(viewImageTabPane));
         imageViewer = new ImageViewer(this);
+        viewTabButton.setOnAction((event) -> {
+            ShowTab(viewImageTabPane);
+            imageViewer.HideOffScreenImages();
+        });
         //UPLOAD TAB
         uploadTabButton.setOnAction((event) -> ShowTab(uploadTabPane));
         //SEARCH TAB
-        searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         searchImages = new SearchImages(this);
+        searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         //SHARE TAB
         shareTabButton.setOnAction((event) -> ShowTab(shareTabPane));
         sendEmailButton.setOnAction(this::SendEmailButtonAction);

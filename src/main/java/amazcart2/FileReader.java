@@ -58,14 +58,17 @@ public class FileReader {
                             String endDate1 = "12/31/" + startYear;
                             String startDate2 = "01/01/" + endYear;
                             if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate1))) {
-                                fileList.add(file.getAbsolutePath() + file.getName());
+                                //fileList.add(file.getAbsolutePath() + file.getName());
+                                fileList.add(file.getAbsolutePath());
                             }
                             if (filter2(attr.creationTime().toString(), convertTime(startDate2), convertTime(endDate))) {
-                                fileList.add(file.getAbsolutePath() + file.getName());
+                                //fileList.add(file.getAbsolutePath() + file.getName());
+                                fileList.add(file.getAbsolutePath());
                             }
                         } else {
                             if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate))) {
-                                fileList.add(file.getAbsolutePath() + file.getName());
+                                //fileList.add(file.getAbsolutePath() + file.getName());
+                                fileList.add(file.getAbsolutePath());
                             }
                         }
                     }
