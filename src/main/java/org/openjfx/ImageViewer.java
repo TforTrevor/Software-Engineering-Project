@@ -73,7 +73,6 @@ public class ImageViewer {
         Thread imageThread = new Thread(() -> {
             XMLImageEditor xmlImageEditor = new XMLImageEditor();
             imageList = xmlImageEditor.GetXMLImages();
-            System.out.println(imageList.size());
             Platform.runLater(() -> {
                 masonryPane.getChildren().clear();
                 masonryPane.getChildren().add(createImagesButton);
@@ -99,9 +98,10 @@ public class ImageViewer {
         HideOffScreenImages();
     }
 
-    private void HideOffScreenImages() {
+    void HideOffScreenImages() {
         Thread hideImagesThread = new Thread(() -> {
             try {
+                System.out.println("Starting Hiding Images");
                 int i = 0;
                 while (viewImageTabPane.isVisible()) {
                     if (imageViewerImages.size() > 0) {
@@ -130,7 +130,7 @@ public class ImageViewer {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                System.out.println("Stopping Hiding");
+                System.out.println("Stopping Hiding Images");
             }
         });
         hideImagesThread.setDaemon(true);
@@ -183,8 +183,8 @@ public class ImageViewer {
                 for (int i = 0; i < selectedImages.size(); i++) {
                     XMLImage xmlImage = selectedImages.get(i).GetXMLImage();
                     String path = xmlImage.GetPath();
-                    imageList.remove(xmlImage);
                     xmlImageEditor.RemoveXMLImage(path);
+                    imageList.remove(xmlImage);
                     imageViewerImages.remove(selectedImages.get(i));
                     final int index = i;
                     Platform.runLater(() -> {
