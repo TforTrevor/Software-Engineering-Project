@@ -155,7 +155,7 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -171,7 +171,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </JFXButton>
-                              <Label text="No File Chosen">
+                              <Label fx:id="uploadImageLabel" text="No File Chosen">
                                  <font>
                                     <Font size="24.0" />
                                  </font>

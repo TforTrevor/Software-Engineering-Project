@@ -55,6 +55,8 @@ public class FXMLController implements Initializable {
     private AnchorPane uploadTabPane;
     @FXML
     JFXButton uploadImageButton;
+    @FXML
+    Label uploadImageLabel;
 
     //SEARCH TAB
     @FXML
