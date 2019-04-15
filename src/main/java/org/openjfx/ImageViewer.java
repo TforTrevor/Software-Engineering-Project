@@ -48,8 +48,9 @@ public class ImageViewer {
     }
 
     private void CreateImages() {
-        imageList = imagePaths.GetXMLImages();
-        LoadImages();
+        //imageList = imagePaths.GetXMLImages();
+        imagePaths.CreateXMLImage("Test", "Hello", "C:/User/Trevor/Desktop/ani2.png");
+        //LoadImages();
     }
 
     private void LoadImages() {

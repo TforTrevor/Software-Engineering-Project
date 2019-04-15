@@ -56,6 +56,35 @@ public class XMLImageEditor {
         return xmlImageList;
     }
 
+    void CreateXMLImage(String tag, String name, String path) {
+        try {
+            Element pathElement = document.createElement("path");
+            pathElement.setTextContent(path);
+
+            Element imageElement = document.createElement("image");
+            imageElement.setAttribute("name", name);
+            imageElement.appendChild(pathElement);
+
+            NodeList imageGroupList = document.getElementsByTagName("imageGroup");
+            for (int i = 0; i < imageGroupList.getLength(); i++) {
+                Node imageGroupNode = imageGroupList.item(i);
+                if (imageGroupNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element imageGroupElement = (Element) imageGroupNode;
+
+                    if (imageGroupElement.getAttribute("tag").equals(tag)) {
+                        imageGroupElement.appendChild(imageElement);
+                        return;
+                    }
+                }
+            }
+            Element imageGroupElement = document.createElement("imageGroup");
+            imageGroupElement.setAttribute("tag", tag);
+            document.getDocumentElement().appendChild(imageGroupElement);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void PrintImages() {
         ArrayList<XMLImage> xmlImages = GetXMLImages();
         for (int i = 0; i < xmlImages.size(); i++) {
