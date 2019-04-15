@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -24,6 +25,8 @@ public class ImageViewer {
     private ArrayList<XMLImage> imageList;
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
     private XMLImageEditor imagePaths;
+    private HBox imageOptions;
+    private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -32,6 +35,7 @@ public class ImageViewer {
         imageViewerPane = fxmlController.imageViewerPane;
         imageViewerImageView = fxmlController.imageViewerImageView;
         closeImageViewerButton = fxmlController.closeImageViewerButton;
+        imageOptions = fxmlController.imageOptions;
 
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
@@ -121,6 +125,7 @@ public class ImageViewer {
         imageViewerImage.GetImageView().setImage(image);
         imageViewerImage.GetImageName().setText(name);
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
+        imageViewerImage.GetCheckBox().setOnAction(event -> SelectImage(imageViewerImage));
 
         return imageViewerImage;
     }
@@ -135,11 +140,24 @@ public class ImageViewer {
 
         JavaFXHelper.AddDropShadow(imageViewerPane);
 
-        imageViewerPane.setVisible(true);
         closeImageViewerButton.setDisable(false);
         closeImageViewerButton.setVisible(true);
 
         JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
+    }
+
+    private void SelectImage(ImageViewerImage imageViewerImage) {
+        if (imageViewerImage.GetCheckBox().isSelected()) {
+            selectedImages.add(imageViewerImage);
+            JavaFXHelper.FadeIn(Duration.seconds(0.1), imageOptions);
+            System.out.println("Added selection");
+        } else {
+            selectedImages.remove(imageViewerImage);
+            if (selectedImages.size() < 1) {
+                JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
+                System.out.println("Removed selection");
+            }
+        }
     }
 
     private void CloseImage() {

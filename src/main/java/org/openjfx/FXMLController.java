@@ -41,6 +41,12 @@ public class FXMLController implements Initializable {
     ImageView imageViewerImageView;
     @FXML
     JFXButton closeImageViewerButton;
+    @FXML
+    HBox imageOptions;
+    @FXML
+    JFXButton imageOptionsShare;
+    @FXML
+    JFXButton imageOptionsRemove;
 
     //UPLOAD TAB
     @FXML

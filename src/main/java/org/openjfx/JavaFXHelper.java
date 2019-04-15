@@ -26,10 +26,12 @@ public class JavaFXHelper {
     static public void FadeIn(Duration time, Node element) {
         Timeline timeline = new Timeline();
         KeyValue startOpacity = new KeyValue(element.opacityProperty(), 0);
+        KeyValue startVisibility = new KeyValue(element.visibleProperty(), true);
         KeyValue endOpacity = new KeyValue(element.opacityProperty(), 1);
+        KeyValue endVisibility = new KeyValue(element.visibleProperty(), true);
 
-        KeyFrame start = new KeyFrame(Duration.ZERO, startOpacity);
-        KeyFrame end = new KeyFrame(time, endOpacity);
+        KeyFrame start = new KeyFrame(Duration.ZERO, startOpacity, startVisibility);
+        KeyFrame end = new KeyFrame(time, endOpacity, endVisibility);
 
         timeline.getKeyFrames().addAll(start, end);
         timeline.play();
@@ -38,10 +40,12 @@ public class JavaFXHelper {
     static public void FadeOut(Duration time, Node element) {
         Timeline timeline = new Timeline();
         KeyValue startOpacity = new KeyValue(element.opacityProperty(), 1);
+        KeyValue startVisibility = new KeyValue(element.visibleProperty(), true);
         KeyValue endOpacity = new KeyValue(element.opacityProperty(), 0);
+        KeyValue endVisibility = new KeyValue(element.visibleProperty(), false);
 
-        KeyFrame start = new KeyFrame(Duration.ZERO, startOpacity);
-        KeyFrame end = new KeyFrame(time, endOpacity);
+        KeyFrame start = new KeyFrame(Duration.ZERO, startOpacity, startVisibility);
+        KeyFrame end = new KeyFrame(time, endOpacity, endVisibility);
 
         timeline.getKeyFrames().addAll(start, end);
         timeline.play();
