@@ -166,7 +166,7 @@
                         </Label>
                         <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
                            <children>
-                              <JFXButton styleClass="primaryColor" stylesheets="@styles.css" text="Choose Files" textFill="WHITE">
+                              <JFXButton fx:id="uploadImageButton" styleClass="primaryColor" stylesheets="@styles.css" text="Choose Files" textFill="WHITE">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
