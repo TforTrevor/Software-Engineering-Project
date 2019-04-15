@@ -58,7 +58,6 @@ public class ImageViewer {
         Thread imageThread = new Thread(() -> {
             for (int i = 0; i < imageList.size(); i++) {
                 try {
-                    System.out.println(imageList.get(i).GetPath());
                     File file = new File(imageList.get(i).GetPath());
                     Image image = new Image(file.toURI().toString());
                     ImageViewerImage imageViewerImage = CreateImageElement(image, imageList.get(i).GetName());
