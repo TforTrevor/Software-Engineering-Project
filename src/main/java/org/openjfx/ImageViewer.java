@@ -23,7 +23,6 @@ public class ImageViewer {
     private JFXButton closeImageViewerButton;
     private ArrayList<XMLImage> imageList;
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
-    private XMLImageEditor imagePaths;
     private HBox imageOptions;
     private JFXButton imageOptionsRemove;
     private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
@@ -59,21 +58,22 @@ public class ImageViewer {
         refreshImagesButton.setText("Refresh Images");
         masonryPane.getChildren().add(refreshImagesButton);
 
-        imagePaths = new XMLImageEditor();
-
         imageOptionsRemove.setOnAction((event) -> RemoveImage());
     }
 
     private void CreateImages() {
-        imagePaths.CreateXMLImage("Test", "Hello", "ani3.png");
-        imagePaths.CreateXMLImage("Test", "Hello", "ani3.png");
-        imagePaths.CreateXMLImage("Test", "Hello", "ani3.png");
+        XMLImageEditor xmlImageEditor = new XMLImageEditor();
+        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
+        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
+        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
         LoadImages();
     }
 
     private void LoadImages() {
         Thread imageThread = new Thread(() -> {
-            imageList = imagePaths.GetXMLImages();
+            XMLImageEditor xmlImageEditor = new XMLImageEditor();
+            imageList = xmlImageEditor.GetXMLImages();
+            System.out.println(imageList.size());
             Platform.runLater(() -> {
                 masonryPane.getChildren().clear();
                 masonryPane.getChildren().add(createImagesButton);
@@ -179,11 +179,12 @@ public class ImageViewer {
     private void RemoveImage() {
         Thread removeThread = new Thread(() -> {
             try {
+                XMLImageEditor xmlImageEditor = new XMLImageEditor();
                 for (int i = 0; i < selectedImages.size(); i++) {
                     XMLImage xmlImage = selectedImages.get(i).GetXMLImage();
                     String path = xmlImage.GetPath();
                     imageList.remove(xmlImage);
-                    imagePaths.RemoveXMLImage(path);
+                    xmlImageEditor.RemoveXMLImage(path);
                     imageViewerImages.remove(selectedImages.get(i));
                     final int index = i;
                     Platform.runLater(() -> {
