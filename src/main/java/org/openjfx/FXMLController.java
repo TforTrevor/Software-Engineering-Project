@@ -53,6 +53,10 @@ public class FXMLController implements Initializable {
     private JFXButton uploadTabButton;
     @FXML
     private AnchorPane uploadTabPane;
+    @FXML
+    JFXButton uploadImageButton;
+    @FXML
+    Label uploadImageLabel;
 
     //SEARCH TAB
     @FXML
@@ -126,6 +130,7 @@ public class FXMLController implements Initializable {
             imageViewer.HideOffScreenImages();
         });
         //UPLOAD TAB
+        UploadImages uploadImages = new UploadImages(this);
         uploadTabButton.setOnAction((event) -> ShowTab(uploadTabPane));
         //SEARCH TAB
         searchImages = new SearchImages(this);
