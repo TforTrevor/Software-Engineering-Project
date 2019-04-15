@@ -7,12 +7,19 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 public class XMLImageEditor {
 
     private Document document;
+    private String filePath = "C:/Users/Trevor/Desktop/images.xml";
 
     XMLImageEditor() {
         try {
@@ -20,7 +27,8 @@ public class XMLImageEditor {
             InputStream xmlInputStream = classLoader.getResourceAsStream("images.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            document = dBuilder.parse(xmlInputStream);
+            //document = dBuilder.parse(xmlInputStream);
+            document = dBuilder.parse(filePath);
             document.getDocumentElement().normalize();
         }
         catch (Exception e) {
@@ -70,16 +78,33 @@ public class XMLImageEditor {
                 Node imageGroupNode = imageGroupList.item(i);
                 if (imageGroupNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element imageGroupElement = (Element) imageGroupNode;
-
                     if (imageGroupElement.getAttribute("tag").equals(tag)) {
                         imageGroupElement.appendChild(imageElement);
+                        WriteToXMLFile();
                         return;
                     }
                 }
             }
             Element imageGroupElement = document.createElement("imageGroup");
             imageGroupElement.setAttribute("tag", tag);
+            imageGroupElement.appendChild(imageElement);
             document.getDocumentElement().appendChild(imageGroupElement);
+            WriteToXMLFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void WriteToXMLFile() {
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(new File(filePath));
+            transformer.transform(source, result);
+            System.out.println("Created image index");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -20,7 +20,4 @@ public class XMLImage {
     String GetPath() {
         return path;
     }
-    String GetURIPath() {
-        return "file:///" + path;
-    }
 }

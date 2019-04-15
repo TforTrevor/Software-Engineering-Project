@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ImageViewer {
@@ -48,16 +49,18 @@ public class ImageViewer {
     }
 
     private void CreateImages() {
-        //imageList = imagePaths.GetXMLImages();
-        imagePaths.CreateXMLImage("Test", "Hello", "C:/User/Trevor/Desktop/ani2.png");
-        //LoadImages();
+        imagePaths.CreateXMLImage("Test", "Hello", "C:/Users/Trevor/Desktop/ani3.png");
+        imageList = imagePaths.GetXMLImages();
+        LoadImages();
     }
 
     private void LoadImages() {
         Thread imageThread = new Thread(() -> {
             for (int i = 0; i < imageList.size(); i++) {
                 try {
-                    Image image = new Image(imageList.get(i).GetURIPath());
+                    System.out.println(imageList.get(i).GetPath());
+                    File file = new File(imageList.get(i).GetPath());
+                    Image image = new Image(file.toURI().toString());
                     ImageViewerImage imageViewerImage = CreateImageElement(image, imageList.get(i).GetName());
                     AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
                     imageViewerImages.add(imageViewerImage);
