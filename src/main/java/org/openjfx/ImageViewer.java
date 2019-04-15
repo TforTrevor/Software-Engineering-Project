@@ -27,6 +27,8 @@ public class ImageViewer {
     private HBox imageOptions;
     private JFXButton imageOptionsRemove;
     private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
+    private JFXButton createImagesButton;
+    private JFXButton refreshImagesButton;
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -43,12 +45,19 @@ public class ImageViewer {
         closeImageViewerButton.setVisible(false);
         closeImageViewerButton.setOnAction((event) -> CloseImage());
 
-        JFXButton button = new JFXButton();
-        button.setOnAction((event) -> CreateImages());
-        button.setPrefSize(256, 256);
-        button.getStyleClass().add("primaryColor");
-        button.setText("Create 100 Images");
-        masonryPane.getChildren().add(button);
+        createImagesButton = new JFXButton();
+        createImagesButton.setOnAction((event) -> CreateImages());
+        createImagesButton.setPrefSize(256, 256);
+        createImagesButton.getStyleClass().add("primaryColor");
+        createImagesButton.setText("Create Images");
+        masonryPane.getChildren().add(createImagesButton);
+
+        refreshImagesButton = new JFXButton();
+        refreshImagesButton.setOnAction((event) -> LoadImages());
+        refreshImagesButton.setPrefSize(256, 256);
+        refreshImagesButton.getStyleClass().add("primaryColor");
+        refreshImagesButton.setText("Refresh Images");
+        masonryPane.getChildren().add(refreshImagesButton);
 
         imagePaths = new XMLImageEditor();
 
@@ -65,6 +74,12 @@ public class ImageViewer {
     private void LoadImages() {
         Thread imageThread = new Thread(() -> {
             imageList = imagePaths.GetXMLImages();
+            Platform.runLater(() -> {
+                masonryPane.getChildren().clear();
+                masonryPane.getChildren().add(createImagesButton);
+                masonryPane.getChildren().add(refreshImagesButton);
+            });
+            imageViewerImages.clear();
             for (int i = 0; i < imageList.size(); i++) {
                 try {
                     ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
