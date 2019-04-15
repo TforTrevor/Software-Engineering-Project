@@ -56,9 +56,9 @@ public class ImageViewer {
     }
 
     private void CreateImages() {
-        imagePaths.CreateXMLImage("Test", "Hello", "C:/Users/Trevor/Desktop/ani3.png");
-        imagePaths.CreateXMLImage("Test", "Hello", "C:/Users/Trevor/Desktop/ani3.png");
-        imagePaths.CreateXMLImage("Test", "Hello", "C:/Users/Trevor/Desktop/ani3.png");
+        imagePaths.CreateXMLImage("Test", "Hello", "ani3.png");
+        imagePaths.CreateXMLImage("Test", "Hello", "ani3.png");
+        imagePaths.CreateXMLImage("Test", "Hello", "ani3.png");
         LoadImages();
     }
 

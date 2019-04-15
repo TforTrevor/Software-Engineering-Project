@@ -19,12 +19,13 @@ import java.util.ArrayList;
 public class XMLImageEditor {
 
     private Document document;
-    private String filePath = "C:/Users/Trevor/Desktop/images.xml";
+    //private String filePath = "C:/Users/Trevor/Desktop/images.xml";
+    private String filePath = "images.xml";
 
     XMLImageEditor() {
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            InputStream xmlInputStream = classLoader.getResourceAsStream("images.xml");
+            //ClassLoader classLoader = getClass().getClassLoader();
+            //InputStream xmlInputStream = classLoader.getResourceAsStream("images.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             //document = dBuilder.parse(xmlInputStream);
@@ -66,8 +67,9 @@ public class XMLImageEditor {
 
     void CreateXMLImage(String tag, String name, String path) {
         try {
+            File file = new File(path);
             Element pathElement = document.createElement("path");
-            pathElement.setTextContent(path);
+            pathElement.setTextContent(file.getAbsolutePath());
 
             Element imageElement = document.createElement("image");
             imageElement.setAttribute("name", name);
