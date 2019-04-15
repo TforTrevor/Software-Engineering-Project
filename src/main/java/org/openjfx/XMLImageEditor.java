@@ -14,6 +14,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class XMLImageEditor {
@@ -29,8 +32,17 @@ public class XMLImageEditor {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             //document = dBuilder.parse(xmlInputStream);
-            document = dBuilder.parse(filePath);
-            document.getDocumentElement().normalize();
+            Path path = Paths.get(filePath);
+            if (Files.exists(path)) {
+                System.out.println("Opening existing document");
+                document = dBuilder.parse(filePath);
+                document.getDocumentElement().normalize();
+            } else {
+                System.out.println("Created new document");
+                document = dBuilder.newDocument();
+                Element rootElement = document.createElement("images");
+                document.appendChild(rootElement);
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
