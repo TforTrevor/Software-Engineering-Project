@@ -28,6 +28,7 @@ public class ImageViewer {
     private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
     private JFXButton createImagesButton;
     private JFXButton refreshImagesButton;
+    private Thread hideImagesThread;
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -59,6 +60,8 @@ public class ImageViewer {
         masonryPane.getChildren().add(refreshImagesButton);
 
         imageOptionsRemove.setOnAction((event) -> RemoveImage());
+
+        hideImagesThread = new Thread();
     }
 
     private void CreateImages() {
@@ -99,42 +102,44 @@ public class ImageViewer {
     }
 
     void HideOffScreenImages() {
-        Thread hideImagesThread = new Thread(() -> {
-            try {
-                System.out.println("Starting Hiding Images");
-                int i = 0;
-                while (viewImageTabPane.isVisible()) {
-                    if (imageViewerImages.size() > 0) {
-                        AnchorPane anchorPane = imageViewerImages.get(i).GetAnchorPane();
-                        ImageView imageView = imageViewerImages.get(i).GetImageView();
-                        Platform.runLater(() -> {
-                            Bounds nodeBounds = anchorPane.localToScene(anchorPane.getBoundsInLocal());
-                            Bounds scrollBounds = scrollPane.localToScene(scrollPane.getBoundsInParent());
-                            if (scrollBounds.intersects(nodeBounds)) {
-                                if (!imageView.isVisible()) {
-                                    imageView.setVisible(true);
+        if (!hideImagesThread.isAlive()) {
+            hideImagesThread = new Thread(() -> {
+                try {
+                    System.out.println("Starting Hiding Images");
+                    int i = 0;
+                    while (viewImageTabPane.isVisible()) {
+                        if (imageViewerImages.size() > 0) {
+                            AnchorPane anchorPane = imageViewerImages.get(i).GetAnchorPane();
+                            ImageView imageView = imageViewerImages.get(i).GetImageView();
+                            Platform.runLater(() -> {
+                                Bounds nodeBounds = anchorPane.localToScene(anchorPane.getBoundsInLocal());
+                                Bounds scrollBounds = scrollPane.localToScene(scrollPane.getBoundsInParent());
+                                if (scrollBounds.intersects(nodeBounds)) {
+                                    if (!imageView.isVisible()) {
+                                        imageView.setVisible(true);
+                                    }
+                                } else {
+                                    if (imageView.isVisible()) {
+                                        imageView.setVisible(false);
+                                    }
                                 }
-                            } else {
-                                if (imageView.isVisible()) {
-                                    imageView.setVisible(false);
-                                }
-                            }
-                        });
+                            });
+                        }
+                        i++;
+                        if (i > imageViewerImages.size() - 1) {
+                            i = 0;
+                        }
+                        Thread.sleep(1);
                     }
-                    i++;
-                    if (i > imageViewerImages.size() - 1) {
-                        i = 0;
-                    }
-                    Thread.sleep(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    System.out.println("Stopping Hiding Images");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                System.out.println("Stopping Hiding Images");
-            }
-        });
-        hideImagesThread.setDaemon(true);
-        hideImagesThread.start();
+            });
+            hideImagesThread.setDaemon(true);
+            hideImagesThread.start();
+        }
     }
 
     private ImageViewerImage CreateImageElement(XMLImage xmlImage) {
