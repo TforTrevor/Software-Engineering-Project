@@ -3,18 +3,15 @@ package org.openjfx;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import javax.management.RuntimeErrorException;
-import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ImageViewer {
@@ -24,8 +21,13 @@ public class ImageViewer {
     private StackPane imageViewerPane;
     private ImageView imageViewerImageView;
     private JFXButton closeImageViewerButton;
-    ArrayList<String> imageList = new ArrayList<>();
+    private ArrayList<XMLImage> imageList;
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
+    private HBox imageOptions;
+    private JFXButton imageOptionsRemove;
+    private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
+    private JFXButton createImagesButton;
+    private JFXButton refreshImagesButton;
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -34,48 +36,61 @@ public class ImageViewer {
         imageViewerPane = fxmlController.imageViewerPane;
         imageViewerImageView = fxmlController.imageViewerImageView;
         closeImageViewerButton = fxmlController.closeImageViewerButton;
+        imageOptions = fxmlController.imageOptions;
+        imageOptionsRemove = fxmlController.imageOptionsRemove;
 
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
         closeImageViewerButton.setOnAction((event) -> CloseImage());
 
-        JFXButton button = new JFXButton();
-        button.setOnAction((event) -> CreateImages());
-        button.setPrefSize(256, 256);
-        button.getStyleClass().add("primaryColor");
-        button.setText("Create 100 Images");
-        masonryPane.getChildren().add(button);
+        createImagesButton = new JFXButton();
+        createImagesButton.setOnAction((event) -> CreateImages());
+        createImagesButton.setPrefSize(256, 256);
+        createImagesButton.getStyleClass().add("primaryColor");
+        createImagesButton.setText("Create Images");
+        masonryPane.getChildren().add(createImagesButton);
+
+        refreshImagesButton = new JFXButton();
+        refreshImagesButton.setOnAction((event) -> LoadImages());
+        refreshImagesButton.setPrefSize(256, 256);
+        refreshImagesButton.getStyleClass().add("primaryColor");
+        refreshImagesButton.setText("Refresh Images");
+        masonryPane.getChildren().add(refreshImagesButton);
+
+        imageOptionsRemove.setOnAction((event) -> RemoveImage());
     }
 
     private void CreateImages() {
-        for (int i = 0; i < 100; i++) {
-            imageList.add("C:/Users/Trevor/Desktop/ani2.png");
-        }
+        XMLImageEditor xmlImageEditor = new XMLImageEditor();
+        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
+        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
+        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
         LoadImages();
     }
 
     private void LoadImages() {
         Thread imageThread = new Thread(() -> {
-            try {
-                for (int i = 0; i < imageList.size(); i++) {
-                    //RESOURCES FOLDER
-                    ClassLoader classLoader = getClass().getClassLoader();
-                    InputStream inputStream = classLoader.getResourceAsStream("ani2.png");
-                    File file = new File(classLoader.getResource("ani2.png").getFile());
-                    Image image = new Image(inputStream);
-                    //DIRECT FILE PATH
-                    //File file = new File(imageList.get(i));
-                    //Image image = new Image(file.toURI().toString());
-                    ImageViewerImage imageViewerImage = CreateImageElement(image, file.getName());
+            XMLImageEditor xmlImageEditor = new XMLImageEditor();
+            imageList = xmlImageEditor.GetXMLImages();
+            Platform.runLater(() -> {
+                masonryPane.getChildren().clear();
+                masonryPane.getChildren().add(createImagesButton);
+                masonryPane.getChildren().add(refreshImagesButton);
+            });
+            imageViewerImages.clear();
+            for (int i = 0; i < imageList.size(); i++) {
+                try {
+                    ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
                     AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
                     imageViewerImages.add(imageViewerImage);
                     Platform.runLater(() -> {
                         masonryPane.getChildren().add(imageAnchorPane);
                     });
                 }
-            } finally {
-                //HideOffScreenImages();
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         imageThread.setDaemon(true);
@@ -83,9 +98,10 @@ public class ImageViewer {
         HideOffScreenImages();
     }
 
-    private void HideOffScreenImages() {
+    void HideOffScreenImages() {
         Thread hideImagesThread = new Thread(() -> {
             try {
+                System.out.println("Starting Hiding Images");
                 int i = 0;
                 while (viewImageTabPane.isVisible()) {
                     if (imageViewerImages.size() > 0) {
@@ -97,12 +113,10 @@ public class ImageViewer {
                             if (scrollBounds.intersects(nodeBounds)) {
                                 if (!imageView.isVisible()) {
                                     imageView.setVisible(true);
-                                    System.out.println("Showing Image");
                                 }
                             } else {
                                 if (imageView.isVisible()) {
                                     imageView.setVisible(false);
-                                    System.out.println("Hiding Image");
                                 }
                             }
                         });
@@ -113,22 +127,21 @@ public class ImageViewer {
                     }
                     Thread.sleep(1);
                 }
-            } catch (RuntimeException | InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                System.out.println("Stopping Hiding");
+                System.out.println("Stopping Hiding Images");
             }
         });
         hideImagesThread.setDaemon(true);
         hideImagesThread.start();
     }
 
-    private ImageViewerImage CreateImageElement(Image image, String name) {
-        ImageViewerImage imageViewerImage = new ImageViewerImage();
+    private ImageViewerImage CreateImageElement(XMLImage xmlImage) {
+        ImageViewerImage imageViewerImage = new ImageViewerImage(xmlImage);
 
-        imageViewerImage.GetImageView().setImage(image);
-        imageViewerImage.GetImageName().setText(name);
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
+        imageViewerImage.GetCheckBox().setOnAction(event -> SelectImage(imageViewerImage));
 
         return imageViewerImage;
     }
@@ -143,12 +156,51 @@ public class ImageViewer {
 
         JavaFXHelper.AddDropShadow(imageViewerPane);
 
-        imageViewerPane.setVisible(true);
         closeImageViewerButton.setDisable(false);
         closeImageViewerButton.setVisible(true);
 
-        //JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
-        imageViewerPane.setVisible(true);
+        JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
+    }
+
+    private void SelectImage(ImageViewerImage imageViewerImage) {
+        if (imageViewerImage.GetCheckBox().isSelected()) {
+            if (selectedImages.size() < 1) {
+                JavaFXHelper.FadeIn(Duration.seconds(0.1), imageOptions);
+            }
+            selectedImages.add(imageViewerImage);
+        } else {
+            selectedImages.remove(imageViewerImage);
+            if (selectedImages.size() < 1) {
+                JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
+            }
+        }
+    }
+
+    private void RemoveImage() {
+        Thread removeThread = new Thread(() -> {
+            try {
+                XMLImageEditor xmlImageEditor = new XMLImageEditor();
+                for (int i = 0; i < selectedImages.size(); i++) {
+                    XMLImage xmlImage = selectedImages.get(i).GetXMLImage();
+                    String path = xmlImage.GetPath();
+                    xmlImageEditor.RemoveXMLImage(path);
+                    imageList.remove(xmlImage);
+                    imageViewerImages.remove(selectedImages.get(i));
+                    final int index = i;
+                    Platform.runLater(() -> {
+                        masonryPane.getChildren().remove(selectedImages.get(index).GetAnchorPane());
+                    });
+                    Thread.sleep(10);
+                }
+                selectedImages.clear();
+                JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        removeThread.setDaemon(true);
+        removeThread.start();
     }
 
     private void CloseImage() {
