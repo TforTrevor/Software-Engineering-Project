@@ -139,7 +139,7 @@
                         <ImageView fx:id="imageViewerImageView" fitHeight="200.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </StackPane>
-                  <HBox fx:id="imageOptions" alignment="CENTER" spacing="25.0" visible="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <HBox fx:id="imageOptions" alignment="CENTER" pickOnBounds="false" spacing="25.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <JFXButton fx:id="imageOptionsShare" buttonType="RAISED" styleClass="primaryColor" text="Share">
                            <font>

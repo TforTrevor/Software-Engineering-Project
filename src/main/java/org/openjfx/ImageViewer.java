@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class ImageViewer {
@@ -58,16 +57,17 @@ public class ImageViewer {
 
     private void CreateImages() {
         imagePaths.CreateXMLImage("Test", "Hello", "C:/Users/Trevor/Desktop/ani3.png");
-        imageList = imagePaths.GetXMLImages();
+        imagePaths.CreateXMLImage("Test", "Hello", "C:/Users/Trevor/Desktop/ani3.png");
+        imagePaths.CreateXMLImage("Test", "Hello", "C:/Users/Trevor/Desktop/ani3.png");
         LoadImages();
     }
 
     private void LoadImages() {
         Thread imageThread = new Thread(() -> {
+            imageList = imagePaths.GetXMLImages();
             for (int i = 0; i < imageList.size(); i++) {
                 try {
-                    File file = new File(imageList.get(i).GetPath());
-                    ImageViewerImage imageViewerImage = CreateImageElement(file, imageList.get(i).GetName());
+                    ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
                     AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
                     imageViewerImages.add(imageViewerImage);
                     Platform.runLater(() -> {
@@ -122,8 +122,8 @@ public class ImageViewer {
         hideImagesThread.start();
     }
 
-    private ImageViewerImage CreateImageElement(File file, String name) {
-        ImageViewerImage imageViewerImage = new ImageViewerImage(file, name);
+    private ImageViewerImage CreateImageElement(XMLImage xmlImage) {
+        ImageViewerImage imageViewerImage = new ImageViewerImage(xmlImage);
 
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
         imageViewerImage.GetCheckBox().setOnAction(event -> SelectImage(imageViewerImage));
@@ -162,12 +162,29 @@ public class ImageViewer {
     }
 
     private void RemoveImage() {
-        for (int i = 0; i < selectedImages.size(); i++) {
-            String path = selectedImages.get(i).GetFilePath();
-            path = path.replace("\\", "/");
-            System.out.println(path);
-            imagePaths.RemoveXMLImage(path);
-        }
+        Thread removeThread = new Thread(() -> {
+            try {
+                for (int i = 0; i < selectedImages.size(); i++) {
+                    XMLImage xmlImage = selectedImages.get(i).GetXMLImage();
+                    String path = xmlImage.GetPath();
+                    imageList.remove(xmlImage);
+                    imagePaths.RemoveXMLImage(path);
+                    imageViewerImages.remove(selectedImages.get(i));
+                    final int index = i;
+                    Platform.runLater(() -> {
+                        masonryPane.getChildren().remove(selectedImages.get(index).GetAnchorPane());
+                    });
+                    Thread.sleep(10);
+                }
+                selectedImages.clear();
+                JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        removeThread.setDaemon(true);
+        removeThread.start();
     }
 
     private void CloseImage() {
