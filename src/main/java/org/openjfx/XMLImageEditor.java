@@ -95,6 +95,34 @@ public class XMLImageEditor {
         }
     }
 
+    void RemoveXMLImage(String path) {
+        try {
+            NodeList imageGroupList = document.getElementsByTagName("imageGroup");
+            for (int i = 0; i < imageGroupList.getLength(); i++) {
+                Node imageGroupNode = imageGroupList.item(i);
+                if (imageGroupNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element imageGroupElement = (Element) imageGroupNode;
+                    NodeList imageList = imageGroupElement.getElementsByTagName("image");
+                    for (int j = 0; j < imageList.getLength(); j++) {
+                        Node imageNode = imageList.item(j);
+                        if (imageNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element imageElement = (Element) imageNode;
+                            if (path.equals(imageElement.getElementsByTagName("path").item(0).getTextContent())) {
+                                imageElement.getParentNode().removeChild(imageElement);
+                                WriteToXMLFile();
+                                System.out.println("Removing node");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            System.out.println("No such node found");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void WriteToXMLFile() {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

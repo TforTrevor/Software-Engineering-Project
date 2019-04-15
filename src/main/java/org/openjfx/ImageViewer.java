@@ -26,6 +26,7 @@ public class ImageViewer {
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
     private XMLImageEditor imagePaths;
     private HBox imageOptions;
+    private JFXButton imageOptionsRemove;
     private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
 
     ImageViewer(FXMLController fxmlController) {
@@ -36,6 +37,7 @@ public class ImageViewer {
         imageViewerImageView = fxmlController.imageViewerImageView;
         closeImageViewerButton = fxmlController.closeImageViewerButton;
         imageOptions = fxmlController.imageOptions;
+        imageOptionsRemove = fxmlController.imageOptionsRemove;
 
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
@@ -50,6 +52,8 @@ public class ImageViewer {
         masonryPane.getChildren().add(button);
 
         imagePaths = new XMLImageEditor();
+
+        imageOptionsRemove.setOnAction((event) -> RemoveImage());
     }
 
     private void CreateImages() {
@@ -63,8 +67,7 @@ public class ImageViewer {
             for (int i = 0; i < imageList.size(); i++) {
                 try {
                     File file = new File(imageList.get(i).GetPath());
-                    Image image = new Image(file.toURI().toString());
-                    ImageViewerImage imageViewerImage = CreateImageElement(image, imageList.get(i).GetName());
+                    ImageViewerImage imageViewerImage = CreateImageElement(file, imageList.get(i).GetName());
                     AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
                     imageViewerImages.add(imageViewerImage);
                     Platform.runLater(() -> {
@@ -119,11 +122,9 @@ public class ImageViewer {
         hideImagesThread.start();
     }
 
-    private ImageViewerImage CreateImageElement(Image image, String name) {
-        ImageViewerImage imageViewerImage = new ImageViewerImage();
+    private ImageViewerImage CreateImageElement(File file, String name) {
+        ImageViewerImage imageViewerImage = new ImageViewerImage(file, name);
 
-        imageViewerImage.GetImageView().setImage(image);
-        imageViewerImage.GetImageName().setText(name);
         imageViewerImage.GetButton().setOnAction(event -> OpenImage(imageViewerImage));
         imageViewerImage.GetCheckBox().setOnAction(event -> SelectImage(imageViewerImage));
 
@@ -148,15 +149,24 @@ public class ImageViewer {
 
     private void SelectImage(ImageViewerImage imageViewerImage) {
         if (imageViewerImage.GetCheckBox().isSelected()) {
+            if (selectedImages.size() < 1) {
+                JavaFXHelper.FadeIn(Duration.seconds(0.1), imageOptions);
+            }
             selectedImages.add(imageViewerImage);
-            JavaFXHelper.FadeIn(Duration.seconds(0.1), imageOptions);
-            System.out.println("Added selection");
         } else {
             selectedImages.remove(imageViewerImage);
             if (selectedImages.size() < 1) {
                 JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
-                System.out.println("Removed selection");
             }
+        }
+    }
+
+    private void RemoveImage() {
+        for (int i = 0; i < selectedImages.size(); i++) {
+            String path = selectedImages.get(i).GetFilePath();
+            path = path.replace("\\", "/");
+            System.out.println(path);
+            imagePaths.RemoveXMLImage(path);
         }
     }
 

@@ -6,23 +6,26 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.io.File;
 import java.util.Stack;
 
 class ImageViewerImage {
     private AnchorPane anchorPane;
     private VBox vBox;
     private StackPane stackPane;
+    private File file;
     private ImageView imageView;
     private Label imageName;
     private JFXButton button;
     private JFXCheckBox checkBox;
-    ImageViewerImage() {
+    ImageViewerImage(File file, String name) {
         anchorPane = new AnchorPane();
         vBox = new VBox();
         stackPane = new StackPane();
@@ -71,6 +74,11 @@ class ImageViewerImage {
         button.getStyleClass().add("sharpButton");
         button.setRipplerFill(Color.color(1,1,1));
         JavaFXHelper.AddDropShadow(imageView);
+
+        this.file = file;
+        Image image = new Image(file.toURI().toString());
+        imageView.setImage(image);
+        imageName.setText(name);
     }
     AnchorPane GetAnchorPane() {
         return anchorPane;
@@ -87,4 +95,5 @@ class ImageViewerImage {
     JFXCheckBox GetCheckBox() {
         return checkBox;
     }
+    String GetFilePath() { return file.getAbsolutePath(); }
 }
