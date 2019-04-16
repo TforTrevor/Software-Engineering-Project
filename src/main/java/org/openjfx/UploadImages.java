@@ -22,7 +22,7 @@ public class UploadImages {
     private void SelectImages() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Images");
-        ExtensionFilter extensionFilter = new ExtensionFilter("Images (*.png, *.jpg)", "*.png", "*.jpg");
+        ExtensionFilter extensionFilter = new ExtensionFilter("Images (*.png, *.jpg, *.gif)", "*.png", "*.jpg", "*.gif");
         fileChooser.getExtensionFilters().add(extensionFilter);
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
         if (selectedFiles != null) {
