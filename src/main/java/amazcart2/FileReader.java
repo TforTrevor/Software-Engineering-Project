@@ -66,6 +66,7 @@ public class FileReader {
                                 fileList.add(file.getAbsolutePath());
                             }
                         } else {
+
                             if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate))) {
                                 //fileList.add(file.getAbsolutePath() + file.getName());
                                 fileList.add(file.getAbsolutePath());
@@ -111,15 +112,30 @@ public class FileReader {
         Integer modMonth = Integer.parseInt(modifiedDate.substring(5, 7));
         Integer startMonth = Integer.parseInt(startDate.substring(5, 7));
         Integer endMonth = Integer.parseInt(endDate.substring(5, 7));
+
         if (modYear.equals(startYear) || modYear.equals(endYear)) {
+            System.out.println(modifiedDate);
+            System.out.println("Month"+modMonth+"Year:"+startYear);
+            System.out.println(startDate);
+            System.out.println("Month"+startMonth+"Year:"+startYear);
             if (modMonth > startMonth && modMonth < endMonth) {
+
                 return true;
-            } else if (modMonth.equals(startMonth) && modMonth.equals(endMonth)) {
+            }
+            else if(modMonth.equals(startMonth))
+            {
                 Integer modDay = Integer.parseInt(modifiedDate.substring(8, 10));
                 Integer startDay = Integer.parseInt(startDate.substring(8, 10));
-                Integer endDay = Integer.parseInt(endDate.substring(8, 10));
-                if (modDay >= startDay && modDay <= endDay) {
+                if(modDay>=startDay)
+                {
                     return true;
+                }
+            }
+            else if (modMonth.equals(endMonth)) {
+                Integer modDay = Integer.parseInt(modifiedDate.substring(8, 10));
+                Integer endDay = Integer.parseInt(endDate.substring(8, 10));
+                if ( modDay <= endDay) {
+                       return true;
                 }
             }
         }
