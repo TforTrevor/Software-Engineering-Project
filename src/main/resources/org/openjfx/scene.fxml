@@ -296,7 +296,7 @@
                               <Font size="24.0" />
                            </font>
                         </JFXButton>
-                        <Label fx:id="emailLabel" text="Invald Emails" textFill="RED" visible="false">
+                        <Label fx:id="emailLabel" text="Invalid Emails" textFill="RED" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>

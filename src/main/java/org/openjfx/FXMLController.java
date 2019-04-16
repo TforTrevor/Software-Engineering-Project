@@ -2,6 +2,7 @@ package org.openjfx;
 
 import com.jfoenix.controls.*;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -119,8 +120,6 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image image = new Image("file:" + "C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
-        System.out.println("Image loading error? " + image.isError());
         images = new ArrayList<ImageView>();
         tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
         //VIEW IMAGES TAB
@@ -156,32 +155,48 @@ public class FXMLController implements Initializable {
     }
 
     private void SendEmailButtonAction(ActionEvent event) {
-        String recipients = recipientTextField.getText();
-        String[] parsedRecipients = recipients.split(",");
-        boolean validEmails = true;
-        for (String s : parsedRecipients) {
-            if (!emailHelper.VerifyEmail(s)) {
-                validEmails = false;
-            }
-        }
-        if (validEmails) {
-            ArrayList<ImageViewerImage> selectedImages = imageViewer.getSelectedImages();
-            emailHelper.setImages(selectedImages);
+        new Thread(() -> {
+            String recipients = recipientTextField.getText();
+            String[] parsedRecipients = recipients.split(",");
+            boolean validEmails = true;
             for (String s : parsedRecipients) {
-                emailHelper.AddRecipient(s);
+                if (!emailHelper.VerifyEmail(s)) {
+                    validEmails = false;
+                }
             }
-            emailHelper.SetSubject(subjectTextField.getText());
-            emailHelper.SetBody(bodyTextArea.getText());
-            emailHelper.SendEmail();
-            emailHelper.ClearAll();
-            emailLabel.setTextFill(Color.web("#000000"));
-            emailLabel.setText("Sent Successfully");
-            emailLabel.setVisible(true);
-        } else {
-            emailLabel.setTextFill(Color.web("#FF0000"));
-            emailLabel.setText("Invalid Emails");
-            emailLabel.setVisible(true);
-        }
+            if (validEmails) {
+                boolean success = emailHelper.RunEmail(imageViewer, parsedRecipients, subjectTextField, bodyTextArea);
+                if (success) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            emailLabel.setTextFill(Color.web("#000000"));
+                            emailLabel.setText("Sent Successfully");
+                            emailLabel.setVisible(true);
+                        }
+                    });
+                }
+                else {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            emailLabel.setTextFill(Color.web("#FF0000"));
+                            emailLabel.setText("Error Sending");
+                            emailLabel.setVisible(true);
+                        }
+                    });
+                }
+            } else {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        emailLabel.setTextFill(Color.web("#FF0000"));
+                        emailLabel.setText("Invalid Emails");
+                        emailLabel.setVisible(true);
+                    }
+                });
+            }
+        }).start();
     }
 
     private void ClearCacheButtonAction(ActionEvent event) {

@@ -1,10 +1,14 @@
 package org.openjfx;
 
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.swing.*;
 import javax.swing.text.html.ImageView;
 import java.io.File;
 import java.util.ArrayList;
@@ -40,6 +44,19 @@ public class EmailHelper {
                 return new PasswordAuthentication(from, "DasInDiabloNotDestiny");
             }
         });
+    }
+
+    public boolean RunEmail(ImageViewer imageViewer, String[] parsedRecipients, JFXTextField subjectTextField, JFXTextArea bodyTextArea) {
+        ArrayList<ImageViewerImage> selectedImages = imageViewer.getSelectedImages();
+        setImages(selectedImages);
+        for (String s : parsedRecipients) {
+            AddRecipient(s);
+        }
+        SetSubject(subjectTextField.getText());
+        SetBody(bodyTextArea.getText());
+        boolean success = SendEmail();
+        ClearAll();
+        return success;
     }
 
     public void AddRecipient(String recipient) {
@@ -80,7 +97,7 @@ public class EmailHelper {
         }
     }
 
-    public void SendEmail() {
+    public boolean SendEmail() {
         try {
             int imagesAttached = 0;
             int imageBytes=0;
@@ -132,6 +149,8 @@ public class EmailHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 }
