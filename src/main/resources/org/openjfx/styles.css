@@ -116,3 +116,14 @@
 .scroll-pane .corner {
     -fx-background-insets: 0;
 }
+
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #1976d2;
+}
+.jfx-tab-pane .tab-header-area .jfx-rippler {
+    -jfx-rippler-fill: #ffffff;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-background-color: #BBDEFB;
+    -fx-pref-height: 5px;
+}
