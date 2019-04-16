@@ -5,6 +5,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.swing.text.html.ImageView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,20 +17,14 @@ public class EmailHelper {
     private String from;
     private String subject;
     private String body;
-    private Properties props;
     private Session session;
 
     public EmailHelper() {
         images = new ArrayList<>();
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\dragon_fire.jpg"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\momoyaz.png"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\scorbunnyHop.png"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\deep.png"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\maxresdefault.jpg"));
         //images.add(new File("D:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\datapc64_merged_bnk_textures3.forge"));
         to = new ArrayList<>();
         from = "oldtimerimagefinder@gmail.com";
-        props = System.getProperties();
+        Properties props = System.getProperties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
@@ -76,6 +71,13 @@ public class EmailHelper {
 
     public void SetSubject(String subject) {
         this.subject = subject;
+    }
+
+    public void setImages(ArrayList<ImageViewerImage> images) {
+        this.images.clear();
+        for (ImageViewerImage image: images) {
+            this.images.add(new File(image.GetXMLImage().GetPath()));
+        }
     }
 
     public void SendEmail() {

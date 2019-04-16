@@ -140,6 +140,7 @@ public class FXMLController implements Initializable {
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
         //SETTINGS TAB
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
+        imageOptionsShare.setOnAction((event) -> ShowTab(shareTabPane));
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
         clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
@@ -164,6 +165,8 @@ public class FXMLController implements Initializable {
             }
         }
         if (validEmails) {
+            ArrayList<ImageViewerImage> selectedImages = imageViewer.getSelectedImages();
+            emailHelper.setImages(selectedImages);
             for (String s : parsedRecipients) {
                 emailHelper.AddRecipient(s);
             }

@@ -213,4 +213,7 @@ public class ImageViewer {
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
     }
+    public ArrayList<ImageViewerImage> getSelectedImages() {
+        return (ArrayList<ImageViewerImage>) selectedImages.clone();
+    }
 }
