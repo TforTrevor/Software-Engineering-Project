@@ -11,6 +11,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -63,6 +64,15 @@
                   <String fx:value="primaryColor" />
                </styleClass>
             </JFXButton>
+            <JFXButton fx:id="helpTabButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="400.0" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Help" textAlignment="CENTER" textFill="WHITE">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <styleClass>
+                  <String fx:value="sharpButton" />
+                  <String fx:value="primaryColor" />
+               </styleClass>
+            </JFXButton>
             <JFXButton fx:id="settingsTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Settings" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
@@ -78,7 +88,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="viewImageTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="viewImageTabPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ScrollPane fx:id="imagesScrollPane" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
@@ -155,7 +165,7 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="uploadTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -307,6 +317,89 @@
                <padding>
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </padding>
+            </AnchorPane>
+            <AnchorPane fx:id="helpTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane hbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                        <VBox prefWidth="860.0" spacing="10.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="primaryColor">
+                                 <children>
+                                    <Label styleClass="primaryColor" text="Help">
+                                       <font>
+                                          <Font size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <effect>
+                                    <DropShadow blurType="GAUSSIAN" color="#00000080" height="20.0" offsetX="2.5" offsetY="2.5" radius="9.5" width="20.0" />
+                                 </effect>
+                              </StackPane>
+                              <VBox>
+                                 <children>
+                                  <TitledPane expanded="false" text="View Images">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <TextFlow>
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Epic meme time" />
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                  </TitledPane>
+                                    <TitledPane expanded="false" layoutX="10.0" layoutY="10.0" text="Upload Images">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <TextFlow>
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Epic meme time" />
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane expanded="false" layoutX="10.0" layoutY="72.0" text="Search Images">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <TextFlow>
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Epic meme time" />
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane expanded="false" layoutX="10.0" layoutY="134.0" text="Share Images">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <TextFlow>
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Epic meme time" />
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                    </content>
+                  </ScrollPane>
+               </children>
             </AnchorPane>
             <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>

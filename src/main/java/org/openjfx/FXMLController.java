@@ -92,6 +92,12 @@ public class FXMLController implements Initializable {
     @FXML
     private Label emailLabel;
 
+    //HELP TAB
+    @FXML
+    private JFXButton helpTabButton;
+    @FXML
+    private AnchorPane helpTabPane;
+
     //SETTINGS TAB
     @FXML
     private JFXButton settingsTabButton;
@@ -122,7 +128,7 @@ public class FXMLController implements Initializable {
         Image image = new Image("file:" + "C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
         System.out.println("Image loading error? " + image.isError());
         images = new ArrayList<ImageView>();
-        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
+        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, helpTabPane, settingsTabPane));
         //VIEW IMAGES TAB
         imageViewer = new ImageViewer(this);
         viewTabButton.setOnAction((event) -> {
@@ -138,6 +144,8 @@ public class FXMLController implements Initializable {
         //SHARE TAB
         shareTabButton.setOnAction((event) -> ShowTab(shareTabPane));
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
+        //HELP TAB
+        helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
         //SETTINGS TAB
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
         clearCacheButton.setOnAction(this::ClearCacheButtonAction);
