@@ -13,7 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import java.lang.management.PlatformManagedObject;
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImageViewer {
@@ -33,6 +34,8 @@ public class ImageViewer {
     private Thread hideImagesThread;
     private JFXTextField searchField;
     private ArrayList<ImageViewerImage> showImages = new ArrayList<>();
+    private JFXButton openOriginal;
+    private ImageViewerImage openImage;
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -44,6 +47,7 @@ public class ImageViewer {
         imageOptions = fxmlController.imageOptions;
         imageOptionsRemove = fxmlController.imageOptionsRemove;
         searchField = fxmlController.imageViewerSearch;
+        openOriginal = fxmlController.imageViewerOpenButton;
 
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
@@ -69,11 +73,12 @@ public class ImageViewer {
         hideImagesThread = new Thread();
 
         searchField.setOnAction((event) -> SearchImages());
+        openOriginal.setOnAction((event) -> OpenOriginal());
     }
 
     private void SearchImages() {
         Thread searchImagesThread = new Thread(() -> {
-            String input = searchField.getText();
+            String input = searchField.getText().toLowerCase();
             if (input.equals("")) {
                 Platform.runLater(() -> {
                     masonryPane.getChildren().clear();
@@ -89,7 +94,8 @@ public class ImageViewer {
             }
             for (int i = 0; i < imageViewerImages.size(); i++) {
                 ImageViewerImage image = imageViewerImages.get(i);
-                if (image.GetImageName().contains(input)) {
+                String imageName = image.GetImageName().toLowerCase();
+                if (imageName.contains(input)) {
                     if (!masonryPane.getChildren().contains(image.GetAnchorPane())) {
                         Platform.runLater(() -> {
                             masonryPane.getChildren().add(image.GetAnchorPane());
@@ -196,6 +202,7 @@ public class ImageViewer {
     }
 
     private void OpenImage(ImageViewerImage imageViewerImage) {
+        openImage = imageViewerImage;
         Image image = imageViewerImage.GetImageView().getImage();
         imageViewerImageView.setImage(image);
 
@@ -257,7 +264,18 @@ public class ImageViewer {
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
     }
-    public ArrayList<ImageViewerImage> getSelectedImages() {
+
+    private void OpenOriginal() {
+        try {
+            if (openImage.GetFile().exists()) {
+                Desktop.getDesktop().open(openImage.GetFile());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ArrayList<ImageViewerImage> GetSelectedImages() {
         return (ArrayList<ImageViewerImage>) selectedImages.clone();
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import java.io.File;
 
@@ -24,6 +25,7 @@ class ImageViewerImage {
     private Label imageName;
     private JFXButton button;
     private JFXCheckBox checkBox;
+    private File file;
     ImageViewerImage(XMLImage xmlImage) {
         anchorPane = new AnchorPane();
         vBox = new VBox();
@@ -53,6 +55,7 @@ class ImageViewerImage {
         imageView.setFitHeight(225);
         imageName.setTextOverrun(OverrunStyle.ELLIPSIS);
         imageName.setMaxWidth(256);
+        imageName.setAlignment(Pos.CENTER);
         imageName.setPadding(new Insets(5, 0, 0, 0));
         button.setPrefSize(256, 256);
 
@@ -77,7 +80,7 @@ class ImageViewerImage {
         JavaFXHelper.AddDropShadow(imageView);
 
         this.xmlImage = xmlImage;
-        File file = new File(xmlImage.GetPath());
+        file = new File(xmlImage.GetPath());
         Image image = new Image(file.toURI().toString());
         imageView.setImage(image);
         imageName.setText(xmlImage.GetName());
@@ -99,4 +102,5 @@ class ImageViewerImage {
         return checkBox;
     }
     XMLImage GetXMLImage() { return xmlImage; }
+    File GetFile() { return file; }
 }

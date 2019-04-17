@@ -8,8 +8,6 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.swing.*;
-import javax.swing.text.html.ImageView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +45,7 @@ public class EmailHelper {
     }
 
     public boolean RunEmail(ImageViewer imageViewer, String[] parsedRecipients, JFXTextField subjectTextField, JFXTextArea bodyTextArea) {
-        ArrayList<ImageViewerImage> selectedImages = imageViewer.getSelectedImages();
+        ArrayList<ImageViewerImage> selectedImages = imageViewer.GetSelectedImages();
         setImages(selectedImages);
         for (String s : parsedRecipients) {
             AddRecipient(s);

@@ -50,6 +50,8 @@ public class FXMLController implements Initializable {
     JFXButton imageOptionsRemove;
     @FXML
     JFXTextField imageViewerSearch;
+    @FXML
+    JFXButton imageViewerOpenButton;
 
     //UPLOAD TAB
     @FXML
