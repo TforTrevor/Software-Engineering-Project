@@ -44,38 +44,42 @@ public class FileReader {
             //Checks to see if thread wants to be run, breaks otherwise
             if (runThread) {
                 try {
-                    if (file.isDirectory()) {
-                        filesInFolder(file);
-                    } else if (file.getName().toLowerCase().contains(".jpg") || file.getName().toLowerCase().contains(".png")) {
-                        Path file2 = Paths.get(file.getAbsolutePath());
-                        BasicFileAttributes attr = Files.readAttributes(file2, BasicFileAttributes.class);
+                    if (!file.getAbsolutePath().contains("\\Downloads\\")) {
+                        if (file.isDirectory()) {
 
-                        String endDate3 = convertTime(endDate);
-                        String startDate3 = convertTime(startDate);
-                        Integer endYear = Integer.parseInt(endDate3.substring(0, 4));
-                        Integer startYear = Integer.parseInt(startDate3.substring(0, 4));
-                        if (endYear.equals(startYear + 1)) {
-                            String endDate1 = "12/31/" + startYear;
-                            String startDate2 = "01/01/" + endYear;
-                            if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate1))) {
-                                //fileList.add(file.getAbsolutePath() + file.getName());
-                                fileList.add(file.getAbsolutePath());
-                            }
-                            if (filter2(attr.creationTime().toString(), convertTime(startDate2), convertTime(endDate))) {
-                                //fileList.add(file.getAbsolutePath() + file.getName());
-                                fileList.add(file.getAbsolutePath());
-                            }
-                        } else {
+                            filesInFolder(file);
 
-                            if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate))) {
-                                //fileList.add(file.getAbsolutePath() + file.getName());
-                                fileList.add(file.getAbsolutePath());
+                        } else if (file.getName().toLowerCase().contains(".jpg") || file.getName().toLowerCase().contains(".png")) {
+                            Path file2 = Paths.get(file.getAbsolutePath());
+                            BasicFileAttributes attr = Files.readAttributes(file2, BasicFileAttributes.class);
+
+                            String endDate3 = convertTime(endDate);
+                            String startDate3 = convertTime(startDate);
+                            Integer endYear = Integer.parseInt(endDate3.substring(0, 4));
+                            Integer startYear = Integer.parseInt(startDate3.substring(0, 4));
+                            if (endYear.equals(startYear + 1)) {
+                                String endDate1 = "12/31/" + startYear;
+                                String startDate2 = "01/01/" + endYear;
+                                if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate1))) {
+                                    //fileList.add(file.getAbsolutePath() + file.getName());
+                                    fileList.add(file.getAbsolutePath());
+                                }
+                                if (filter2(attr.creationTime().toString(), convertTime(startDate2), convertTime(endDate))) {
+                                    //fileList.add(file.getAbsolutePath() + file.getName());
+                                    fileList.add(file.getAbsolutePath());
+                                }
+                            } else {
+
+                                if (filter2(attr.creationTime().toString(), convertTime(startDate), convertTime(endDate))) {
+                                    //fileList.add(file.getAbsolutePath() + file.getName());
+                                    fileList.add(file.getAbsolutePath());
+                                }
                             }
                         }
                     }
+                    } catch(Exception ignore){
+                    }
 
-                } catch (Exception ignore) {
-                }
             }
             else {
                 break;
@@ -114,13 +118,18 @@ public class FileReader {
         Integer endMonth = Integer.parseInt(endDate.substring(5, 7));
 
         if (modYear.equals(startYear) || modYear.equals(endYear)) {
-            System.out.println(modifiedDate);
-            System.out.println("Month"+modMonth+"Year:"+startYear);
-            System.out.println(startDate);
-            System.out.println("Month"+startMonth+"Year:"+startYear);
             if (modMonth > startMonth && modMonth < endMonth) {
-
                 return true;
+            }
+            else if(modMonth.equals(startMonth)&&modMonth.equals(endMonth))
+            {
+                Integer modDay = Integer.parseInt(modifiedDate.substring(8, 10));
+                Integer startDay = Integer.parseInt(startDate.substring(8, 10));
+                Integer endDay = Integer.parseInt(endDate.substring(8, 10));
+                if(modDay>=startDay&&modDay <= endDay)
+                {
+                    return true;
+                }
             }
             else if(modMonth.equals(startMonth))
             {
@@ -138,6 +147,7 @@ public class FileReader {
                        return true;
                 }
             }
+
         }
         return false;
     }
