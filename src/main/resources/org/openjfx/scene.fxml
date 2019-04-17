@@ -77,14 +77,9 @@
                <children>
                   <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="primaryColor">
+                        <HBox alignment="CENTER_LEFT" styleClass="primaryColorLight">
                            <children>
-                              <Label styleClass="primaryColor" text="Search:">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="imageViewerSearch" focusColor="WHITE" styleClass="primaryColor" unFocusColor="WHITE">
+                              <JFXTextField fx:id="imageViewerSearch" focusColor="WHITE" prefWidth="500.0" promptText="Search Images" unFocusColor="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
