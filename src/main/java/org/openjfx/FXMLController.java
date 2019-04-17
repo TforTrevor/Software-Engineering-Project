@@ -103,13 +103,15 @@ public class FXMLController implements Initializable {
     @FXML
     private AnchorPane settingsTabPane;
     @FXML
-    private AnchorPane clearCachePane;
+    AnchorPane clearCachePane;
     @FXML
-    private JFXButton clearCacheButton;
+    JFXButton clearCacheButton;
     @FXML
-    private JFXButton clearCacheAcceptButton;
+    JFXButton clearCacheAcceptButton;
     @FXML
-    private JFXButton clearCacheDenyButton;
+    JFXButton clearCacheDenyButton;
+    @FXML
+    JFXButton chooseSearchFolder;
 
     private ImageViewer imageViewer;
 
@@ -139,10 +141,8 @@ public class FXMLController implements Initializable {
         //HELP TAB
         helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
         //SETTINGS TAB
+        Settings settings = new Settings(this);
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
-        clearCacheButton.setOnAction(this::ClearCacheButtonAction);
-        clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
-        clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
 
         emailHelper = new EmailHelper();
     }
@@ -172,24 +172,6 @@ public class FXMLController implements Initializable {
             emailLabel.setText("Invalid Emails");
             emailLabel.setVisible(true);
         }
-    }
-
-    private void ClearCacheButtonAction(ActionEvent event) {
-        settingsTabPane.setDisable(true);
-        clearCachePane.setVisible(true);
-        tabPane.setDisable(true);
-    }
-
-    private void ClearCacheAcceptAction(ActionEvent event) {
-        settingsTabPane.setDisable(false);
-        clearCachePane.setVisible(false);
-        tabPane.setDisable(false);
-    }
-
-    private void ClearCacheDenyAction(ActionEvent event) {
-        settingsTabPane.setDisable(false);
-        clearCachePane.setVisible(false);
-        tabPane.setDisable(false);
     }
 
     private void ShowTab(AnchorPane keepPane) {

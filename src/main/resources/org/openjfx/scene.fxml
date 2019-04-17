@@ -528,41 +528,30 @@
                   </JFXTabPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="settingsTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="CENTER" spacing="20.0" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label text="Settings">
                            <font>
                               <Font size="45.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="clearCacheButton" prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Clear Cache" textFill="WHITE">
+                        <JFXButton fx:id="clearCacheButton" buttonType="RAISED" prefWidth="250.0" ripplerFill="WHITE" styleClass="primaryColor" stylesheets="@styles.css" text="Clear Cache" textFill="WHITE">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Connect Facebook" textFill="WHITE">
+                        <JFXButton fx:id="chooseSearchFolder" buttonType="RAISED" layoutX="425.0" layoutY="388.0" prefWidth="250.0" ripplerFill="WHITE" styleClass="primaryColor" stylesheets="@styles.css" text="Choose Folder" textFill="WHITE">
                            <font>
                               <Font size="24.0" />
                            </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </JFXButton>
-                        <JFXButton prefWidth="250.0" styleClass="primaryColor" stylesheets="@styles.css" text="Email" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
                         </JFXButton>
                      </children>
                   </VBox>
-                  <AnchorPane fx:id="clearCachePane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="clearCachePane" styleClass="transparent" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox alignment="CENTER" styleClass="transparent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <VBox alignment="CENTER" styleClass="backgroundColorDark">
                                  <children>
@@ -602,10 +591,6 @@
                            </children>
                         </VBox>
                      </children>
-                     <styleClass>
-                        <String fx:value="backgroundColor" />
-                        <String fx:value="transparent" />
-                     </styleClass>
                   </AnchorPane>
                </children>
             </AnchorPane>
