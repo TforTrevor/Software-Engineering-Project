@@ -79,8 +79,6 @@ public class FXMLController implements Initializable {
 
     //SHARE TAB
     @FXML
-    private JFXButton shareTabButton;
-    @FXML
     private AnchorPane shareTabPane;
     @FXML
     private JFXButton sendEmailButton;
@@ -135,7 +133,6 @@ public class FXMLController implements Initializable {
         searchImages = new SearchImages(this);
         searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         //SHARE TAB
-        shareTabButton.setOnAction((event) -> ShowTab(shareTabPane));
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
         //SETTINGS TAB
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
