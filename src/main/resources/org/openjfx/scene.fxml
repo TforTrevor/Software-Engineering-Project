@@ -321,7 +321,7 @@
             </AnchorPane>
             <AnchorPane fx:id="helpTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <JFXTabPane tabMinHeight="75.0" tabMinWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <JFXTabPane fx:id="helpPane" tabMinHeight="75.0" tabMinWidth="355.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
                         <Tab text="View Images">
                           <content>
@@ -486,22 +486,4 @@
          </children>
       </AnchorPane>
    </center>
-   <right>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="backgroundColorDark" BorderPane.alignment="CENTER">
-         <children>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" styleClass="backgroundColorDark" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <TextFlow prefWidth="185.0">
-                     <children>
-                        <Text fx:id="consoleLabel" strokeType="OUTSIDE" strokeWidth="0.0" />
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" top="5.0" />
-                     </padding>
-                  </TextFlow>
-               </content>
-            </ScrollPane>
-         </children>
-      </AnchorPane>
-   </right>
 </BorderPane>

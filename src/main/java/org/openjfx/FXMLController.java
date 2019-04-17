@@ -5,14 +5,10 @@ import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -98,6 +94,8 @@ public class FXMLController implements Initializable {
     private JFXButton helpTabButton;
     @FXML
     private AnchorPane helpTabPane;
+    @FXML
+    private JFXTabPane helpPane;
 
     //SETTINGS TAB
     @FXML
@@ -113,12 +111,8 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton clearCacheDenyButton;
 
-    @FXML
-    private Text consoleLabel;
     private ImageViewer imageViewer;
 
-    private ArrayList<String> filesArr;
-    private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
     private SearchImages searchImages;
 
@@ -126,9 +120,6 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image image = new Image("file:" + "C:\\Users\\godbo\\OneDrive\\Pictures\\Desktop\\angrycat.png");
-        System.out.println("Image loading error? " + image.isError());
-        images = new ArrayList<ImageView>();
         tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, helpTabPane, settingsTabPane));
         //VIEW IMAGES TAB
         imageViewer = new ImageViewer(this);
@@ -154,13 +145,6 @@ public class FXMLController implements Initializable {
         clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
 
         emailHelper = new EmailHelper();
-    }
-
-    public void WriteToConsole(String message) {
-        if (!consoleLabel.getText().equals("")) {
-            consoleLabel.setText(consoleLabel.getText() + System.lineSeparator());
-        }
-        consoleLabel.setText(consoleLabel.getText() + message);
     }
 
     private void SendEmailButtonAction(ActionEvent event) {
