@@ -80,7 +80,7 @@ public class SearchImages {
         String stringFromDate = ConvertDateFormat(fromDate);
         String stringToDate = ConvertDateFormat(toDate);
 
-        fileReader = new FileReader(stringFromDate, stringToDate, "C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest");
+        fileReader = new FileReader(stringFromDate, stringToDate, "E:/Videos");
         searchThread = new Thread(this::SearchThread);
         if (!searchThread.isAlive()) {
             searchThread.start();
