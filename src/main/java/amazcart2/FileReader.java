@@ -1,6 +1,7 @@
 package amazcart2;
 
 import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,12 +18,12 @@ public class FileReader {
     //="12/01/2017";
     private String endDate;
     //="02/17/2018";
-    private String fileSearchLocation;
+    private String[] fileSearchLocation;
     //="C:\\";
     private ArrayList fileList;
     private boolean runThread;
 
-    public FileReader(String startingDay, String endingDay, String fileSearchingLocation) {
+    public FileReader(String startingDay, String endingDay, String[] fileSearchingLocation) {
 
         startDate = startingDay;
 
@@ -34,9 +35,11 @@ public class FileReader {
     }
 
     public void SearchImages() {
-        File folder = new File(fileSearchLocation);
-
-        filesInFolder(folder);
+        for(String fileLocation:fileSearchLocation) {
+            System.out.println(fileLocation);
+            File folder = new File(fileLocation);
+            filesInFolder(folder);
+        }
     }
 
     public void filesInFolder(final File folder) {
@@ -44,7 +47,7 @@ public class FileReader {
             //Checks to see if thread wants to be run, breaks otherwise
             if (runThread) {
                 try {
-                    if (!file.getAbsolutePath().contains("\\Downloads\\")) {
+
                         if (file.isDirectory()) {
 
                             filesInFolder(file);
@@ -75,7 +78,7 @@ public class FileReader {
                                     fileList.add(file.getAbsolutePath());
                                 }
                             }
-                        }
+
                     }
                     } catch(Exception ignore){
                     }

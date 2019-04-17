@@ -18,8 +18,8 @@ public class Amazcart2 {
         // TODO code application logic here
        // FileReader name= new FileReader();
         //name.SearchImages();
-        FileReader testing=new FileReader("01/09/2019","01/11/2019","C:\\Users\\Jpc\\Documents\\NetBeansProjects");
-        testing.SearchImages();
+//        FileReader testing=new FileReader("01/09/2019","01/11/2019","C:\\Users\\Jpc\\Documents\\NetBeansProjects");
+       // testing.SearchImages();
     }
 
 }

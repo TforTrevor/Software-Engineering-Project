@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.InputStream;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
@@ -79,8 +80,27 @@ public class SearchImages {
 
         String stringFromDate = ConvertDateFormat(fromDate);
         String stringToDate = ConvertDateFormat(toDate);
+        String myDocuments = null;
+        String base=null;
+        try {
+            Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+            p.waitFor();
 
-        fileReader = new FileReader(stringFromDate, stringToDate, "C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest");
+            InputStream in = p.getInputStream();
+            byte[] b = new byte[in.available()];
+            in.read(b);
+            in.close();
+
+            myDocuments = new String(b);
+            myDocuments = myDocuments.split("\\s\\s+")[4];
+            System.out.println(myDocuments);
+             base=myDocuments.substring(0,myDocuments.indexOf("Documents"));
+        } catch(Throwable t) {
+            t.printStackTrace();
+        }
+        String[] allSearch={myDocuments+"\\",base+"Desktop",base+"Pictures\\", base+"Downloads\\"};
+        fileReader = new FileReader(stringFromDate, stringToDate, allSearch);
+
         searchThread = new Thread(this::SearchThread);
         if (!searchThread.isAlive()) {
             searchThread.start();
