@@ -21,6 +21,7 @@ public class ImageViewer {
     private JFXTextField searchField;
     private ScrollPane scrollPane;
     private JFXMasonryPane masonryPane;
+    private int loadAmount = 30;
 
     private StackPane imageViewerPane;
     private ImageView imageViewerImageView;
@@ -37,6 +38,7 @@ public class ImageViewer {
 
     private Thread hideImagesThread;
     private Thread loadImagesThread;
+    private Thread scrollCheck;
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -60,6 +62,7 @@ public class ImageViewer {
 
         hideImagesThread = new Thread();
         loadImagesThread = new Thread();
+        scrollCheck = new Thread();
     }
 
     private void SearchImages() {
@@ -67,14 +70,12 @@ public class ImageViewer {
             String input = searchField.getText().toLowerCase();
             if (input.equals("")) {
                 Platform.runLater(() -> masonryPane.getChildren().clear());
-                for (int i = 0; i < imageViewerImages.size(); i++) {
-                    final int num = i;
-                    Platform.runLater(() -> {
-                        masonryPane.getChildren().add(imageViewerImages.get(num).GetAnchorPane());
-                    });
-                }
+                ClearImages();
+                GetXMLImages();
+                LoadImages();
                 return;
             }
+            Platform.runLater(() -> scrollPane.setVvalue(scrollPane.getVmin()));
             for (int i = 0; i < imageViewerImages.size(); i++) {
                 ImageViewerImage image = imageViewerImages.get(i);
                 String imageName = image.GetImageName().toLowerCase();
@@ -93,23 +94,45 @@ public class ImageViewer {
         searchImagesThread.start();
     }
 
-    void LoadImages() {
+    void ClearImages() {
+        imageViewerImages.clear();
+        masonryPane.getChildren().clear();
+    }
+
+    void GetXMLImages() {
+        XMLImageEditor xmlImageEditor = new XMLImageEditor();
+        imageList = xmlImageEditor.GetXMLImages();
+    }
+
+    void ScrollCheck() {
+        scrollCheck = new Thread(() -> {
+            while (masonryPane.isVisible()) {
+                try {
+                    if (scrollPane.getVvalue() >= (0.9 * scrollPane.getVmax()) || masonryPane.getChildren().size() == 0) {
+                        LoadImages();
+                    }
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        scrollCheck.setDaemon(true);
+        scrollCheck.start();
+    }
+
+    private void LoadImages() {
         if (!loadImagesThread.isAlive()) {
             loadImagesThread = new Thread(() -> {
-                XMLImageEditor xmlImageEditor = new XMLImageEditor();
-                imageList = xmlImageEditor.GetXMLImages();
-                Platform.runLater(() -> masonryPane.getChildren().clear());
-                imageViewerImages.clear();
-                for (int i = 0; i < imageList.size(); i++) {
-                    try {
-                        ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
-                        AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
-                        imageViewerImages.add(imageViewerImage);
-                        Platform.runLater(() -> masonryPane.getChildren().add(imageAnchorPane));
-                        Thread.sleep(1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                int count = 0;
+                for (int i = imageViewerImages.size(); i < imageList.size(); i++) {
+                    if (count++ >= loadAmount) {
+                        break;
                     }
+                    ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
+                    AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
+                    imageViewerImages.add(imageViewerImage);
+                    Platform.runLater(() -> masonryPane.getChildren().add(imageAnchorPane));
                 }
             });
             loadImagesThread.setDaemon(true);
@@ -146,7 +169,7 @@ public class ImageViewer {
                         if (i > imageViewerImages.size() - 1) {
                             i = 0;
                         }
-                        Thread.sleep(1);
+                        Thread.sleep(5);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
