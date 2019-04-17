@@ -85,9 +85,10 @@ class ImageViewerImage {
     ImageView GetImageView() {
         return imageView;
     }
-    Label GetImageName() {
+    Label GetImageLabel() {
         return imageName;
     }
+    String GetImageName() { return imageName.getText(); }
     JFXButton GetButton() {
         return button;
     }

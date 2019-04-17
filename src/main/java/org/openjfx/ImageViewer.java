@@ -2,6 +2,7 @@ package org.openjfx;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.control.ScrollPane;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.lang.management.PlatformManagedObject;
 import java.util.ArrayList;
 
 public class ImageViewer {
@@ -29,6 +31,8 @@ public class ImageViewer {
     private JFXButton createImagesButton;
     private JFXButton refreshImagesButton;
     private Thread hideImagesThread;
+    private JFXTextField searchField;
+    private ArrayList<ImageViewerImage> showImages = new ArrayList<>();
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -39,6 +43,7 @@ public class ImageViewer {
         closeImageViewerButton = fxmlController.closeImageViewerButton;
         imageOptions = fxmlController.imageOptions;
         imageOptionsRemove = fxmlController.imageOptionsRemove;
+        searchField = fxmlController.imageViewerSearch;
 
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
@@ -62,6 +67,45 @@ public class ImageViewer {
         imageOptionsRemove.setOnAction((event) -> RemoveImage());
 
         hideImagesThread = new Thread();
+
+        searchField.setOnAction((event) -> SearchImages());
+    }
+
+    private void SearchImages() {
+        Thread searchImagesThread = new Thread(() -> {
+            String input = searchField.getText();
+            if (input.equals("")) {
+                Platform.runLater(() -> {
+                    masonryPane.getChildren().clear();
+                    masonryPane.getChildren().addAll(createImagesButton, refreshImagesButton);
+                });
+                for (int i = 0; i < imageViewerImages.size(); i++) {
+                    final int num = i;
+                    Platform.runLater(() -> {
+                        masonryPane.getChildren().add(imageViewerImages.get(num).GetAnchorPane());
+                    });
+                }
+                return;
+            }
+            for (int i = 0; i < imageViewerImages.size(); i++) {
+                ImageViewerImage image = imageViewerImages.get(i);
+                if (image.GetImageName().contains(input)) {
+                    if (!masonryPane.getChildren().contains(image.GetAnchorPane())) {
+                        Platform.runLater(() -> {
+                            masonryPane.getChildren().add(image.GetAnchorPane());
+                        });
+                    }
+                } else {
+                    if (masonryPane.getChildren().contains(image.GetAnchorPane())) {
+                        Platform.runLater(() -> {
+                            masonryPane.getChildren().remove(image.GetAnchorPane());
+                        });
+                    }
+                }
+            }
+        });
+        searchImagesThread.setDaemon(true);
+        searchImagesThread.start();
     }
 
     private void CreateImages() {

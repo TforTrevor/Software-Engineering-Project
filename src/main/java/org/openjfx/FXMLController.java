@@ -48,6 +48,8 @@ public class FXMLController implements Initializable {
     JFXButton imageOptionsShare;
     @FXML
     JFXButton imageOptionsRemove;
+    @FXML
+    JFXTextField imageViewerSearch;
 
     //UPLOAD TAB
     @FXML
