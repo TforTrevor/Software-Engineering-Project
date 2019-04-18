@@ -2,10 +2,15 @@ package org.openjfx;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.util.List;
 
 public class Settings {
 
@@ -14,6 +19,7 @@ public class Settings {
     private JFXButton clearCacheAccept;
     private JFXButton clearCacheDeny;
     private AnchorPane clearCachePane;
+    private Label directoryLabel;
 
     Settings(FXMLController fxmlController) {
         clearCacheButton = fxmlController.clearCacheButton;
@@ -21,30 +27,13 @@ public class Settings {
         clearCacheAccept = fxmlController.clearCacheAcceptButton;
         clearCacheDeny = fxmlController.clearCacheDenyButton;
         clearCachePane = fxmlController.clearCachePane;
+        directoryLabel = fxmlController.searchDirectoryLabel;
 
         clearCacheButton.setOnAction((event) -> ShowCachePrompt());
         clearCacheAccept.setOnAction((event) -> ClearCache());
         clearCacheDeny.setOnAction((event) -> HideCachePrompt());
         chooseFolder.setOnAction((event) -> ChooseFolder());
     }
-
-//    private void ClearCacheButtonAction(ActionEvent event) {
-//        settingsTabPane.setDisable(true);
-//        clearCachePane.setVisible(true);
-//        tabPane.setDisable(true);
-//    }
-//
-//    private void ClearCacheAcceptAction(ActionEvent event) {
-//        settingsTabPane.setDisable(false);
-//        clearCachePane.setVisible(false);
-//        tabPane.setDisable(false);
-//    }
-//
-//    private void ClearCacheDenyAction(ActionEvent event) {
-//        settingsTabPane.setDisable(false);
-//        clearCachePane.setVisible(false);
-//        tabPane.setDisable(false);
-//    }
 
     private void ShowCachePrompt() {
         JavaFXHelper.FadeIn(Duration.seconds(0.1), clearCachePane);
@@ -66,6 +55,11 @@ public class Settings {
     }
 
     private void ChooseFolder() {
-
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Directory");
+        File selectedDirectory = directoryChooser.showDialog(null);
+        if (selectedDirectory != null) {
+            directoryLabel.setText(selectedDirectory.getAbsolutePath());
+        }
     }
 }

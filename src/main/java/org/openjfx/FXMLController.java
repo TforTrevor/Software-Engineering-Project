@@ -80,8 +80,6 @@ public class FXMLController implements Initializable {
 
     //SHARE TAB
     @FXML
-    private JFXButton shareTabButton;
-    @FXML
     private AnchorPane shareTabPane;
     @FXML
     private JFXButton sendEmailButton;
@@ -117,6 +115,8 @@ public class FXMLController implements Initializable {
     JFXButton clearCacheDenyButton;
     @FXML
     JFXButton chooseSearchFolder;
+    @FXML
+    Label searchDirectoryLabel;
 
     private ImageViewer imageViewer;
 
@@ -144,7 +144,6 @@ public class FXMLController implements Initializable {
         searchImages = new SearchImages(this);
         searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         //SHARE TAB
-        shareTabButton.setOnAction((event) -> ShowTab(shareTabPane));
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
         //HELP TAB
         helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
@@ -152,9 +151,6 @@ public class FXMLController implements Initializable {
         Settings settings = new Settings(this);
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
         imageOptionsShare.setOnAction((event) -> ShowTab(shareTabPane));
-        clearCacheButton.setOnAction(this::ClearCacheButtonAction);
-        clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
-        clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
 
         emailHelper = new EmailHelper();
     }
