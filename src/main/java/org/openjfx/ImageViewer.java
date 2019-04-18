@@ -2,6 +2,7 @@ package org.openjfx;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.control.ScrollPane;
@@ -12,23 +13,32 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class ImageViewer {
     private AnchorPane viewImageTabPane;
+    private JFXTextField searchField;
     private ScrollPane scrollPane;
     private JFXMasonryPane masonryPane;
+    private int loadAmount = 30;
+
     private StackPane imageViewerPane;
     private ImageView imageViewerImageView;
+    private ImageViewerImage openedImage;
     private JFXButton closeImageViewerButton;
-    private ArrayList<XMLImage> imageList;
-    private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
+    private JFXButton openOriginal;
+
     private HBox imageOptions;
     private JFXButton imageOptionsRemove;
+
+    private ArrayList<XMLImage> imageList = new ArrayList<>();
+    private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
     private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
-    private JFXButton createImagesButton;
-    private JFXButton refreshImagesButton;
+
     private Thread hideImagesThread;
+    private Thread loadImagesThread;
+    private Thread scrollCheck;
 
     ImageViewer(FXMLController fxmlController) {
         viewImageTabPane = fxmlController.viewImageTabPane;
@@ -39,66 +49,96 @@ public class ImageViewer {
         closeImageViewerButton = fxmlController.closeImageViewerButton;
         imageOptions = fxmlController.imageOptions;
         imageOptionsRemove = fxmlController.imageOptionsRemove;
+        searchField = fxmlController.imageViewerSearch;
+        openOriginal = fxmlController.imageViewerOpenButton;
 
+        searchField.setOnAction((event) -> SearchImages());
+        imageOptionsRemove.setOnAction((event) -> RemoveImage());
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
         closeImageViewerButton.setOnAction((event) -> CloseImage());
-
-        createImagesButton = new JFXButton();
-        createImagesButton.setOnAction((event) -> CreateImages());
-        createImagesButton.setPrefSize(256, 256);
-        createImagesButton.getStyleClass().add("primaryColor");
-        createImagesButton.setText("Create Images");
-        masonryPane.getChildren().add(createImagesButton);
-
-        refreshImagesButton = new JFXButton();
-        refreshImagesButton.setOnAction((event) -> LoadImages());
-        refreshImagesButton.setPrefSize(256, 256);
-        refreshImagesButton.getStyleClass().add("primaryColor");
-        refreshImagesButton.setText("Refresh Images");
-        masonryPane.getChildren().add(refreshImagesButton);
-
-        imageOptionsRemove.setOnAction((event) -> RemoveImage());
+        openOriginal.setOnAction((event) -> OpenOriginalImage());
 
         hideImagesThread = new Thread();
+        loadImagesThread = new Thread();
+        scrollCheck = new Thread();
     }
 
-    private void CreateImages() {
-        XMLImageEditor xmlImageEditor = new XMLImageEditor();
-        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
-        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
-        xmlImageEditor.CreateXMLImage("Test", "Hello", "ani3.png");
-        LoadImages();
-    }
-
-    private void LoadImages() {
-        Thread imageThread = new Thread(() -> {
-            XMLImageEditor xmlImageEditor = new XMLImageEditor();
-            imageList = xmlImageEditor.GetXMLImages();
-            Platform.runLater(() -> {
-                masonryPane.getChildren().clear();
-                masonryPane.getChildren().add(createImagesButton);
-                masonryPane.getChildren().add(refreshImagesButton);
-            });
-            imageViewerImages.clear();
-            for (int i = 0; i < imageList.size(); i++) {
-                try {
-                    ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
-                    AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
-                    imageViewerImages.add(imageViewerImage);
-                    Platform.runLater(() -> {
-                        masonryPane.getChildren().add(imageAnchorPane);
-                    });
+    private void SearchImages() {
+        Thread searchImagesThread = new Thread(() -> {
+            String input = searchField.getText().toLowerCase();
+            if (input.equals("")) {
+                Platform.runLater(() -> masonryPane.getChildren().clear());
+                ClearImages();
+                GetXMLImages();
+                LoadImages();
+                return;
+            }
+            Platform.runLater(() -> scrollPane.setVvalue(scrollPane.getVmin()));
+            for (int i = 0; i < imageViewerImages.size(); i++) {
+                ImageViewerImage image = imageViewerImages.get(i);
+                String imageName = image.GetImageName().toLowerCase();
+                if (imageName.contains(input)) {
+                    if (!masonryPane.getChildren().contains(image.GetAnchorPane())) {
+                        Platform.runLater(() -> masonryPane.getChildren().add(image.GetAnchorPane()));
+                    }
+                } else {
+                    if (masonryPane.getChildren().contains(image.GetAnchorPane())) {
+                        Platform.runLater(() -> masonryPane.getChildren().remove(image.GetAnchorPane()));
+                    }
                 }
-                catch (Exception e) {
+            }
+        });
+        searchImagesThread.setDaemon(true);
+        searchImagesThread.start();
+    }
+
+    void ClearImages() {
+        imageViewerImages.clear();
+        masonryPane.getChildren().clear();
+    }
+
+    void GetXMLImages() {
+        XMLImageEditor xmlImageEditor = new XMLImageEditor();
+        imageList = xmlImageEditor.GetXMLImages();
+    }
+
+    void ScrollCheck() {
+        scrollCheck = new Thread(() -> {
+            while (masonryPane.isVisible()) {
+                try {
+                    if (scrollPane.getVvalue() >= (0.9 * scrollPane.getVmax()) || masonryPane.getChildren().size() == 0) {
+                        LoadImages();
+                    }
+                    Thread.sleep(500);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        imageThread.setDaemon(true);
-        imageThread.start();
-        HideOffScreenImages();
+        scrollCheck.setDaemon(true);
+        scrollCheck.start();
+    }
+
+    private void LoadImages() {
+        if (!loadImagesThread.isAlive()) {
+            loadImagesThread = new Thread(() -> {
+                int count = 0;
+                for (int i = imageViewerImages.size(); i < imageList.size(); i++) {
+                    if (count++ >= loadAmount) {
+                        break;
+                    }
+                    ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
+                    AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
+                    imageViewerImages.add(imageViewerImage);
+                    Platform.runLater(() -> masonryPane.getChildren().add(imageAnchorPane));
+                }
+            });
+            loadImagesThread.setDaemon(true);
+            loadImagesThread.start();
+            HideOffScreenImages();
+        }
     }
 
     void HideOffScreenImages() {
@@ -129,7 +169,7 @@ public class ImageViewer {
                         if (i > imageViewerImages.size() - 1) {
                             i = 0;
                         }
-                        Thread.sleep(1);
+                        Thread.sleep(5);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -152,6 +192,7 @@ public class ImageViewer {
     }
 
     private void OpenImage(ImageViewerImage imageViewerImage) {
+        openedImage = imageViewerImage;
         Image image = imageViewerImage.GetImageView().getImage();
         imageViewerImageView.setImage(image);
 
@@ -165,6 +206,22 @@ public class ImageViewer {
         closeImageViewerButton.setVisible(true);
 
         JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
+    }
+
+    private void CloseImage() {
+        imageViewerPane.setVisible(false);
+        closeImageViewerButton.setDisable(true);
+        closeImageViewerButton.setVisible(false);
+    }
+
+    private void OpenOriginalImage() {
+        try {
+            if (openedImage.GetFile().exists()) {
+                Desktop.getDesktop().open(openedImage.GetFile());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void SelectImage(ImageViewerImage imageViewerImage) {
@@ -192,9 +249,7 @@ public class ImageViewer {
                     imageList.remove(xmlImage);
                     imageViewerImages.remove(selectedImages.get(i));
                     final int index = i;
-                    Platform.runLater(() -> {
-                        masonryPane.getChildren().remove(selectedImages.get(index).GetAnchorPane());
-                    });
+                    Platform.runLater(() -> masonryPane.getChildren().remove(selectedImages.get(index).GetAnchorPane()));
                     Thread.sleep(10);
                 }
                 selectedImages.clear();
@@ -208,9 +263,7 @@ public class ImageViewer {
         removeThread.start();
     }
 
-    private void CloseImage() {
-        imageViewerPane.setVisible(false);
-        closeImageViewerButton.setDisable(true);
-        closeImageViewerButton.setVisible(false);
+    ArrayList<ImageViewerImage> GetSelectedImages() {
+        return (ArrayList<ImageViewerImage>) selectedImages.clone();
     }
 }
