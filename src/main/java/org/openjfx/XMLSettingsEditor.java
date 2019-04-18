@@ -31,14 +31,15 @@ public class XMLSettingsEditor {
             //document = dBuilder.parse(xmlInputStream);
             Path path = Paths.get(filePath);
             if (Files.exists(path)) {
-                System.out.println("Opening existing document");
+                System.out.println("Opening existing settings document");
                 document = dBuilder.parse(filePath);
                 document.getDocumentElement().normalize();
             } else {
-                System.out.println("Created new document");
+                System.out.println("Created new settings document");
                 document = dBuilder.newDocument();
                 Element rootElement = document.createElement("settings");
                 document.appendChild(rootElement);
+                SetSearchPath(System.getProperty("user.home"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,7 +76,7 @@ public class XMLSettingsEditor {
             DOMSource source = new DOMSource(document);
             StreamResult result = new StreamResult(new File(filePath));
             transformer.transform(source, result);
-            System.out.println("Created image index");
+            System.out.println("Created path in settings");
         } catch (Exception e) {
             e.printStackTrace();
         }

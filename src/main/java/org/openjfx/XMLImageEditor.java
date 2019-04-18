@@ -34,11 +34,11 @@ public class XMLImageEditor {
             //document = dBuilder.parse(xmlInputStream);
             Path path = Paths.get(filePath);
             if (Files.exists(path)) {
-                System.out.println("Opening existing document");
+                System.out.println("Opening existing images document");
                 document = dBuilder.parse(filePath);
                 document.getDocumentElement().normalize();
             } else {
-                System.out.println("Created new document");
+                System.out.println("Created new images document");
                 document = dBuilder.newDocument();
                 Element rootElement = document.createElement("images");
                 document.appendChild(rootElement);

@@ -137,7 +137,6 @@ public class ImageViewer {
             });
             loadImagesThread.setDaemon(true);
             loadImagesThread.start();
-            HideOffScreenImages();
         }
     }
 
