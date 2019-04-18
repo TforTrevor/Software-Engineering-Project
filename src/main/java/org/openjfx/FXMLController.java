@@ -79,18 +79,22 @@ public class FXMLController implements Initializable {
     Label invalidDatesLabel;
 
     //SHARE TAB
+    //@FXML
+    //private AnchorPane shareTabPane;
     @FXML
-    private AnchorPane shareTabPane;
+    StackPane sharePane;
     @FXML
-    private JFXButton sendEmailButton;
+    JFXButton closeShareButton;
     @FXML
-    private JFXTextField subjectTextField;
+    JFXTextField subjectTextField;
     @FXML
-    private JFXTextField recipientTextField;
+    JFXTextField recipientTextField;
     @FXML
-    private JFXTextArea bodyTextArea;
+    JFXTextArea bodyTextArea;
     @FXML
-    private Label emailLabel;
+    JFXButton sendEmailButton;
+    @FXML
+    Label emailLabel;
 
     //HELP TAB
     @FXML
@@ -118,18 +122,17 @@ public class FXMLController implements Initializable {
     @FXML
     Label searchDirectoryLabel;
 
-    private ImageViewer imageViewer;
+    ImageViewer imageViewer;
 
     private ArrayList<AnchorPane> tabPanes;
     private ImageSearcher imageSearcher;
 
-    private EmailHelper emailHelper;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, helpTabPane, settingsTabPane));
+        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, helpTabPane, settingsTabPane));
         //VIEW IMAGES TAB
         imageViewer = new ImageViewer(this);
+        ShareImages shareImages = new ShareImages(this);
         viewTabButton.setOnAction((event) -> {
             ShowTab(viewImageTabPane);
             imageViewer.HideOffScreenImages();
@@ -144,61 +147,11 @@ public class FXMLController implements Initializable {
         //SEARCH TAB
         imageSearcher = new ImageSearcher(this);
         searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
-        //SHARE TAB
-        sendEmailButton.setOnAction(this::SendEmailButtonAction);
         //HELP TAB
         helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
         //SETTINGS TAB
         Settings settings = new Settings(this);
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
-        imageOptionsShare.setOnAction((event) -> ShowTab(shareTabPane));
-
-        emailHelper = new EmailHelper();
-    }
-
-    private void SendEmailButtonAction(ActionEvent event) {
-        new Thread(() -> {
-            String recipients = recipientTextField.getText();
-            String[] parsedRecipients = recipients.split(",");
-            boolean validEmails = true;
-            for (String s : parsedRecipients) {
-                if (!emailHelper.VerifyEmail(s)) {
-                    validEmails = false;
-                }
-            }
-            if (validEmails) {
-                boolean success = emailHelper.RunEmail(imageViewer, parsedRecipients, subjectTextField, bodyTextArea);
-                if (success) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            emailLabel.setTextFill(Color.web("#000000"));
-                            emailLabel.setText("Sent Successfully");
-                            emailLabel.setVisible(true);
-                        }
-                    });
-                }
-                else {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            emailLabel.setTextFill(Color.web("#FF0000"));
-                            emailLabel.setText("Error Sending");
-                            emailLabel.setVisible(true);
-                        }
-                    });
-                }
-            } else {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        emailLabel.setTextFill(Color.web("#FF0000"));
-                        emailLabel.setText("Invalid Emails");
-                        emailLabel.setVisible(true);
-                    }
-                });
-            }
-        }).start();
     }
 
     private void ShowTab(AnchorPane keepPane) {

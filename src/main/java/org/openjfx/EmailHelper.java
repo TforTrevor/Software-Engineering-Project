@@ -21,7 +21,7 @@ public class EmailHelper {
     private String body;
     private Session session;
 
-    public EmailHelper() {
+    EmailHelper() {
         images = new ArrayList<>();
         //images.add(new File("D:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\datapc64_merged_bnk_textures3.forge"));
         to = new ArrayList<>();
@@ -44,7 +44,7 @@ public class EmailHelper {
         });
     }
 
-    public boolean RunEmail(ImageViewer imageViewer, String[] parsedRecipients, JFXTextField subjectTextField, JFXTextArea bodyTextArea) {
+    boolean RunEmail(ImageViewer imageViewer, String[] parsedRecipients, JFXTextField subjectTextField, JFXTextArea bodyTextArea) {
         ArrayList<ImageViewerImage> selectedImages = imageViewer.GetSelectedImages();
         setImages(selectedImages);
         for (String s : parsedRecipients) {
@@ -57,7 +57,7 @@ public class EmailHelper {
         return success;
     }
 
-    public void AddRecipient(String recipient) {
+    void AddRecipient(String recipient) {
         try {
             to.add(new InternetAddress(recipient));
         } catch (AddressException e) {
@@ -65,7 +65,7 @@ public class EmailHelper {
         }
     }
 
-    public boolean VerifyEmail(String address) {
+    boolean VerifyEmail(String address) {
         boolean isValid = false;
         try {
             InternetAddress newAddress = new InternetAddress(address);
@@ -75,27 +75,27 @@ public class EmailHelper {
         return isValid;
     }
 
-    public void ClearAll() {
+    void ClearAll() {
         to.clear();
         images.clear();
     }
 
-    public void SetBody(String message) {
+    void SetBody(String message) {
         body = message;
     }
 
-    public void SetSubject(String subject) {
+    void SetSubject(String subject) {
         this.subject = subject;
     }
 
-    public void setImages(ArrayList<ImageViewerImage> images) {
+    void setImages(ArrayList<ImageViewerImage> images) {
         this.images.clear();
         for (ImageViewerImage image: images) {
             this.images.add(new File(image.GetXMLImage().GetPath()));
         }
     }
 
-    public boolean SendEmail() {
+    boolean SendEmail() {
         try {
             int imagesAttached = 0;
             int imageBytes=0;
