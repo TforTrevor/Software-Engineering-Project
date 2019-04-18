@@ -103,7 +103,6 @@ public class ImageSearcher {
     }
 
     private void CancelSearch() {
-        System.out.println("Cancel search crashing");
         fileReader.SetRunThread(false);
         ArrayList<File> files = fileReader.GetFiles();
         imagePaths.clear();

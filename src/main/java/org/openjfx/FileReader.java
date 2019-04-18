@@ -42,21 +42,26 @@ public class FileReader {
 
     private void Search(File file) {
         if (runThread) {
-            if (file.isDirectory()) {
-                if (file.canRead()) {
-                    for (int i = 0; i < file.listFiles().length; i++) {
-                        File temp = file.listFiles()[i];
-                        if (temp.isDirectory()) {
-                            Search(temp);
-                        } else {
-                            if (CheckFile(temp.getAbsoluteFile())) {
-                                files.add(temp.getAbsoluteFile());
+            if (!file.isHidden()) {
+                if (file.isDirectory()) {
+                    if (file.canRead()) {
+                        File[] fileList = file.listFiles();
+                        if (fileList != null) {
+                            for (int i = 0; i < fileList.length; i++) {
+                                File temp = fileList[i];
+                                if (temp.isDirectory()) {
+                                    Search(temp);
+                                } else {
+                                    if (CheckFile(temp.getAbsoluteFile())) {
+                                        files.add(temp.getAbsoluteFile());
+                                    }
+                                }
                             }
                         }
                     }
+                } else {
+                    System.out.println(file.getAbsoluteFile() + "Permission Denied");
                 }
-            } else {
-                System.out.println(file.getAbsoluteFile() + "Permission Denied");
             }
         }
     }
