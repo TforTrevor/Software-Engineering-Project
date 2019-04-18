@@ -151,13 +151,4 @@ public class XMLImageEditor {
             e.printStackTrace();
         }
     }
-
-    void PrintImages() {
-        ArrayList<XMLImage> xmlImages = GetXMLImages();
-        for (int i = 0; i < xmlImages.size(); i++) {
-            System.out.println("Tag: " + xmlImages.get(i).GetTag());
-            System.out.println("Name: " + xmlImages.get(i).GetName());
-            System.out.println("Path: " + xmlImages.get(i).GetPath());
-        }
-    }
 }

@@ -26,7 +26,7 @@ public class ImageSearcher {
     private JFXDatePicker toDate;
     private Label invalidDatesLabel;
     private Pane searchingImagesPane;
-
+    
     ImageSearcher(FXMLController fxmlController) {
         searchImageButton = fxmlController.searchImageButton;
         cancelSearchButton = fxmlController.cancelSearchButton;
@@ -79,12 +79,8 @@ public class ImageSearcher {
             return false;
         }
 
-        XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
-        Date startDate = java.sql.Date.valueOf(fromDate.getValue());
-        Date endDate = java.sql.Date.valueOf(toDate.getValue());
-        fileReader = new FileReader(startDate, endDate, xmlSettingsEditor.GetSearchPath());
-
         if (!searchThread.isAlive()) {
+            searchThread = new Thread(this::SearchThread);
             searchThread.setDaemon(true);
             searchThread.start();
         }
@@ -93,14 +89,21 @@ public class ImageSearcher {
 
     private void SearchThread() {
         try {
+            XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
+            Date startDate = java.sql.Date.valueOf(fromDate.getValue());
+            Date endDate = java.sql.Date.valueOf(toDate.getValue());
+            fileReader = new FileReader(startDate, endDate, xmlSettingsEditor.GetSearchPath());
             fileReader.SetRunThread(true);
             fileReader.SearchImages();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             CancelSearch();
         }
     }
 
     private void CancelSearch() {
+        System.out.println("Cancel search crashing");
         fileReader.SetRunThread(false);
         ArrayList<File> files = fileReader.GetFiles();
         imagePaths.clear();

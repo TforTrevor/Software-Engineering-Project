@@ -88,6 +88,6 @@ public class FileReader {
     }
 
     public ArrayList<File> GetFiles() {
-        return files;
+        return (ArrayList<File>) files.clone();
     }
 }
