@@ -33,6 +33,9 @@ public class Settings {
         clearCacheAccept.setOnAction((event) -> ClearCache());
         clearCacheDeny.setOnAction((event) -> HideCachePrompt());
         chooseFolder.setOnAction((event) -> ChooseFolder());
+
+        XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
+        directoryLabel.setText(xmlSettingsEditor.GetSearchPath());
     }
 
     private void ShowCachePrompt() {
@@ -60,6 +63,8 @@ public class Settings {
         File selectedDirectory = directoryChooser.showDialog(null);
         if (selectedDirectory != null) {
             directoryLabel.setText(selectedDirectory.getAbsolutePath());
+            XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
+            xmlSettingsEditor.SetSearchPath(selectedDirectory.getAbsolutePath());
         }
     }
 }

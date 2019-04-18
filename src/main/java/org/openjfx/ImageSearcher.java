@@ -15,7 +15,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 
-public class SearchImages {
+public class ImageSearcher {
     private ArrayList<String> images;
     private Thread searchThread;
     private FileReader fileReader;
@@ -27,7 +27,9 @@ public class SearchImages {
     private Label invalidDatesLabel;
     private Pane searchingImagesPane;
 
-    SearchImages(FXMLController fxmlController) {
+    private String imageSearchPath;
+
+    ImageSearcher(FXMLController fxmlController) {
         searchImageButton = fxmlController.searchImageButton;
         cancelSearchButton = fxmlController.cancelSearchButton;
         fromDate = fxmlController.fromDate;
@@ -80,7 +82,8 @@ public class SearchImages {
         String stringFromDate = ConvertDateFormat(fromDate);
         String stringToDate = ConvertDateFormat(toDate);
 
-        fileReader = new FileReader(stringFromDate, stringToDate, "E:/Videos");
+        XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
+        fileReader = new FileReader(stringFromDate, stringToDate, xmlSettingsEditor.GetSearchPath());
         searchThread = new Thread(this::SearchThread);
         if (!searchThread.isAlive()) {
             searchThread.start();

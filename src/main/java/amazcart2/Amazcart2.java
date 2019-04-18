@@ -17,7 +17,7 @@ public class Amazcart2 {
     public static void main(String[] args) {
         // TODO code application logic here
        // FileReader name= new FileReader();
-        //name.SearchImages();
+        //name.ImageSearcher();
         FileReader testing=new FileReader("01/09/2019","01/11/2019","C:\\Users\\Jpc\\Documents\\NetBeansProjects");
         testing.SearchImages();
     }

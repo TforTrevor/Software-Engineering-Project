@@ -121,7 +121,7 @@ public class FXMLController implements Initializable {
     private ImageViewer imageViewer;
 
     private ArrayList<AnchorPane> tabPanes;
-    private SearchImages searchImages;
+    private ImageSearcher imageSearcher;
 
     private EmailHelper emailHelper;
 
@@ -141,7 +141,7 @@ public class FXMLController implements Initializable {
         UploadImages uploadImages = new UploadImages(this);
         uploadTabButton.setOnAction((event) -> ShowTab(uploadTabPane));
         //SEARCH TAB
-        searchImages = new SearchImages(this);
+        imageSearcher = new ImageSearcher(this);
         searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         //SHARE TAB
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
