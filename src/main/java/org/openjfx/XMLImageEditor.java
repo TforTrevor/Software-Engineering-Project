@@ -34,11 +34,11 @@ public class XMLImageEditor {
             //document = dBuilder.parse(xmlInputStream);
             Path path = Paths.get(filePath);
             if (Files.exists(path)) {
-                System.out.println("Opening existing document");
+                System.out.println("Opening existing images document");
                 document = dBuilder.parse(filePath);
                 document.getDocumentElement().normalize();
             } else {
-                System.out.println("Created new document");
+                System.out.println("Created new images document");
                 document = dBuilder.newDocument();
                 Element rootElement = document.createElement("images");
                 document.appendChild(rootElement);
@@ -149,15 +149,6 @@ public class XMLImageEditor {
             System.out.println("Created image index");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    void PrintImages() {
-        ArrayList<XMLImage> xmlImages = GetXMLImages();
-        for (int i = 0; i < xmlImages.size(); i++) {
-            System.out.println("Tag: " + xmlImages.get(i).GetTag());
-            System.out.println("Name: " + xmlImages.get(i).GetName());
-            System.out.println("Path: " + xmlImages.get(i).GetPath());
         }
     }
 }

@@ -6,13 +6,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -83,8 +80,6 @@ public class FXMLController implements Initializable {
 
     //SHARE TAB
     @FXML
-    private JFXButton shareTabButton;
-    @FXML
     private AnchorPane shareTabPane;
     @FXML
     private JFXButton sendEmailButton;
@@ -97,35 +92,42 @@ public class FXMLController implements Initializable {
     @FXML
     private Label emailLabel;
 
+    //HELP TAB
+    @FXML
+    private JFXButton helpTabButton;
+    @FXML
+    private AnchorPane helpTabPane;
+    @FXML
+    private JFXTabPane helpPane;
+
     //SETTINGS TAB
     @FXML
     private JFXButton settingsTabButton;
     @FXML
     private AnchorPane settingsTabPane;
     @FXML
-    private AnchorPane clearCachePane;
+    AnchorPane clearCachePane;
     @FXML
-    private JFXButton clearCacheButton;
+    JFXButton clearCacheButton;
     @FXML
-    private JFXButton clearCacheAcceptButton;
+    JFXButton clearCacheAcceptButton;
     @FXML
-    private JFXButton clearCacheDenyButton;
+    JFXButton clearCacheDenyButton;
+    @FXML
+    JFXButton chooseSearchFolder;
+    @FXML
+    Label searchDirectoryLabel;
 
-    @FXML
-    private Text consoleLabel;
     private ImageViewer imageViewer;
 
-    private ArrayList<String> filesArr;
-    private ArrayList<ImageView> images;
     private ArrayList<AnchorPane> tabPanes;
-    private SearchImages searchImages;
+    private ImageSearcher imageSearcher;
 
     private EmailHelper emailHelper;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        images = new ArrayList<ImageView>();
-        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, settingsTabPane));
+        tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, shareTabPane, helpTabPane, settingsTabPane));
         //VIEW IMAGES TAB
         imageViewer = new ImageViewer(this);
         viewTabButton.setOnAction((event) -> {
@@ -134,31 +136,24 @@ public class FXMLController implements Initializable {
             imageViewer.ClearImages();
             imageViewer.GetXMLImages();
             imageViewer.ScrollCheck();
+            imageViewer.SetLoadAllImages();
         });
         //UPLOAD TAB
         UploadImages uploadImages = new UploadImages(this);
         uploadTabButton.setOnAction((event) -> ShowTab(uploadTabPane));
         //SEARCH TAB
-        searchImages = new SearchImages(this);
+        imageSearcher = new ImageSearcher(this);
         searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         //SHARE TAB
-        shareTabButton.setOnAction((event) -> ShowTab(shareTabPane));
         sendEmailButton.setOnAction(this::SendEmailButtonAction);
+        //HELP TAB
+        helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
         //SETTINGS TAB
+        Settings settings = new Settings(this);
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
         imageOptionsShare.setOnAction((event) -> ShowTab(shareTabPane));
-        clearCacheButton.setOnAction(this::ClearCacheButtonAction);
-        clearCacheAcceptButton.setOnAction(this::ClearCacheAcceptAction);
-        clearCacheDenyButton.setOnAction(this::ClearCacheDenyAction);
 
         emailHelper = new EmailHelper();
-    }
-
-    public void WriteToConsole(String message) {
-        if (!consoleLabel.getText().equals("")) {
-            consoleLabel.setText(consoleLabel.getText() + System.lineSeparator());
-        }
-        consoleLabel.setText(consoleLabel.getText() + message);
     }
 
     private void SendEmailButtonAction(ActionEvent event) {
@@ -204,24 +199,6 @@ public class FXMLController implements Initializable {
                 });
             }
         }).start();
-    }
-
-    private void ClearCacheButtonAction(ActionEvent event) {
-        settingsTabPane.setDisable(true);
-        clearCachePane.setVisible(true);
-        tabPane.setDisable(true);
-    }
-
-    private void ClearCacheAcceptAction(ActionEvent event) {
-        settingsTabPane.setDisable(false);
-        clearCachePane.setVisible(false);
-        tabPane.setDisable(false);
-    }
-
-    private void ClearCacheDenyAction(ActionEvent event) {
-        settingsTabPane.setDisable(false);
-        clearCachePane.setVisible(false);
-        tabPane.setDisable(false);
     }
 
     private void ShowTab(AnchorPane keepPane) {

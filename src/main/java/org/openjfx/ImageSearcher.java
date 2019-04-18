@@ -1,6 +1,5 @@
 package org.openjfx;
 
-import amazcart2.FileReader;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.scene.control.DatePicker;
@@ -13,10 +12,11 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 
-public class SearchImages {
-    private ArrayList<String> images;
+public class ImageSearcher {
+    private ArrayList<String> imagePaths = new ArrayList<>();
     private Thread searchThread;
     private FileReader fileReader;
 
@@ -26,8 +26,8 @@ public class SearchImages {
     private JFXDatePicker toDate;
     private Label invalidDatesLabel;
     private Pane searchingImagesPane;
-
-    SearchImages(FXMLController fxmlController) {
+    
+    ImageSearcher(FXMLController fxmlController) {
         searchImageButton = fxmlController.searchImageButton;
         cancelSearchButton = fxmlController.cancelSearchButton;
         fromDate = fxmlController.fromDate;
@@ -37,6 +37,8 @@ public class SearchImages {
 
         searchImageButton.setOnAction((event) -> SearchImageButtonAction());
         cancelSearchButton.setOnAction((event) -> CancelSearch());
+
+        searchThread = new Thread(this::SearchThread);
     }
 
     private void SearchImageButtonAction() {
@@ -77,45 +79,44 @@ public class SearchImages {
             return false;
         }
 
-        String stringFromDate = ConvertDateFormat(fromDate);
-        String stringToDate = ConvertDateFormat(toDate);
-
-        fileReader = new FileReader(stringFromDate, stringToDate, "E:/Videos");
-        searchThread = new Thread(this::SearchThread);
         if (!searchThread.isAlive()) {
+            searchThread = new Thread(this::SearchThread);
+            searchThread.setDaemon(true);
             searchThread.start();
         }
-
         return true;
     }
 
     private void SearchThread() {
         try {
+            XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
+            Date startDate = java.sql.Date.valueOf(fromDate.getValue());
+            Date endDate = java.sql.Date.valueOf(toDate.getValue());
+            fileReader = new FileReader(startDate, endDate, xmlSettingsEditor.GetSearchPath());
             fileReader.SetRunThread(true);
             fileReader.SearchImages();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
-            images = fileReader.GetImages();
             CancelSearch();
         }
     }
 
     private void CancelSearch() {
+        System.out.println("Cancel search crashing");
         fileReader.SetRunThread(false);
-        images = fileReader.GetImages();
-
-        XMLImageEditor xmlImageEditor = new XMLImageEditor();
-        for (int i = 0; i < images.size(); i++) {
-            String path = images.get(i);
-            path.replace("\\", "/");
-            File file = new File(path);
-            xmlImageEditor.CreateXMLImage("Test", FilenameUtils.removeExtension(file.getName()), path);
+        ArrayList<File> files = fileReader.GetFiles();
+        imagePaths.clear();
+        for (int i = 0; i < files.size(); i++) {
+            imagePaths.add(files.get(i).getAbsolutePath());
         }
 
+        XMLImageEditor xmlImageEditor = new XMLImageEditor();
+        for (int i = 0; i < imagePaths.size(); i++) {
+            File file = new File(imagePaths.get(i));
+            xmlImageEditor.CreateXMLImage("Test", FilenameUtils.removeExtension(file.getName()), file.getAbsolutePath());
+        }
         searchImageButton.setDisable(false);
         searchingImagesPane.setVisible(false);
-    }
-
-    public ArrayList<String> GetImages() {
-        return (ArrayList<String>) images.clone();
     }
 }
