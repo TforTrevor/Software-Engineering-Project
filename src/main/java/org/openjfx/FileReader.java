@@ -45,15 +45,17 @@ public class FileReader {
             if (!file.isHidden()) {
                 if (file.isDirectory()) {
                     if (file.canRead()) {
-                        File[] fileList = file.listFiles();
-                        if (fileList != null) {
-                            for (int i = 0; i < fileList.length; i++) {
-                                File temp = fileList[i];
-                                if (temp.isDirectory()) {
-                                    Search(temp);
-                                } else {
-                                    if (CheckFile(temp.getAbsoluteFile())) {
-                                        files.add(temp.getAbsoluteFile());
+                        if (!file.getName().startsWith(".")) {
+                            File[] fileList = file.listFiles();
+                            if (fileList != null) {
+                                for (int i = 0; i < fileList.length; i++) {
+                                    File temp = fileList[i];
+                                    if (temp.isDirectory()) {
+                                        Search(temp);
+                                    } else {
+                                        if (CheckFile(temp.getAbsoluteFile())) {
+                                            files.add(temp.getAbsoluteFile());
+                                        }
                                     }
                                 }
                             }
