@@ -5,12 +5,14 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class ShareImages {
 
+    private HBox imageOptions;
     private JFXButton shareButton;
 
     private StackPane sharePane;
@@ -25,9 +27,10 @@ public class ShareImages {
     private EmailHelper emailHelper;
 
     ShareImages(FXMLController fxmlController) {
+        imageOptions = fxmlController.imageOptions;
+        shareButton = fxmlController.imageOptionsShare;
         sharePane = fxmlController.sharePane;
         closeShareButton = fxmlController.closeShareButton;
-        shareButton = fxmlController.imageOptionsShare;
         recipientTextField = fxmlController.recipientTextField;
         subjectTextField = fxmlController.subjectTextField;
         bodyTextArea = fxmlController.bodyTextArea;
@@ -44,7 +47,8 @@ public class ShareImages {
 
     private void OpenSharePane() {
         closeShareButton.setVisible(true);
-        JavaFXHelper.FadeIn(Duration.seconds(0.1), sharePane);
+        JavaFXHelper.FadeIn(Duration.seconds(0.25), sharePane);
+        JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
         recipientTextField.clear();
         subjectTextField.clear();
         bodyTextArea.clear();
@@ -52,7 +56,8 @@ public class ShareImages {
 
     private void CloseSharePane() {
         closeShareButton.setVisible(false);
-        JavaFXHelper.FadeOut(Duration.seconds(0.1), sharePane);
+        JavaFXHelper.FadeOut(Duration.seconds(0.25), sharePane);
+        JavaFXHelper.FadeIn(Duration.seconds(0.1), imageOptions);
     }
 
     private void SendEmail() {
