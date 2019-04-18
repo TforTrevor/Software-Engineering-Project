@@ -15,6 +15,8 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ImageViewer {
     private AnchorPane viewImageTabPane;
@@ -33,6 +35,7 @@ public class ImageViewer {
     private JFXButton imageOptionsRemove;
 
     private ArrayList<XMLImage> imageList = new ArrayList<>();
+    private ArrayList<XMLImage> loadImageList = new ArrayList<>();
     private ArrayList<ImageViewerImage> imageViewerImages = new ArrayList<>();
     private ArrayList<ImageViewerImage> selectedImages = new ArrayList<>();
 
@@ -68,25 +71,20 @@ public class ImageViewer {
     private void SearchImages() {
         Thread searchImagesThread = new Thread(() -> {
             String input = searchField.getText().toLowerCase();
-            if (input.equals("")) {
-                Platform.runLater(() -> masonryPane.getChildren().clear());
+            Platform.runLater(() -> {
                 ClearImages();
-                GetXMLImages();
+                scrollPane.setVvalue(scrollPane.getVmin());
+            });
+            GetXMLImages();
+            if (input.equals("")) {
+                SetLoadAllImages();
                 LoadImages();
                 return;
             }
-            Platform.runLater(() -> scrollPane.setVvalue(scrollPane.getVmin()));
-            for (int i = 0; i < imageViewerImages.size(); i++) {
-                ImageViewerImage image = imageViewerImages.get(i);
-                String imageName = image.GetImageName().toLowerCase();
+            for (int i = 0; i < imageList.size(); i++) {
+                String imageName = imageList.get(i).GetName().toLowerCase();
                 if (imageName.contains(input)) {
-                    if (!masonryPane.getChildren().contains(image.GetAnchorPane())) {
-                        Platform.runLater(() -> masonryPane.getChildren().add(image.GetAnchorPane()));
-                    }
-                } else {
-                    if (masonryPane.getChildren().contains(image.GetAnchorPane())) {
-                        Platform.runLater(() -> masonryPane.getChildren().remove(image.GetAnchorPane()));
-                    }
+                    loadImageList.add(imageList.get(i));
                 }
             }
         });
@@ -95,6 +93,7 @@ public class ImageViewer {
     }
 
     void ClearImages() {
+        loadImageList.clear();
         imageViewerImages.clear();
         masonryPane.getChildren().clear();
     }
@@ -104,9 +103,13 @@ public class ImageViewer {
         imageList = xmlImageEditor.GetXMLImages();
     }
 
+    void SetLoadAllImages() {
+        loadImageList = (ArrayList<XMLImage>) imageList.clone();
+    }
+
     void ScrollCheck() {
         scrollCheck = new Thread(() -> {
-            while (masonryPane.isVisible()) {
+            while (viewImageTabPane.isVisible()) {
                 try {
                     if (scrollPane.getVvalue() >= (0.9 * scrollPane.getVmax()) || masonryPane.getChildren().size() == 0) {
                         LoadImages();
@@ -124,12 +127,13 @@ public class ImageViewer {
     private void LoadImages() {
         if (!loadImagesThread.isAlive()) {
             loadImagesThread = new Thread(() -> {
+                System.out.println("Loading images");
                 int count = 0;
-                for (int i = imageViewerImages.size(); i < imageList.size(); i++) {
+                for (int i = imageViewerImages.size(); i < loadImageList.size(); i++) {
                     if (count++ >= loadAmount) {
                         break;
                     }
-                    ImageViewerImage imageViewerImage = CreateImageElement(imageList.get(i));
+                    ImageViewerImage imageViewerImage = CreateImageElement(loadImageList.get(i));
                     AnchorPane imageAnchorPane = imageViewerImage.GetAnchorPane();
                     imageViewerImages.add(imageViewerImage);
                     Platform.runLater(() -> masonryPane.getChildren().add(imageAnchorPane));

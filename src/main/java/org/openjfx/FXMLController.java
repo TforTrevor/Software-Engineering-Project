@@ -136,6 +136,7 @@ public class FXMLController implements Initializable {
             imageViewer.ClearImages();
             imageViewer.GetXMLImages();
             imageViewer.ScrollCheck();
+            imageViewer.SetLoadAllImages();
         });
         //UPLOAD TAB
         UploadImages uploadImages = new UploadImages(this);
