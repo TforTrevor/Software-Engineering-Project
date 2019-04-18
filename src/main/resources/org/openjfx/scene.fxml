@@ -140,7 +140,7 @@
                                                 <JFXTextField fx:id="recipientTextField" alignment="TOP_LEFT" focusColor="#1976d2" promptText="Recipients' e-mail" unFocusColor="#00000080" />
                                                 <JFXTextField fx:id="subjectTextField" focusColor="#1976d2" promptText="Subject" unFocusColor="#00000080" />
                                                 <JFXTextArea fx:id="bodyTextArea" focusColor="#1976d2" promptText="Message Body" unFocusColor="#0000007e" />
-                                                <JFXButton fx:id="sendEmailButton" prefWidth="200.0" styleClass="primaryColor" text="Send">
+                                                <JFXButton fx:id="sendEmailButton" buttonType="RAISED" prefWidth="200.0" styleClass="primaryColor" text="Send">
                                                    <font>
                                                       <Font size="24.0" />
                                                    </font>
