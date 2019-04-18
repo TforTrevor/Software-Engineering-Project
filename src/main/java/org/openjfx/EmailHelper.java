@@ -1,5 +1,8 @@
 package org.openjfx;
 
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -16,20 +19,14 @@ public class EmailHelper {
     private String from;
     private String subject;
     private String body;
-    private Properties props;
     private Session session;
 
     public EmailHelper() {
         images = new ArrayList<>();
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\dragon_fire.jpg"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\momoyaz.png"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\scorbunnyHop.png"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\deep.png"));
-        images.add(new File("C:\\Users\\godbo\\OneDrive\\Pictures\\ImageSearchTest\\maxresdefault.jpg"));
         //images.add(new File("D:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\datapc64_merged_bnk_textures3.forge"));
         to = new ArrayList<>();
         from = "oldtimerimagefinder@gmail.com";
-        props = System.getProperties();
+        Properties props = System.getProperties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
@@ -45,6 +42,19 @@ public class EmailHelper {
                 return new PasswordAuthentication(from, "DasInDiabloNotDestiny");
             }
         });
+    }
+
+    public boolean RunEmail(ImageViewer imageViewer, String[] parsedRecipients, JFXTextField subjectTextField, JFXTextArea bodyTextArea) {
+        ArrayList<ImageViewerImage> selectedImages = imageViewer.GetSelectedImages();
+        setImages(selectedImages);
+        for (String s : parsedRecipients) {
+            AddRecipient(s);
+        }
+        SetSubject(subjectTextField.getText());
+        SetBody(bodyTextArea.getText());
+        boolean success = SendEmail();
+        ClearAll();
+        return success;
     }
 
     public void AddRecipient(String recipient) {
@@ -78,7 +88,14 @@ public class EmailHelper {
         this.subject = subject;
     }
 
-    public void SendEmail() {
+    public void setImages(ArrayList<ImageViewerImage> images) {
+        this.images.clear();
+        for (ImageViewerImage image: images) {
+            this.images.add(new File(image.GetXMLImage().GetPath()));
+        }
+    }
+
+    public boolean SendEmail() {
         try {
             int imagesAttached = 0;
             int imageBytes=0;
@@ -130,6 +147,8 @@ public class EmailHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 }
