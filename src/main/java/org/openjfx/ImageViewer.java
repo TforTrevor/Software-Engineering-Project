@@ -194,8 +194,7 @@ public class ImageViewer {
 
     private void OpenImage(ImageViewerImage imageViewerImage) {
         openedImage = imageViewerImage;
-        //Image image = imageViewerImage.GetImageView().getImage();
-        Image image = imageViewerImage.GetImage();
+        Image image = new Image(imageViewerImage.GetFile().toURI().toString());
         imageViewerImageView.setImage(image);
 
         imageViewerPane.setMinSize(0, 0);
