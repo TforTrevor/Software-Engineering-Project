@@ -27,7 +27,7 @@
    <left>
       <VBox fx:id="tabPane" alignment="CENTER" styleClass="primaryColor">
          <children>
-            <JFXButton fx:id="viewTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="viewTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-border-color: #ffffff; -fx-border-style: hidden;" text="View Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -35,8 +35,11 @@
                   <String fx:value="sharpButton" />
                   <String fx:value="primaryColor" />
                </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </JFXButton>
-            <JFXButton fx:id="uploadTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Upload Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="uploadTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Upload Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -44,8 +47,11 @@
                   <String fx:value="sharpButton" />
                   <String fx:value="primaryColor" />
                </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </JFXButton>
-            <JFXButton fx:id="searchTabButton" alignment="BASELINE_LEFT" defaultButton="true" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Search Images" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="searchTabButton" alignment="BASELINE_LEFT" defaultButton="true" prefHeight="60.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Search Images" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -53,8 +59,11 @@
                   <String fx:value="sharpButton" />
                   <String fx:value="primaryColor" />
                </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </JFXButton>
-            <JFXButton fx:id="helpTabButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="400.0" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Help" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="helpTabButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="400.0" prefHeight="60.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Help" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -62,8 +71,11 @@
                   <String fx:value="sharpButton" />
                   <String fx:value="primaryColor" />
                </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </JFXButton>
-            <JFXButton fx:id="settingsTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Settings" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="settingsTabButton" alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="200.0" ripplerFill="WHITE" style="-fx-border-color: #ffffff; -fx-border-style: solid hidden hidden hidden;" text="Settings" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="30.0" />
                </padding>
@@ -71,6 +83,9 @@
                   <String fx:value="sharpButton" />
                   <String fx:value="primaryColor" />
                </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </JFXButton>
          </children>
       </VBox>
