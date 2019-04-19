@@ -55,6 +55,7 @@ public class ShareImages {
     }
 
     private void CloseSharePane() {
+        emailLabel.setText("");
         closeShareButton.setVisible(false);
         JavaFXHelper.FadeOut(Duration.seconds(0.25), sharePane);
         JavaFXHelper.FadeIn(Duration.seconds(0.1), imageOptions);
@@ -76,6 +77,7 @@ public class ShareImages {
             if (validEmails) {
                 boolean success = emailHelper.RunEmail(imageViewer, parsedRecipients, subjectTextField, bodyTextArea);
                 if (success) {
+                    imageViewer.DeselectAllImages();
                     Platform.runLater(() -> {
                         sendEmailButton.setDisable(false);
                         emailLabel.setTextFill(Color.GRAY);
