@@ -84,7 +84,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" styleClass="primaryColorLight">
                            <children>
-                              <JFXTextField fx:id="imageViewerSearch" focusColor="WHITE" prefWidth="500.0" promptText="Search Images" unFocusColor="WHITE">
+                              <JFXTextField fx:id="imageViewerSearch" focusColor="WHITE" prefWidth="500.0" promptText="Search Images" style="-fx-text-fill: #ffffff;" unFocusColor="#00000040">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
