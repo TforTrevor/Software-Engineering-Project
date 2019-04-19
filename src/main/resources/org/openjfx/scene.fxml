@@ -84,7 +84,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" styleClass="primaryColorLight">
                            <children>
-                              <JFXTextField fx:id="imageViewerSearch" focusColor="WHITE" prefWidth="500.0" promptText="Search Images" unFocusColor="WHITE">
+                              <JFXTextField fx:id="imageViewerSearch" focusColor="WHITE" prefWidth="500.0" promptText="Search Images" style="-fx-text-fill: #ffffff;" unFocusColor="#00000040">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -209,7 +209,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -260,34 +260,42 @@
                         </JFXButton>
                      </children>
                   </VBox>
-                  <VBox fx:id="searchingImagesPane" alignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="searchingImagesPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox alignment="CENTER" spacing="20.0" styleClass="backgroundColorDark">
+                        <StackPane opacity="0.75" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Searching for images...." textAlignment="CENTER">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
+                              <VBox alignment="CENTER" spacing="20.0" styleClass="backgroundColorDark">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Searching for images...." textAlignment="CENTER">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <JFXSpinner styleClass="spinnerPrimaryColor" />
+                                    <JFXButton fx:id="cancelSearchButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="Cancel" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </JFXButton>
+                                 </children>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <JFXSpinner styleClass="spinnerPrimaryColor" />
-                              <JFXButton fx:id="cancelSearchButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="sharpButton" text="Cancel" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                                 <opaqueInsets>
                                     <Insets />
-                                 </opaqueInsets>
-                              </JFXButton>
+                                 </VBox.margin>
+                              </VBox>
                            </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" color="#00000080" offsetX="2.5" offsetY="2.5" />
+                           </effect>
                         </VBox>
                      </children>
-                  </VBox>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="helpTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

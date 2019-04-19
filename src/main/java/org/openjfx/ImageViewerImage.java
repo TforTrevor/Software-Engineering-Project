@@ -26,6 +26,7 @@ class ImageViewerImage {
     private JFXButton button;
     private JFXCheckBox checkBox;
     private File file;
+    private Image image;
     ImageViewerImage(XMLImage xmlImage) {
         anchorPane = new AnchorPane();
         vBox = new VBox();
@@ -81,13 +82,16 @@ class ImageViewerImage {
 
         this.xmlImage = xmlImage;
         file = new File(xmlImage.GetPath());
-        Image image = new Image(file.toURI().toString());
-        imageView.setImage(image);
+        image = new Image(file.toURI().toString());
+        Image scaledImage = new Image(file.toURI().toString(), 225, 225, true, true);
+        imageView.setImage(scaledImage);
+        //imageView.setImage(image);
         imageName.setText(xmlImage.GetName());
     }
     AnchorPane GetAnchorPane() {
         return anchorPane;
     }
+    Image GetImage() { return image; }
     ImageView GetImageView() {
         return imageView;
     }

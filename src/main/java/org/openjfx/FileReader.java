@@ -49,7 +49,7 @@ public class FileReader {
                         if (fileList != null) {
                             for (int i = 0; i < fileList.length; i++) {
                                 File temp = fileList[i];
-                                if (temp.isDirectory()) {
+                                if (temp.isDirectory()&&!(temp.getName().startsWith("."))) {
                                     Search(temp);
                                 } else {
                                     if (CheckFile(temp.getAbsoluteFile())) {

@@ -15,8 +15,6 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ImageViewer {
     private AnchorPane viewImageTabPane;
@@ -196,7 +194,8 @@ public class ImageViewer {
 
     private void OpenImage(ImageViewerImage imageViewerImage) {
         openedImage = imageViewerImage;
-        Image image = imageViewerImage.GetImageView().getImage();
+        //Image image = imageViewerImage.GetImageView().getImage();
+        Image image = imageViewerImage.GetImage();
         imageViewerImageView.setImage(image);
 
         imageViewerPane.setMinSize(0, 0);
@@ -241,6 +240,13 @@ public class ImageViewer {
         }
     }
 
+    void DeselectAllImages() {
+        for (int i = 0; i < selectedImages.size(); i++) {
+            selectedImages.get(i).GetCheckBox().setSelected(false);
+        }
+        selectedImages.clear();
+    }
+
     private void RemoveImage() {
         Thread removeThread = new Thread(() -> {
             try {
@@ -257,8 +263,7 @@ public class ImageViewer {
                 }
                 selectedImages.clear();
                 JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
