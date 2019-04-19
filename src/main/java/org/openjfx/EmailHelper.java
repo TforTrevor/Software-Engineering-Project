@@ -23,7 +23,6 @@ public class EmailHelper {
 
     EmailHelper() {
         images = new ArrayList<>();
-        //images.add(new File("D:\\SteamLibrary\\steamapps\\common\\Tom Clancy's Rainbow Six Siege\\datapc64_merged_bnk_textures3.forge"));
         to = new ArrayList<>();
         from = "oldtimerimagefinder@gmail.com";
         Properties props = System.getProperties();

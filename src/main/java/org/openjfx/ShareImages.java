@@ -62,6 +62,9 @@ public class ShareImages {
 
     private void SendEmail() {
         Thread emailThread = new Thread(() -> {
+            Platform.runLater(() ->{
+                sendEmailButton.setDisable(true);
+            });
             String recipients = recipientTextField.getText();
             String[] parsedRecipients = recipients.split(",");
             boolean validEmails = true;
@@ -74,12 +77,14 @@ public class ShareImages {
                 boolean success = emailHelper.RunEmail(imageViewer, parsedRecipients, subjectTextField, bodyTextArea);
                 if (success) {
                     Platform.runLater(() -> {
+                        sendEmailButton.setDisable(false);
                         emailLabel.setTextFill(Color.GRAY);
                         emailLabel.setText("Sent Successfully");
                         emailLabel.setVisible(true);
                     });
                 } else {
                     Platform.runLater(() -> {
+                        sendEmailButton.setDisable(false);
                         emailLabel.setTextFill(Color.RED);
                         emailLabel.setText("Error Sending");
                         emailLabel.setVisible(true);
@@ -87,6 +92,7 @@ public class ShareImages {
                 }
             } else {
                 Platform.runLater(() -> {
+                    sendEmailButton.setDisable(false);
                     emailLabel.setTextFill(Color.RED);
                     emailLabel.setText("Invalid Emails");
                     emailLabel.setVisible(true);
