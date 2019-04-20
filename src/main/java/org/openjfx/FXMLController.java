@@ -72,9 +72,9 @@ public class FXMLController implements Initializable {
     @FXML
     JFXButton cancelSearchButton;
     @FXML
-    JFXDatePicker toDate;
+    JFXDatePicker endDatePicker;
     @FXML
-    JFXDatePicker fromDate;
+    JFXDatePicker startDatePicker;
     @FXML
     Label invalidDatesLabel;
 

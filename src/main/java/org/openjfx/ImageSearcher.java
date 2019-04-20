@@ -8,8 +8,6 @@ import javafx.scene.layout.Pane;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,16 +20,16 @@ public class ImageSearcher {
 
     private JFXButton searchImageButton;
     private JFXButton cancelSearchButton;
-    private JFXDatePicker fromDate;
-    private JFXDatePicker toDate;
+    private JFXDatePicker startDatePicker;
+    private JFXDatePicker endDatePicker;
     private Label invalidDatesLabel;
     private Pane searchingImagesPane;
     
     ImageSearcher(FXMLController fxmlController) {
         searchImageButton = fxmlController.searchImageButton;
         cancelSearchButton = fxmlController.cancelSearchButton;
-        fromDate = fxmlController.fromDate;
-        toDate = fxmlController.toDate;
+        startDatePicker = fxmlController.startDatePicker;
+        endDatePicker = fxmlController.endDatePicker;
         invalidDatesLabel = fxmlController.invalidDatesLabel;
         searchingImagesPane = fxmlController.searchingImagesPane;
 
@@ -43,7 +41,7 @@ public class ImageSearcher {
 
     private void SearchImageButtonAction() {
         searchImageButton.setDisable(true);
-        if (!SearchImages(fromDate, toDate)) {
+        if (!SearchImages(startDatePicker, endDatePicker)) {
             invalidDatesLabel.setVisible(true);
             searchImageButton.setDisable(false);
         } else {
@@ -63,19 +61,12 @@ public class ImageSearcher {
         }
     }
 
-    private String ConvertDateFormat(DatePicker date) {
-        Format format = new SimpleDateFormat("MM/dd/yyyy");
-        //date.getvalue returns yyyy/mm/dd
-        java.util.Date tempDate = java.sql.Date.valueOf(date.getValue());
-        return format.format(tempDate);
-    }
+    private boolean SearchImages(DatePicker startDate, DatePicker endDate) {
 
-    private boolean SearchImages(DatePicker fromDate, DatePicker toDate) {
-
-        if (!CheckDateValidity(fromDate)) {
+        if (!CheckDateValidity(startDate)) {
             return false;
         }
-        if (!CheckDateValidity(toDate)) {
+        if (!CheckDateValidity(endDate)) {
             return false;
         }
 
@@ -90,8 +81,8 @@ public class ImageSearcher {
     private void SearchThread() {
         try {
             XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
-            Date startDate = java.sql.Date.valueOf(fromDate.getValue());
-            Date endDate = java.sql.Date.valueOf(toDate.getValue());
+            Date startDate = java.sql.Date.valueOf(this.startDatePicker.getValue());
+            Date endDate = java.sql.Date.valueOf(this.endDatePicker.getValue());
             fileReader = new FileReader(startDate, endDate, xmlSettingsEditor.GetSearchPath());
             fileReader.SetRunThread(true);
             fileReader.SearchImages();

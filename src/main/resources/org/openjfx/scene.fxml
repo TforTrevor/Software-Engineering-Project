@@ -240,7 +240,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <JFXDatePicker fx:id="fromDate" styleClass="jfxPrimaryColor">
+                              <JFXDatePicker fx:id="startDatePicker" styleClass="jfxPrimaryColor">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -254,7 +254,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <JFXDatePicker fx:id="toDate" styleClass="jfxPrimaryColor" />
+                              <JFXDatePicker fx:id="endDatePicker" styleClass="jfxPrimaryColor" />
                            </children>
                         </HBox>
                         <Label fx:id="invalidDatesLabel" alignment="CENTER" contentDisplay="CENTER" text="Invalid Dates" textAlignment="CENTER" textFill="#f20000" visible="false">
