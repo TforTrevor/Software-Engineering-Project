@@ -135,7 +135,7 @@ public class FXMLController implements Initializable {
         ShareImages shareImages = new ShareImages(this);
         viewTabButton.setOnAction((event) -> {
             ShowTab(viewImageTabPane);
-            imageViewer.HideOffScreenImages();
+            //imageViewer.HideOffScreenImages();
             imageViewer.ClearImages();
             imageViewer.GetXMLImages();
             imageViewer.ScrollCheck();
