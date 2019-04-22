@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,23 +51,16 @@ public class ImageSearcher {
         }
     }
 
-    private boolean CheckDateValidity(DatePicker date) {
-        try {
-            if (date.getValue() == null) {
-                throw new DateTimeParseException("Invalid Date", date.toString(), 0);
-            }
-            return true;
-        } catch (DateTimeParseException e) {
+    private boolean CheckDateValidity(LocalDate startDate, LocalDate endDate) {
+        if (startDate == null || endDate == null) {
             return false;
         }
+        return !startDate.isAfter(endDate);
     }
 
     private boolean SearchImages(DatePicker startDate, DatePicker endDate) {
 
-        if (!CheckDateValidity(startDate)) {
-            return false;
-        }
-        if (!CheckDateValidity(endDate)) {
+        if (!CheckDateValidity(startDate.getValue(), endDate.getValue())) {
             return false;
         }
 
