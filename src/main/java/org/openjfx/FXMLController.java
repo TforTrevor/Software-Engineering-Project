@@ -126,13 +126,16 @@ public class FXMLController implements Initializable {
 
     private ArrayList<AnchorPane> tabPanes;
     private ImageSearcher imageSearcher;
+    private ShareImages shareImages;
+    private UploadImages uploadImages;
+    private Settings settings;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, helpTabPane, settingsTabPane));
         //VIEW IMAGES TAB
         imageViewer = new ImageViewer(this);
-        ShareImages shareImages = new ShareImages(this);
+        shareImages = new ShareImages(this);
         viewTabButton.setOnAction((event) -> {
             //imageViewer.HideOffScreenImages();
             imageViewer.CloseImage();
@@ -143,7 +146,7 @@ public class FXMLController implements Initializable {
             ShowTab(viewImageTabPane);
         });
         //UPLOAD TAB
-        UploadImages uploadImages = new UploadImages(this);
+        uploadImages = new UploadImages(this);
         uploadTabButton.setOnAction((event) -> ShowTab(uploadTabPane));
         //SEARCH TAB
         imageSearcher = new ImageSearcher(this);
@@ -151,7 +154,7 @@ public class FXMLController implements Initializable {
         //HELP TAB
         helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
         //SETTINGS TAB
-        Settings settings = new Settings(this);
+        settings = new Settings(this);
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
     }
 
