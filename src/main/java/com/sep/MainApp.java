@@ -21,7 +21,7 @@ public class MainApp extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(600);
 
-        stage.setTitle("Image Searcher");
+        stage.setTitle("Old Timer Image Finder");
         stage.setScene(scene);
         stage.show();
     }
