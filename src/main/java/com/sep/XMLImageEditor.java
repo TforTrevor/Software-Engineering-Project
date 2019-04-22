@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -13,7 +13,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

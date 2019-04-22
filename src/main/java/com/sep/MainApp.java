@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;

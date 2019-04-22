@@ -1,16 +1,13 @@
-package org.openjfx;
+package com.sep;
 
 import com.jfoenix.controls.*;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ArrayList;

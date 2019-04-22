@@ -36,7 +36,7 @@ apply plugin: 'javafx-gradle-plugin'
 // for all available settings please look at the class "JavaFXGradlePluginExtension"
 jfx {
     verbose = true
-    mainClass = "org.openjfx.MainApp"
+    mainClass = "com.sep.MainApp"
     jfxAppOutputDir = "build/jfx/app"
     jfxMainAppJarName = "SEP-jfx.jar"
     deployDir = "src/main/deploy"

@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Label;

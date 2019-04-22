@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import java.io.File;
 import java.nio.file.Files;

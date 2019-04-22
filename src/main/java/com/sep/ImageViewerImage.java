@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 
 import java.io.File;
 

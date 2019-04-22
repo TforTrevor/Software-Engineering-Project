@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
+<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sep.FXMLController">
    <left>
       <VBox fx:id="tabPane" alignment="CENTER" styleClass="primaryColor">
          <children>
