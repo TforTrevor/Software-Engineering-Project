@@ -46,6 +46,7 @@ public class ShareImages {
     }
 
     private void OpenSharePane() {
+        imageViewer.CloseImage();
         closeShareButton.setVisible(true);
         JavaFXHelper.FadeIn(Duration.seconds(0.25), sharePane);
         JavaFXHelper.FadeOut(Duration.seconds(0.1), imageOptions);
