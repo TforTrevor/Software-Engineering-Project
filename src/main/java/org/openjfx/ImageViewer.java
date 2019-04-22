@@ -209,7 +209,7 @@ public class ImageViewer {
         JavaFXHelper.FadeIn(Duration.seconds(0.25), imageViewerPane);
     }
 
-    private void CloseImage() {
+    void CloseImage() {
         imageViewerPane.setVisible(false);
         closeImageViewerButton.setDisable(true);
         closeImageViewerButton.setVisible(false);
