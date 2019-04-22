@@ -70,6 +70,10 @@ public class ImageSearcher {
             return false;
         }
 
+        if(!startDate.getValue().isBefore(endDate.getValue())) {
+            return false;
+        }
+
         if (!searchThread.isAlive()) {
             searchThread = new Thread(this::SearchThread);
             searchThread.setDaemon(true);
