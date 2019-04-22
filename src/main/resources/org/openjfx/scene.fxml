@@ -129,7 +129,7 @@
                   <JFXButton fx:id="closeImageViewerButton" opacity="0.75" style="-fx-background-color: #000000;" styleClass="sharpButton" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <StackPane fx:id="imageViewerPane" pickOnBounds="false" visible="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
                      <children>
-                        <VBox alignment="CENTER_LEFT" pickOnBounds="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                        <VBox alignment="CENTER" pickOnBounds="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <ImageView fx:id="imageViewerImageView" fitHeight="200.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
                               <JFXButton fx:id="imageViewerOpenButton" buttonType="RAISED" prefWidth="200.0" ripplerFill="WHITE" styleClass="primaryColor" text="Open Original">
