@@ -37,7 +37,6 @@ public class XMLImageEditor {
                 document = dBuilder.parse(filePath);
                 document.getDocumentElement().normalize();
             } else {
-                FeatureLock.EnableViewTab();
                 System.out.println("Created new images document");
                 document = dBuilder.newDocument();
                 Element rootElement = document.createElement("images");

@@ -102,5 +102,9 @@ public class ImageSearcher {
         }
         searchImageButton.setDisable(false);
         searchingImagesPane.setVisible(false);
+
+        if (imagePaths.size() > 0) {
+            FeatureLock.EnableViewTab();
+        }
     }
 }

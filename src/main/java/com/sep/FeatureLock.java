@@ -34,7 +34,5 @@ public class FeatureLock {
     static void EnableViewTab() {
         viewTabButton.setDisable(false);
     }
-
-
 }
 

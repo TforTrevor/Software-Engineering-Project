@@ -33,6 +33,7 @@ public class UploadImages {
                 xmlImageEditor.CreateXMLImage("Test", FilenameUtils.removeExtension(selectedFiles.get(i).getName()), path);
             }
             uploadLabel.setText("Uploaded " + selectedFiles.size() + " images.");
+            FeatureLock.EnableViewTab();
         }
     }
 }

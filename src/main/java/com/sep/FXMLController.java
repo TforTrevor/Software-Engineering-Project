@@ -162,11 +162,10 @@ public class FXMLController implements Initializable {
             featureLock.UpdateViewText();
             ShowTab(helpTabPane);
         });
+        featureLock.UpdateViewTab();
         //SETTINGS TAB
         settings = new Settings(this);
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
-
-        featureLock.UpdateViewTab();
     }
 
     private void ShowTab(AnchorPane keepPane) {
