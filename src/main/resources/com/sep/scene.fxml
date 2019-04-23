@@ -339,7 +339,7 @@
                      <children>
                         <StackPane styleClass="primaryColor">
                            <children>
-                              <Label styleClass="primaryColor" text="Help">
+                              <Label styleClass="primaryColor" text="What do you need help with?">
                                  <font>
                                     <Font name="System Bold" size="36.0" />
                                  </font>
