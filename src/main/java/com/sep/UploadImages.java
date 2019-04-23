@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Label;
@@ -33,6 +33,7 @@ public class UploadImages {
                 xmlImageEditor.CreateXMLImage("Test", FilenameUtils.removeExtension(selectedFiles.get(i).getName()), path);
             }
             uploadLabel.setText("Uploaded " + selectedFiles.size() + " images.");
+            FeatureLock.EnableViewTab();
         }
     }
 }

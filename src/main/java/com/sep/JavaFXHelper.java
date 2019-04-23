@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

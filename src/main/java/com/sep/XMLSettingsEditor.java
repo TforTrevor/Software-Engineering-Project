@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

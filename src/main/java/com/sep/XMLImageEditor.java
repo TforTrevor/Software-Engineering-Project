@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -13,7 +13,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,9 +30,9 @@ public class XMLImageEditor {
             //InputStream xmlInputStream = classLoader.getResourceAsStream("images.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            //document = dBuilder.parse(xmlInputStream);
-            Path path = Paths.get(filePath);
-            if (Files.exists(path)) {
+
+            //document = dBuilder.parse(xmlInputStream)
+            if (imagesDocumentExists()) {
                 System.out.println("Opening existing images document");
                 document = dBuilder.parse(filePath);
                 document.getDocumentElement().normalize();
@@ -47,6 +46,11 @@ public class XMLImageEditor {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    boolean imagesDocumentExists() {
+        Path path = Paths.get(filePath);
+        return Files.exists(path);
     }
 
     ArrayList<XMLImage> GetXMLImages() {

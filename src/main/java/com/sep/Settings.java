@@ -1,16 +1,12 @@
-package org.openjfx;
+package com.sep;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.util.Duration;
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
-import java.util.List;
 
 public class Settings {
 

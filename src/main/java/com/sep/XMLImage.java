@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 public class XMLImage {
     private String tag;

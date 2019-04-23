@@ -36,7 +36,7 @@ apply plugin: 'javafx-gradle-plugin'
 // for all available settings please look at the class "JavaFXGradlePluginExtension"
 jfx {
     verbose = true
-    mainClass = "org.openjfx.MainApp"
+    mainClass = "com.sep.MainApp"
     jfxAppOutputDir = "build/jfx/app"
     jfxMainAppJarName = "SEP-jfx.jar"
     deployDir = "src/main/deploy"
@@ -74,7 +74,7 @@ jfx {
     appName = "SoftwareEngineeringProject" // this is used for files below "src/main/deploy", e.g. "src/main/deploy/package/windows/project.ico"
     additionalBundlerResources = null // path to some additional resources for the bundlers when creating application-bundle
     additionalAppResources = null // path to some additional resources when creating application-bundle
-    secondaryLaunchers = [[appName:"somethingDifferent"], [appName:"somethingDifferent2"]]
+    //secondaryLaunchers = [[appName:"somethingDifferent"], [appName:"somethingDifferent2"]]
     fileAssociations = null // List<Map<String, Object>>
     noBlobSigning = false // when using bundler "jnlp", you can choose to NOT use blob signing
     customBundlers = null // List<String>

@@ -1,4 +1,4 @@
-package org.openjfx;
+package com.sep;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -8,8 +8,7 @@ import javafx.scene.layout.Pane;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
-import java.text.Format;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,16 +21,16 @@ public class ImageSearcher {
 
     private JFXButton searchImageButton;
     private JFXButton cancelSearchButton;
-    private JFXDatePicker fromDate;
-    private JFXDatePicker toDate;
+    private JFXDatePicker startDatePicker;
+    private JFXDatePicker endDatePicker;
     private Label invalidDatesLabel;
     private Pane searchingImagesPane;
     
     ImageSearcher(FXMLController fxmlController) {
         searchImageButton = fxmlController.searchImageButton;
         cancelSearchButton = fxmlController.cancelSearchButton;
-        fromDate = fxmlController.fromDate;
-        toDate = fxmlController.toDate;
+        startDatePicker = fxmlController.startDatePicker;
+        endDatePicker = fxmlController.endDatePicker;
         invalidDatesLabel = fxmlController.invalidDatesLabel;
         searchingImagesPane = fxmlController.searchingImagesPane;
 
@@ -43,7 +42,7 @@ public class ImageSearcher {
 
     private void SearchImageButtonAction() {
         searchImageButton.setDisable(true);
-        if (!SearchImages(fromDate, toDate)) {
+        if (!SearchImages(startDatePicker, endDatePicker)) {
             invalidDatesLabel.setVisible(true);
             searchImageButton.setDisable(false);
         } else {
@@ -52,30 +51,16 @@ public class ImageSearcher {
         }
     }
 
-    private boolean CheckDateValidity(DatePicker date) {
-        try {
-            if (date.getValue() == null) {
-                throw new DateTimeParseException("Invalid Date", date.toString(), 0);
-            }
-            return true;
-        } catch (DateTimeParseException e) {
+    private boolean CheckDateValidity(LocalDate startDate, LocalDate endDate) {
+        if (startDate == null || endDate == null) {
             return false;
         }
+        return !startDate.isAfter(endDate);
     }
 
-    private String ConvertDateFormat(DatePicker date) {
-        Format format = new SimpleDateFormat("MM/dd/yyyy");
-        //date.getvalue returns yyyy/mm/dd
-        java.util.Date tempDate = java.sql.Date.valueOf(date.getValue());
-        return format.format(tempDate);
-    }
+    private boolean SearchImages(DatePicker startDate, DatePicker endDate) {
 
-    private boolean SearchImages(DatePicker fromDate, DatePicker toDate) {
-
-        if (!CheckDateValidity(fromDate)) {
-            return false;
-        }
-        if (!CheckDateValidity(toDate)) {
+        if (!CheckDateValidity(startDate.getValue(), endDate.getValue())) {
             return false;
         }
 
@@ -90,8 +75,8 @@ public class ImageSearcher {
     private void SearchThread() {
         try {
             XMLSettingsEditor xmlSettingsEditor = new XMLSettingsEditor();
-            Date startDate = java.sql.Date.valueOf(fromDate.getValue());
-            Date endDate = java.sql.Date.valueOf(toDate.getValue());
+            Date startDate = java.sql.Date.valueOf(this.startDatePicker.getValue());
+            Date endDate = java.sql.Date.valueOf(this.endDatePicker.getValue());
             fileReader = new FileReader(startDate, endDate, xmlSettingsEditor.GetSearchPath());
             fileReader.SetRunThread(true);
             fileReader.SearchImages();
@@ -103,7 +88,6 @@ public class ImageSearcher {
     }
 
     private void CancelSearch() {
-        System.out.println("Cancel search crashing");
         fileReader.SetRunThread(false);
         ArrayList<File> files = fileReader.GetFiles();
         imagePaths.clear();
@@ -118,5 +102,9 @@ public class ImageSearcher {
         }
         searchImageButton.setDisable(false);
         searchingImagesPane.setVisible(false);
+
+        if (imagePaths.size() > 0) {
+            FeatureLock.EnableViewTab();
+        }
     }
 }
