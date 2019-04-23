@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class FXMLController implements Initializable {
 
     //VIEW IMAGES TAB
     @FXML
-    private JFXButton viewTabButton;
+    JFXButton viewTabButton;
     @FXML
     AnchorPane viewImageTabPane;
     @FXML
@@ -100,6 +101,12 @@ public class FXMLController implements Initializable {
     private AnchorPane helpTabPane;
     @FXML
     private JFXTabPane helpPane;
+    @FXML
+    Text viewImagesHelpText;
+    @FXML
+    Text uploadImagesHelpText;
+    @FXML
+    Text searchImagesHelpText;
 
     //SETTINGS TAB
     @FXML
@@ -126,10 +133,12 @@ public class FXMLController implements Initializable {
     private ShareImages shareImages;
     private UploadImages uploadImages;
     private Settings settings;
+    private FeatureLock featureLock;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tabPanes = new ArrayList<>(Arrays.asList(viewImageTabPane, uploadTabPane, searchTabPane, helpTabPane, settingsTabPane));
+        featureLock = new FeatureLock(this);
         //VIEW IMAGES TAB
         imageViewer = new ImageViewer(this);
         shareImages = new ShareImages(this);
@@ -149,10 +158,15 @@ public class FXMLController implements Initializable {
         imageSearcher = new ImageSearcher(this);
         searchTabButton.setOnAction((event) -> ShowTab(searchTabPane));
         //HELP TAB
-        helpTabButton.setOnAction((event) -> ShowTab(helpTabPane));
+        helpTabButton.setOnAction((event) -> {
+            featureLock.UpdateViewText();
+            ShowTab(helpTabPane);
+        });
         //SETTINGS TAB
         settings = new Settings(this);
         settingsTabButton.setOnAction((event) -> ShowTab(settingsTabPane));
+
+        featureLock.UpdateViewTab();
     }
 
     private void ShowTab(AnchorPane keepPane) {

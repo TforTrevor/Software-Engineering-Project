@@ -30,13 +30,14 @@ public class XMLImageEditor {
             //InputStream xmlInputStream = classLoader.getResourceAsStream("images.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            //document = dBuilder.parse(xmlInputStream);
-            Path path = Paths.get(filePath);
-            if (Files.exists(path)) {
+
+            //document = dBuilder.parse(xmlInputStream)
+            if (imagesDocumentExists()) {
                 System.out.println("Opening existing images document");
                 document = dBuilder.parse(filePath);
                 document.getDocumentElement().normalize();
             } else {
+                FeatureLock.EnableViewTab();
                 System.out.println("Created new images document");
                 document = dBuilder.newDocument();
                 Element rootElement = document.createElement("images");
@@ -46,6 +47,11 @@ public class XMLImageEditor {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    boolean imagesDocumentExists() {
+        Path path = Paths.get(filePath);
+        return Files.exists(path);
     }
 
     ArrayList<XMLImage> GetXMLImages() {

@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sep.FXMLController">
+<BorderPane fx:id="mainPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sep.FXMLController">
    <left>
       <VBox fx:id="tabPane" alignment="CENTER" styleClass="primaryColor">
          <children>
@@ -233,7 +233,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="searchTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -333,7 +333,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="helpTabPane" styleClass="backgroundColor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="helpTabPane" styleClass="backgroundColor" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -359,36 +359,9 @@
                                              <content>
                                                 <VBox spacing="20.0">
                                                    <children>
-                                                      <TextFlow>
+                                                      <TextFlow lineSpacing="20.0">
                                                          <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can view images by clicking on the view images tab on the left.">
-                                                               <font>
-                                                                  <Font size="18.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                      </TextFlow>
-                                                      <TextFlow layoutX="20.0" layoutY="20.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can press refresh images to refresh the image viewer.">
-                                                               <font>
-                                                                  <Font size="18.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                      </TextFlow>
-                                                      <TextFlow layoutX="20.0" layoutY="39.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can select images by click on the check box in the upper left of every image.">
-                                                               <font>
-                                                                  <Font size="18.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                      </TextFlow>
-                                                      <TextFlow layoutX="20.0" layoutY="68.0">
-                                                         <children>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can select multiple images at a time by clicking on multiple check boxes.">
+                                                            <Text fx:id="viewImagesHelpText" strokeType="OUTSIDE" strokeWidth="0.0" text="You can view images by clicking on the view images tab on the left.&#13;You can select multiple images at a time by clicking on multiple check boxes.&#13;You can select images by click on the check box in the upper left of every image.&#13;You can press refresh images to refresh the image viewer.&#13;You can view images by clicking on the view images tab on the left.">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
